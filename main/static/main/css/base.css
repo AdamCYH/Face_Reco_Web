@@ -1,6 +1,6 @@
 html {
     background-image: url("/static/main/img/background.png");
-    background-color: transparent;
+    background-color: black;
     color: white;
     min-width: 920px;
 }

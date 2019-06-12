@@ -6,7 +6,7 @@ from main.utilities import utilities, redis
 
 # Create your views here.
 def home(request):
-    return render(request, 'main/index.html')
+    return render(request, 'main/recognition.html')
 
 
 def detection(request):

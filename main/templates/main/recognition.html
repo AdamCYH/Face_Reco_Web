@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
     <script src="{% static 'main/js/main.js' %}"></script>
 {% endblock %}
 
@@ -34,7 +34,23 @@
             {% csrf_token %}
         </div>
         <div class="content upper info">
-
+            <div id="info_header">
+                <span>Information</span>
+            </div>
+            <table style="display: table" id="info_table">
+                <tr>
+                    <th>Name</th>
+                    <td>Adam Chiu</td>
+                </tr>
+                <tr>
+                    <th>Age</th>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>Research assistant in cylab Research assistant in cylab Research assistant in cylab Research assistant in cylab </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="content lower">

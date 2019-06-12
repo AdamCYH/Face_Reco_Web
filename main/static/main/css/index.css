@@ -24,6 +24,10 @@
     display: inline-flex;
 }
 
+.info {
+    width: 30%;
+}
+
 .match {
     width: 28%;
 }
@@ -76,17 +80,22 @@
     cursor: pointer;
 }
 
-#match_post_form {
-    width: 68px;
-    margin: auto;
+#info_header {
+    width: 150px;
+    margin: 20px auto;
+    font-size: 30px;
 }
 
-html {
-    background-image: url("/static/main/img/background.png");
-    background-color: black;
-    color: white;
-    min-width: 920px;
+#info_table {
+    width: 90%;
+    margin: 20px auto;
+    font-size: 14px;
 }
+
+#info_table tbody * {
+    padding: 20px;
+}
+
 
 @media (max-height: 650px) {
     .upload_image {
