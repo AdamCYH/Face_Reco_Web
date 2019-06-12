@@ -1,0 +1,21 @@
+html {
+    background-image: url("/static/main/img/background.png");
+    background-color: transparent;
+    color: white;
+    min-width: 920px;
+}
+
+body {
+    background-color: transparent;
+    color: white;
+}
+
+.navbar-custom * {
+    color: #FFFFFF !important;
+    background-color: transparent;
+}
+
+
+.container {
+    max-width: 1300px;
+}

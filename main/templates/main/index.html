@@ -1,52 +1,45 @@
-<!DOCTYPE html>
-<html>
+{% extends "main/base.html" %}
 
-<head>
-    {% load staticfiles %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Face Recognition</title>
+{% load staticfiles %}
 
+{% block header %}
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
     <script src="{% static 'main/js/main.js' %}"></script>
-    <script src="{% static 'main/js/jquery-3.1.1.min.js' %}"></script>
-</head>
-<body>
+{% endblock %}
 
+{% block content %}
 
-<h3>Face Recognition</h3>
+    <div class="content upper">
+        <div class="content upper upload">
+            <div class="content upload_tools">
+                <div id="upload_button_div">
+                    <label for="file-upload" id="custom-file-upload">
+                        Image Upload
+                    </label>
+                </div>
+            </div>
 
-<div class="container upload">
-    <div class="container upload_tools">
-        <div id="upload_button_div">
-            <label for="file-upload" class="custom-file-upload">
-                Image Upload
-            </label>
+            <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
+            <div class="content upper upload_image" id="upload_image">
+                <img id="snap_image">
+            </div>
+
+        </div>
+        <div class="content upper tools">
+            <input id="img_name" hidden>
+            <div class="button_div">
+                <a class="button" id="match_button"
+                   onclick="submitform(this)">Match</a>
+            </div>
+            {% csrf_token %}
+        </div>
+        <div class="content upper info">
+
         </div>
     </div>
+    <div class="content lower">
 
-    <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
-    <div class="container upload_image" id="upload_image">
-        <img id="snap_image">
     </div>
 
-</div>
-<div class="container tools">
-    <form id="match_post_form" name="info_form" action={% url 'detection' %} method="POST">
-        <input name="img_holder" hidden>
-        <br>
-        <a type="button" class="button" id="match_button"
-           onclick="submitform(this)">Match
-        </a>
-        {% csrf_token %}
-    </form>
-</div>
-<div class="container match">
 
-</div>
-
-
-</body>
-
-</html>
+{% endblock %}

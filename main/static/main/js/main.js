@@ -1,11 +1,12 @@
 function loadImg(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
+        var fileName = input.files[0].name
         reader.onload = function (e) {
             $('#snap_image')
                 .attr('src', e.target.result);
-            $("[name=img_holder]").val(e.target.result);
+            $("#snap_image").val(e.target.result);
+            $("#img_name").val(fileName.split(".")[0]);
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -14,19 +15,27 @@ function loadImg(input) {
 
 function submitform() {
     if (validate()) {
-        document.info_form.submit();
+        $.ajax({
+            url: "/detection",
+            dataType: "json",
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),
+                img_name: $("#img_name").val(),
+                img_data: $('#snap_image').val()
+            },
+            context: document.body,
+            success: function (data) {
+
+            }
+        });
     }
 }
 
 
 function validate() {
-    if ($("[name=fname]").val().trim().length == 0 ||
-        $("[name=lname]").val().trim().length == 0 ||
-        $("[name=age]").val().trim().length == 0) {
-        alert("Please enter all information.")
-        return false;
-    } else if ($("[name=img_holder]").val().trim().length == 0) {
-        alert("Please take a picture.")
+    if ($('#snap_image').val().trim().length == 0) {
+        alert("Please upload a picture.")
         return false;
     } else {
         return true;

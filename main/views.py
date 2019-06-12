@@ -11,7 +11,7 @@ def home(request):
 
 def detection(request):
     image_name = request.POST.get("img_name")
-    image_data = request.POST.get("img_holder")
+    image_data = request.POST.get("img_data")
 
     photo_path = utilities.save_image(image_name, image_data)
 
