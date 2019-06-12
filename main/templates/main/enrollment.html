@@ -1,0 +1,61 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+    <script src="{% static 'main/js/main.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="content upper">
+        <div class="content upper upload">
+            <div class="content upload_tools">
+                <div id="upload_button_div">
+                    <label for="file-upload" id="custom-file-upload">
+                        Image Upload
+                    </label>
+                </div>
+            </div>
+
+            <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
+            <div class="content upper upload_image" id="upload_image">
+                <img id="snap_image">
+            </div>
+
+        </div>
+        <div class="content upper tools">
+            <input id="img_name" hidden>
+            <div class="button_div">
+                <a class="button" id="match_button"
+                   onclick="submitform(this)">Match</a>
+            </div>
+            {% csrf_token %}
+        </div>
+        <div class="content upper info">
+            <div id="info_header">
+                <span>Information</span>
+            </div>
+            <table style="display: table" id="info_table">
+                <tr>
+                    <th>Name</th>
+                    <td>Adam Chiu</td>
+                </tr>
+                <tr>
+                    <th>Age</th>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>Research assistant in cylab Research assistant in cylab Research assistant in cylab Research assistant in cylab </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="content lower">
+
+    </div>
+
+
+{% endblock %}
