@@ -3,8 +3,8 @@
 {% load staticfiles %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
-    <script src="{% static 'main/js/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'main/css/recognition.css' %}">
+    <script src="{% static 'main/js/recognition.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -27,7 +27,7 @@
         </div>
         <div class="content upper tools">
             <input id="img_name" hidden>
-            <div class="button_div">
+            <div class="center">
                 <a class="button" id="match_button"
                    onclick="submitform(this)">Match</a>
             </div>

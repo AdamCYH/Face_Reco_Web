@@ -6,6 +6,7 @@ html {
 }
 
 body {
+    font-weight: lighter;
     background-color: transparent;
     color: white;
 }
@@ -19,4 +20,12 @@ body {
 
 .container {
     max-width: 1300px;
+}
+
+.center {
+    margin: auto;
+}
+
+.active {
+    font-weight: bolder;
 }

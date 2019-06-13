@@ -18,7 +18,7 @@ from django.urls import path
 from main import views
 
 urlpatterns = [
-    path('', views.recognition, name='main-detection_site'),
+    path('', views.recognition, name='main-recognition_site'),
     path('recognition', views.recognition),
     path('enrollment', views.enrollment, name='main-enrollment_site'),
 
