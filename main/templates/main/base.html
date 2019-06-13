@@ -32,10 +32,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" id="recognition" href="{% url 'main-recognition_site' %}">Recognition</a>
+                <a class="nav-link" id="enrollment" href="{% url 'main-enrollment_site' %}">Enrollment</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="enrollment" href="{% url 'main-enrollment_site' %}">Enrollment</a>
+                <a class="nav-link" id="recognition" href="{% url 'main-recognition_site' %}">Recognition</a>
             </li>
         </ul>
     </div>
@@ -49,7 +49,7 @@
     var path = $(location).attr('href').split("/").pop();
     console.log(path)
     if (path == "") {
-        $('#recognition').addClass("active");
+        $('#enrollment').addClass("active");
     } else {
         $('#' + path).addClass("active");
     }

@@ -25,7 +25,7 @@
 
     </div>
     <div class="content lower">
-        <form class="center" name="info_form" id="info_form" action={% url 'main-recognition_site' %} method="POST">
+        <form class="center" name="info_form" id="info_form" action={% url 'main-enrollment_site' %} method="POST">
             <table id="info_table">
                 <tr>
                     <td>First name:</td>
@@ -41,15 +41,20 @@
                 </tr>
                 <tr>
                     <td>Description:</td>
-                    <td><textarea name="description" form="info_form">Enter description here...</textarea>
+                    <td><textarea name="description" form="info_form"
+                                  placeholder="Enter description here..."></textarea>
+                </tr>
+                <tr>
+                    <td colspan="2"><span class="message" id="message"></span>
+                        <button type="button" class="button" id="submit_form"
+                                onclick="submitform(this)">Submit
+                        </button>
+                    </td>
                 </tr>
             </table>
             <input name="img_holder" hidden>
-            <br>
             {% csrf_token %}
         </form>
-        <button type="button" class="button" id="submit_form"
-                onclick="submitform(this)">Submit
-        </button>
+
     </div>
 {% endblock %}

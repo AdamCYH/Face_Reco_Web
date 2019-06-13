@@ -17,10 +17,13 @@ import os
 ############## Directory Config ################
 ################################################
 ################################################
-IMG_STORAGE_PATH = "./photos"
+RECOGNITION_IMG_UPLOAD = "./photos/recognition"
+ENROLLMENT_IMG_UPLOAD = "./photos/enrollment"
 
 MEDIA_ROOT = "./media"
 MEDIA_URL = '/media/'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

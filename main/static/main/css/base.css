@@ -22,10 +22,26 @@ body {
     max-width: 1300px;
 }
 
+.center_parent {
+    vertical-align: middle;
+    display: inline-flex;
+    width: 100%;
+}
+
 .center {
     margin: auto;
 }
 
+.white_border {
+    border: solid 1px white;
+}
+
 .active {
     font-weight: bolder;
+}
+
+.button {
+    background-color: transparent;
+    color: white;
+    font-weight: lighter;
 }

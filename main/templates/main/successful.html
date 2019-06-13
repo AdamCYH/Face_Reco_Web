@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+{% block header %}
+    <style>
+        .success {
+            top: 200px;
+            position: relative;
+            padding: 50px 100px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="content center_parent">
+        <div class="center white_border success">
+            <h3>
+                Successfully Enrolled.
+            </h3>
+            <a href="{% url "main-enrollment_site" %}">
+                Start another enrollment.
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
