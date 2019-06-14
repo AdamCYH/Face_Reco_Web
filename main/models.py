@@ -9,6 +9,7 @@ class User(models.Model):
     description = models.CharField(max_length=1000)
     photo_path = models.CharField(max_length=500)
     registration_time = models.DateTimeField()
+    face_feature = models.ForeignKey('FaceFeatures', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'user'
@@ -20,16 +21,3 @@ class FaceFeatures(models.Model):
 
     class Meta:
         db_table = 'face_features'
-
-
-class Detection(models.Model):
-    detection_id = models.AutoField(primary_key=True)
-    visitor = models.ForeignKey(User, on_delete=models.CASCADE)
-    detect_camera = models.CharField(max_length=200, null=True)
-    location = models.CharField(max_length=200)
-    detected_photo_path = models.CharField(max_length=500, null=True)
-    detection_time = models.DateTimeField(null=True)
-    confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
-
-    class Meta:
-        db_table = 'detection'

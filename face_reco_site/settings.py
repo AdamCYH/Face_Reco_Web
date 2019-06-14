@@ -37,7 +37,7 @@ SECRET_KEY = '$qfqkk0*_ojle6)u+wj2(ve33zj@^_x+0^3y$*-67ry2o*m5d+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '128.237.0.1']
 
 # Application definition
 
@@ -84,15 +84,14 @@ WSGI_APPLICATION = 'face_reco_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'OPTIONS': {
-#             'read_default_file': '/etc/mysql/my.cnf',
-#         },
-#         'DATABASE': 'face_recognition',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'face_recognition',
+        'USER': 'admin',
+        'PASSWORD': 'spiderman',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
