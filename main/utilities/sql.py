@@ -1,12 +1,16 @@
-from registry.models import Visitor
+from django.utils import timezone
+
+from main.models import User
 
 
-def insert_visitor(visitor_object):
-    visitor = Visitor()
-    visitor.fname = visitor_object.fname
-    visitor.lname = visitor_object.lname
-    visitor.age = visitor_object.age
-    visitor.photo_path = visitor_object.photo_path
-    visitor.entrance_time = visitor_object.entrance_time
-    visitor.save()
-    return visitor
+def insert_visitor(fname, lname, age, description, photo_path):
+    user = User()
+    user.fname = fname
+    if age != "":
+        user.age = age
+    user.lname = lname
+    user.description = description
+    user.photo_path = photo_path
+    user.enroll_time = timezone.now()
+    user.save()
+    return user

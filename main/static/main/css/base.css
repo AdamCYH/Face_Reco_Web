@@ -2,7 +2,7 @@ html {
     background-image: url("/static/main/img/background.png");
     background-color: black;
     color: white;
-    min-width: 920px;
+    min-width: 600px;
 }
 
 body {
@@ -37,7 +37,7 @@ body {
 }
 
 .active {
-    font-weight: bolder;
+    font-weight: bold;
 }
 
 .button {
