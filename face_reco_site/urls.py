@@ -13,12 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from main import views
+from main.views import FaceFeatureViewSet, UserViewSet
+
+router = DefaultRouter()
+router.register(r'face_feature', FaceFeatureViewSet)
+router.register(r'user', UserViewSet)
+
 
 urlpatterns = [
     path('', views.enrollment),
+    path('api/', include(router.urls)),
     path('recognition', views.recognition, name='main-recognition_site'),
     path('enrollment', views.enrollment, name='main-enrollment_site'),
 

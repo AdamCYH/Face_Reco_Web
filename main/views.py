@@ -1,9 +1,16 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework.response import Response
 
+from main.models import FaceFeature, User
+from main.serializer import FaceFeatureSerializer, UserSerializer
 from main.utilities import utilities, redis, sql
 
 
+##############################
+######### SITE VIEW ##########
+##############################
 def enrollment(request):
     if request.method == "POST":
         fname = request.POST.get("fname")
@@ -34,3 +41,28 @@ def recognition(request):
         return JsonResponse({})
     elif request.method == "GET":
         return render(request, 'main/recognition.html')
+
+
+##############################
+############ API #############
+##############################
+class FaceFeatureViewSet(viewsets.ModelViewSet):
+    queryset = FaceFeature.objects.all()
+    serializer_class = FaceFeatureSerializer
+
+    # def list(self, request):
+    #     # Note the use of `get_queryset()` instead of `self.queryset`
+    #     queryset = self.get_queryset()
+    #     serializer = FaceFeature(queryset)
+    #     return Response(serializer.data)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    # def list(self, request):
+    #     # Note the use of `get_queryset()` instead of `self.queryset`
+    #     queryset = self.get_queryset()
+    #     serializer = User(queryset)
+    #     return Response(serializer.data)

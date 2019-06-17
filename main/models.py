@@ -20,3 +20,11 @@ class FaceFeature(models.Model):
 
     class Meta:
         db_table = 'face_feature'
+
+
+class MatchResult(models.Model):
+    result_id = models.AutoField(primary_key=True)
+    result_content = models.CharField(max_length=2000)
+
+    class Meta:
+        db_table = 'match_result'
