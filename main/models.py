@@ -32,7 +32,7 @@ class MatchJob(models.Model):
 
 
 class MatchUser(models.Model):
-    job = models.ForeignKey(MatchJob, on_delete=models.CASCADE)
+    job = models.ForeignKey(MatchJob, db_index=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='confidence_level', on_delete=models.CASCADE)
     confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
 
