@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from rest_framework import viewsets
+from rest_framework.renderers import JSONRenderer
 
 from main.models import FaceFeature, User, MatchJob
 from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer
@@ -56,8 +57,12 @@ class RecognitionView(View):
             match_result = redis.result_from_redis(match_job.job_id)
 
         # insert recognition result to database
-        sql.insert_match_result(match_result)
-        return JsonResponse({})
+        match_job = sql.insert_match_result(match_result)
+
+        serializer = MatchJobSerializer(match_job)
+        data = str(JSONRenderer().render(serializer.data), encoding="utf8")
+
+        return JsonResponse({"data": data})
 
 
 class FaceFeatureViewSet(viewsets.ModelViewSet):
@@ -70,6 +75,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class MatchJobViewSet(viewsets.ModelViewSet):
+class MatchJobViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MatchJob.objects.all()
     serializer_class = MatchJobSerializer

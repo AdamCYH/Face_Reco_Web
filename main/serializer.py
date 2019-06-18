@@ -16,23 +16,24 @@ class FaceFeatureSerializer(serializers.ModelSerializer):
         fields = ('user', 'features')
 
 
-class MatchUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MatchUser
-        fields = ('confidence_level',)
-
-
 class UserSerializer(serializers.ModelSerializer):
-    confidence_level = MatchUserSerializer(required=False, read_only=True)
-
     class Meta:
         model = User
-        fields = ('user_id', 'fname', 'lname', 'age', 'description', 'photo_path', 'enroll_time', 'confidence_level')
+        fields = ('user_id', 'fname', 'lname', 'age', 'description', 'photo_path', 'enroll_time')
         read_only_fields = ('user_id',)
 
 
+class MatchUserSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = MatchUser
+        fields = ('confidence_level', 'user')
+        ordering = ('confidence_level',)
+
+
 class MatchJobSerializer(serializers.ModelSerializer):
-    users = UserSerializer(many=True, read_only=True)
+    match_job = MatchUserSerializer(many=True, read_only=True)
 
     # def create(self, validated_data):
     #     match_user = validated_data.pop('user_list')
@@ -45,7 +46,7 @@ class MatchJobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MatchJob
-        fields = ('job_id', 'users')
+        fields = ('job_id', 'match_job')
 
     def validate_user(self, value):
         pass

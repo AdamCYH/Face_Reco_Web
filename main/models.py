@@ -25,15 +25,14 @@ class FaceFeature(models.Model):
 class MatchJob(models.Model):
     job_id = models.AutoField(primary_key=True)
     match_time = models.DateTimeField()
-    users = models.ManyToManyField(User, through='MatchUser')
 
     class Meta:
         db_table = 'match_jobs'
 
 
 class MatchUser(models.Model):
-    job = models.ForeignKey(MatchJob, db_index=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='confidence_level', on_delete=models.CASCADE)
+    job = models.ForeignKey(MatchJob, related_name="match_job", db_index=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='match_user', on_delete=models.CASCADE)
     confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
 
     class Meta:

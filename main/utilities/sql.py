@@ -31,6 +31,5 @@ def insert_match_result(match_result):
         match_user.user = User.objects.get(user_id=user["user_id"])
         match_user.confidence_level = user["confidence_level"]
         match_user.save()
-        match_job.users.add(match_user.user)
-    match_job.save()
+
     return match_job
