@@ -46,9 +46,9 @@ def recognition_redis(photo_path, job_id):
 
 def result_from_redis(job_id):
     result_string = my_server.get("FR_result:%d" % job_id)
-    if result_string == "":
+    if result_string is None:
         return ""
-    result = json.loads(result_string)
+    result = json.loads(str(result_string, encoding='utf8'))
     return result
 
 

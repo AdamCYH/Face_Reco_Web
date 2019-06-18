@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views import View
 from rest_framework import viewsets
 
 from main.models import FaceFeature, User, MatchJob
@@ -7,11 +8,14 @@ from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSeria
 from main.utilities import utilities, redis, sql
 
 
-##############################
-######### SITE VIEW ##########
-##############################
-def enrollment(request):
-    if request.method == "POST":
+# View for enrollment
+class EnrollmentView(View):
+    # get request, return the template
+    def get(self, request):
+        return render(request, 'main/enrollment.html')
+
+    # post request, save post data into db as new user
+    def post(self, request):
         fname = request.POST.get("fname")
         lname = request.POST.get("lname")
         age = request.POST.get("age")
@@ -24,32 +28,38 @@ def enrollment(request):
         redis.enroll_to_redis(user)
 
         return render(request, 'main/successful.html')
-    elif request.method == "GET":
-        return render(request, 'main/enrollment.html')
 
 
-def recognition(request):
-    if request.method == "POST":
+# view for recognition
+class RecognitionView(View):
+    # get request, return the template
+    def get(self, request):
+        return render(request, 'main/recognition.html')
+
+    # process recognition pipeline
+    def post(self, request):
         image_name = request.POST.get("img_name")
         image_data = request.POST.get("img_data")
 
+        # save uploaded image
         photo_path = utilities.save_image(image_data, "recognition", image_name)
 
+        # create a new recognition job
         match_job = sql.create_job()
 
+        # send new recognition job id and photo path to redis for SDK recognition
+        redis.recognition_redis(photo_path, match_job.job_id)
+
+        # try to get recognition result, if not continue trying
         match_result = ""
         while match_result == "":
-            match_result = redis.recognition_redis(photo_path, match_job.job_id)
+            match_result = redis.result_from_redis(match_job.job_id)
 
+        # insert recognition result to database
         sql.insert_match_result(match_result)
         return JsonResponse({})
-    elif request.method == "GET":
-        return render(request, 'main/recognition.html')
 
 
-##############################
-############ API #############
-##############################
 class FaceFeatureViewSet(viewsets.ModelViewSet):
     queryset = FaceFeature.objects.all()
     serializer_class = FaceFeatureSerializer

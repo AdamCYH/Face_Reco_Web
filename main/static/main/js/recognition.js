@@ -1,7 +1,7 @@
 function loadImg(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        var fileName = input.files[0].name
+        var fileName = input.files[0].name;
         reader.onload = function (e) {
             $('#snap_image')
                 .attr('src', e.target.result);
@@ -16,7 +16,7 @@ function loadImg(input) {
 function submitform() {
     if (validate()) {
         $.ajax({
-            url: "/detection",
+            url: "recognition",
             dataType: "json",
             type: 'POST',
             data: {
@@ -26,7 +26,7 @@ function submitform() {
             },
             context: document.body,
             success: function (data) {
-
+                console.log(data);
             }
         });
     }

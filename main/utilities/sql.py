@@ -19,15 +19,18 @@ def insert_visitor(fname, lname, age, description, photo_path):
 def create_job():
     match_job = MatchJob()
     match_job.match_time = timezone.now()
+    match_job.save()
     return match_job
 
 
 def insert_match_result(match_result):
     match_job = MatchJob.objects.get(job_id=match_result["job_id"])
-    for user in match_result['users']:
+    for user in match_result["users"]:
         match_user = MatchUser()
         match_user.job = match_job
-        match_user.user = User.objects.get(user_id=user.user_id)
-        match_user.confidence_level = user['confidence_level']
-        match_job.users.add(match_user)
+        match_user.user = User.objects.get(user_id=user["user_id"])
+        match_user.confidence_level = user["confidence_level"]
+        match_user.save()
+        match_job.users.add(match_user.user)
+    match_job.save()
     return match_job

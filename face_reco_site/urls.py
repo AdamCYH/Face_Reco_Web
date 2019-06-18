@@ -16,8 +16,7 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from main import views
-from main.views import FaceFeatureViewSet, UserViewSet, MatchJobViewSet
+from main.views import EnrollmentView, RecognitionView, FaceFeatureViewSet, UserViewSet, MatchJobViewSet
 
 router = DefaultRouter()
 router.register(r'face_feature', FaceFeatureViewSet)
@@ -25,9 +24,9 @@ router.register(r'user', UserViewSet)
 router.register(r'match_job', MatchJobViewSet)
 
 urlpatterns = [
-    path('', views.enrollment),
+    path('', EnrollmentView.as_view()),
     path('api/', include(router.urls)),
-    path('recognition', views.recognition, name='main-recognition_site'),
-    path('enrollment', views.enrollment, name='main-enrollment_site'),
+    path('recognition', RecognitionView.as_view(), name='main-recognition_site'),
+    path('enrollment', EnrollmentView.as_view(), name='main-enrollment_site'),
 
 ]
