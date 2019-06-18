@@ -17,12 +17,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from main import views
-from main.views import FaceFeatureViewSet, UserViewSet
+from main.views import FaceFeatureViewSet, UserViewSet, MatchJobViewSet
 
 router = DefaultRouter()
 router.register(r'face_feature', FaceFeatureViewSet)
 router.register(r'user', UserViewSet)
-
+router.register(r'match_job', MatchJobViewSet)
 
 urlpatterns = [
     path('', views.enrollment),

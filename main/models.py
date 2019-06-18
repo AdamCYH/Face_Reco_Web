@@ -11,7 +11,7 @@ class User(models.Model):
     enroll_time = models.DateTimeField()
 
     class Meta:
-        db_table = 'user'
+        db_table = 'users'
 
 
 class FaceFeature(models.Model):
@@ -19,12 +19,23 @@ class FaceFeature(models.Model):
     features = models.TextField()
 
     class Meta:
-        db_table = 'face_feature'
+        db_table = 'face_features'
 
 
-class MatchResult(models.Model):
-    result_id = models.AutoField(primary_key=True)
-    result_content = models.CharField(max_length=2000)
+class MatchJob(models.Model):
+    job_id = models.AutoField(primary_key=True)
+    match_time = models.DateTimeField()
+    users = models.ManyToManyField(User, through='MatchUser')
 
     class Meta:
-        db_table = 'match_result'
+        db_table = 'match_jobs'
+
+
+class MatchUser(models.Model):
+    job = models.ForeignKey(MatchJob, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='confidence_level', on_delete=models.CASCADE)
+    confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+
+    class Meta:
+        # unique_together = ('job', 'user')
+        db_table = 'match_users'
