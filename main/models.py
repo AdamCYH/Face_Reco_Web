@@ -31,10 +31,9 @@ class MatchJob(models.Model):
 
 
 class MatchUser(models.Model):
-    job = models.ForeignKey(MatchJob, related_name="match_job", db_index=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='match_user', on_delete=models.CASCADE)
+    job = models.ForeignKey(MatchJob, related_name="match_users", db_index=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
 
     class Meta:
-        # unique_together = ('job', 'user')
         db_table = 'match_users'

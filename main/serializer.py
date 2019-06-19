@@ -33,7 +33,7 @@ class MatchUserSerializer(serializers.ModelSerializer):
 
 
 class MatchJobSerializer(serializers.ModelSerializer):
-    match_job = MatchUserSerializer(many=True, read_only=True)
+    match_users = MatchUserSerializer(many=True, read_only=True)
 
     # def create(self, validated_data):
     #     match_user = validated_data.pop('user_list')
@@ -46,7 +46,7 @@ class MatchJobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MatchJob
-        fields = ('job_id', 'match_job')
+        fields = ('job_id', 'match_users')
 
     def validate_user(self, value):
         pass
