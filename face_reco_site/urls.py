@@ -16,6 +16,8 @@ Including another URLconf
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from django.conf.urls.static import static
+from django.conf import settings
 
 from main.views import EnrollmentView, RecognitionView, FaceFeatureViewSet, UserViewSet, MatchJobViewSet
 
@@ -30,4 +32,4 @@ urlpatterns = [
     path('recognition', RecognitionView.as_view(), name='main-recognition_site'),
     path('enrollment', EnrollmentView.as_view(), name='main-enrollment_site'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,6 +20,7 @@ body {
 
 .container {
     max-width: 1300px;
+    min-width: 800px;
 }
 
 .center_parent {
@@ -30,6 +31,7 @@ body {
 
 .center {
     margin: auto;
+    width: max-content;
 }
 
 .white_border {

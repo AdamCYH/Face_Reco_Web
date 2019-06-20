@@ -27,9 +27,41 @@ function submitform() {
             context: document.body,
             success: function (data) {
                 console.log(data);
+                display_result(data.data.match_users)
             }
         });
     }
+}
+
+function display_result(users) {
+    var x;
+    for (x in users) {
+        var curr_user = users[x];
+        $("#detection_container").append(
+            "<div class='detection_box'>" +
+            "<div class='detection_img center_parent'>" +
+            "<img class='thumbnail center' src='" + curr_user.user.photo_path + "'></div>" +
+            "<div class='detection_info center_parent'>" +
+            "<div class='center'>" +
+            "<div class='center'>" + curr_user.user.fname + " " + curr_user.user.lname + "</div>" +
+            "<div class='center'>Confidence Level: " + curr_user.confidence_level + "</div>" +
+            "</div>" +
+            "</div>" +
+            "<div class='info_holder' hidden>" +
+            "<span class='name_holder'>" + curr_user.user.fname + " " + curr_user.user.lname + "</span>" +
+            "<span class='age_holder'>" + curr_user.user.age + "</span>" +
+            "<span class='desc_holder'>" + curr_user.user.description + "</span></div></div>");
+        console.log(users[x]);
+    }
+    if (users.length > 0) {
+        set_info(users[0].user.fname + " " + users[0].user.lname, users[0].user.age, users[0].user.description)
+    }
+}
+
+function set_info(name, age, description) {
+    $("#name_col").html(name);
+    $("#age_col").html(age);
+    $("#description_col").html(description);
 }
 
 
@@ -41,3 +73,9 @@ function validate() {
         return true;
     }
 }
+
+$(document).ready(function () {
+    $(document).on('click', '.detection_box', function () {
+        set_info($(this).find('.name_holder').html(), $(this).find('.age_holder').html(), $(this).find('.desc_holder').html());
+    });
+});

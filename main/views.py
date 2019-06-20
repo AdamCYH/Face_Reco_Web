@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
@@ -60,7 +62,22 @@ class RecognitionView(View):
         match_job = sql.insert_match_result(match_result)
 
         serializer = MatchJobSerializer(match_job)
-        data = str(JSONRenderer().render(serializer.data), encoding="utf8")
+        data = json.loads(str(JSONRenderer().render(serializer.data), encoding="utf8"))
+        # data = {"job_id": 23, "match_users": [{"confidence_level": "97.80",
+        #                                       "user": {"user_id": 1, "fname": "Adam", "lname": "Chu", "age": 25,
+        #                                                "description": "Research Assistant at CyLab",
+        #                                                "photo_path": "./media/photos/enrollment/Adam_Chu_201906181741.png",
+        #                                                "enroll_time": "2019-06-18T17:41:36.664004Z"}},
+        #                                      {"confidence_level": "87.60",
+        #                                       "user": {"user_id": 2, "fname": "Bob", "lname": "Bil", "age": 25,
+        #                                                "description": "test",
+        #                                                "photo_path": "./media/photos/enrollment/Bob_Bil_201906181741.png",
+        #                                                "enroll_time": "2019-06-18T17:41:59.236418Z"}},
+        #                                      {"confidence_level": "76.90",
+        #                                       "user": {"user_id": 3, "fname": "user3", "lname": "adam", "age": 29,
+        #                                                "description": "Hello My Name is adam\r\nthis is the second line\r\n",
+        #                                                "photo_path": "./media/photos/enrollment/user3_adam_201906181843.png",
+        #                                                "enroll_time": "2019-06-18T18:43:56.896219Z"}}]}
 
         return JsonResponse({"data": data})
 
