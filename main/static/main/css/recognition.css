@@ -19,7 +19,7 @@
 }
 
 .scan-overlay {
-    background-color: rgba(38, 174, 255, 0.6);
+    background-color: rgba(38, 174, 255, 0.5);
     -webkit-box-shadow: 0 10px 20px -5px #00ffd8, inset 0 -35px 20px -30px #00ffd8;
     -moz-box-shadow: 0 10px 20px -5px #00ffd8, inset 0 -35px 20px -30px #00ffd8;
     box-shadow: 0 10px 20px -5px #00ffd8, inset 0 -35px 20px -30px #00ffd8;
@@ -54,9 +54,10 @@
     border: none;
     color: #bed0ff;
     font-size: 0.75rem;
-    font-family: Trebuchet MS;
+    font-family: Trebuchet MS, sans-serif;
     padding: 0.4rem 2rem;
-    background-image: radial-gradient(#5b698c 50%, #a2b5e3 200%);
+    box-shadow: inset 0 0px 3px 1px #a3b5e1;
+    background-color: #5b698c;
 }
 
 #info-display {
@@ -66,7 +67,7 @@
     border-image: url(/static/main/img/border.png) 13 stretch;
     height: 95%;
     text-align: center;
-    font-family: Trebuchet MS;
+    font-family: Trebuchet MS, sans-serif;
     font-size: 1.25rem;
 }
 
@@ -107,6 +108,9 @@
 
 #info_table pre {
     padding: 0;
+    margin: 0;
+    max-height: 4rem;
+    overflow: auto;
 }
 
 

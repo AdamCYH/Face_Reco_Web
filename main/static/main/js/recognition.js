@@ -16,6 +16,7 @@ function loadImg(input) {
 
 function doMatch() {
     if (validate()) {
+        clear_info();
         $(".scan-overlay").css("display", "block");
         $.ajax({
             url: "recognition",
@@ -28,22 +29,25 @@ function doMatch() {
             },
             context: document.body,
             success: function (data) {
-                console.log(data);
                 $(".scan-overlay").css("display", "none");
-                display_result(data.data.match_users)
+                if (data.data.match_users.length === 0) {
+                    $("#detected_img_container").append("<div class='center' id='no_match_div'>No Match Found.</div>");
+                } else {
+                    $("#detected_img_container").append("<img class='center' id='img_col'>");
+                    display_result(data.data.match_users)
+                }
             }
         });
     }
 }
 
 function display_result(users) {
-    $(".default-match-block").remove();
+    $(".default-match-block").css('display', 'none');
     var x;
     for (x in users) {
         var curr_user = users[x];
         $("#detection_container").append(
             "<div class='detection_box left-border center-parent'>" +
-
             "<img class='thumbnail center' src='" + curr_user.user.photo_path + "'>" +
             "<div class='conf-level-container'>" + curr_user.confidence_level + "%</div>" +
             "<div class='info_holder' hidden>" +
@@ -65,6 +69,15 @@ function set_info(name, age, description, img) {
     $("#img_col").attr('src', img);
 }
 
+function clear_info() {
+    $("#no_match_div").remove();
+    $("#img_col").remove();
+    $("#name_col").html("");
+    $("#age_col").html("");
+    $("#description_col").html("");
+    $(".detection_box").remove();
+    $(".default-match-block").css('display', 'inline-block');
+}
 
 function validate() {
     if ($('#snap_image').val().trim().length == 0) {
