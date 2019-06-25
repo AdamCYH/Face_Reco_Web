@@ -8,56 +8,147 @@
 {% endblock %}
 
 {% block content %}
+    <div class="content">
+        <div class="upper">
+            <div class="line-1"></div>
+            <div class="content-left">
+                <div id="upload-container">
+                    <div class="box-2 inline-block">
+                        <div class="box-2 color-2" style="height: 13%"></div>
+                        <div class="box-2 color-3" style="height: 87%"></div>
+                    </div>
+                    <div class="inline-block" id="upload-tool">
+                        <div>
+                            <div class="font-2">IMAGE UPLOAD</div>
+                            <div class="font-3">Upload a image with one face.</div>
+                        </div>
+                        <div id="upload-button-div">
+                            <label for="file-upload" id="custom-file-upload" style="color: black">
+                                Upload
+                            </label>
+                        </div>
+                        <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
+                    </div>
+                </div>
+                <div class="upload-img-container border-1">
+                    <div class="center-parent" id="snap_image-container">
+                        <div class="scan-overlay scan-annimation" style="display:none;"></div>
+                        <img class="center" id="snap_image" src="{% static "main/img/default_img.gif" %}">
+                        <div id="default-overlay"></div>
+                    </div>
 
-    <div class="content upper">
-        <div class="content upper upload">
-            <div class="content upload_tools">
-                <div id="upload_button_div">
-                    <label for="file-upload" id="custom-file-upload">
-                        Image Upload
-                    </label>
                 </div>
             </div>
+            <div class="content-middle center-parent">
+                <div class="center">
+                    <a class="button" id="match_button"
+                       onclick="doMatch(this)">Match</a>
+                </div>
+                {% csrf_token %}
+            </div>
+            <div class="content-right">
+                <div class="border-1" id="info-container">
+                    <div id="info-display">
+                        <div id="detected_img_container" class="center-parent border-2"><img class="center"
+                                                                                             id="img_col"></div>
+                        <table style="display: table" id="info_table">
+                            <tr>
+                                <td>Name</td>
+                                <td class="detected_info" id="name_col"></td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td class="detected_info" id="age_col"></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>
+                                    <pre class="detected_info" id="description_col"></pre>
+                                </td>
+                            </tr>
+                        </table>
 
-            <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
-            <div class="content upper upload_image" id="upload_image">
-                <img id="snap_image">
+                    </div>
+                    <div class="design-block4">
+                        <div class="design-buttons" id="design-buttons-left">
+                            <div class="design-buttons-component"><img src="{% static "main/img/ring_circle.png" %}">
+                            </div>
+                            <div class="design-buttons-component spin-left speed-median"><img
+                                    src="{% static "main/img/ring_middle.png" %}">
+                            </div>
+                            <div class="design-buttons-component"><img src="{% static "main/img/spin_text3.png" %}">
+                            </div>
+                        </div>
+                        <div class="design-buttons" id="design-buttons-middle">
+                            <div class="design-buttons-component spin-left speed-slow"><img
+                                    src="{% static "main/img/ring_outer.png" %}">
+                            </div>
+                            <div class="design-buttons-component spin-right speed-median"><img
+                                    src="{% static "main/img/ring_middle.png" %}">
+                            </div>
+                            <div class="design-buttons-component spin-left speed-fast"><img
+                                    src="{% static "main/img/ring_inner.png" %}">
+                            </div>
+                            <div class="design-buttons-component"><img src="{% static "main/img/spin_text2.png" %}">
+                            </div>
+                        </div>
+                        <div class="design-buttons" id="design-buttons-right">
+                            <div class="design-buttons-component spin-right speed-slow"><img
+                                    src="{% static "main/img/ring_outer.png" %}">
+                            </div>
+                            <div class="design-buttons-component spin-left speed-median"><img
+                                    src="{% static "main/img/ring_middle.png" %}">
+                            </div>
+                            <div class="design-buttons-component"><img src="{% static "main/img/spin_text1.png" %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="bottom" style="display: block;">
+            <div class="bottom-left">
+                <div class="line-3"></div>
+                <div class="detection-block">
+                    <div id="detection_container" style="width: max-content; height: 100%;">
+                        <div class="position-block1">
+                            <img src="{% static "main/img/design_box1.png" %}">
+                        </div>
+                        <div class="position-block1 left-border default-match-block"></div>
+                        <div class="position-block1 left-border default-match-block"></div>
+                        <div class="position-block1 left-border default-match-block"></div>
+                        <div class="position-block1 left-border default-match-block"></div>
+                        <div class="position-block1 left-border default-match-block"></div>
+                    </div>
+                </div>
 
-        </div>
-        <div class="content upper tools">
-            <input id="img_name" hidden>
-            <div class="center">
-                <a class="button" id="match_button"
-                   onclick="submitform(this)">Match</a>
             </div>
-            {% csrf_token %}
-        </div>
-        <div class="content upper info">
-            <div id="info_header">
-                <span>Information</span>
+            <div class="bottom-right">
+                <div class="design-block2">
+                    <div class="position-block2 color-gradient1">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                    <div class="position-block2 color-gradient2">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                    <div class="position-block2 color-gradient3">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                </div>
+
             </div>
-            <table style="display: table" id="info_table">
-                <tr>
-                    <th>Name</th>
-                    <td id="name_col"></td>
-                </tr>
-                <tr>
-                    <th>Age</th>
-                    <td id="age_col"></td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td id="description_col">
-                    </td>
-                </tr>
-            </table>
         </div>
     </div>
-    <div class="content lower">
-        <div class="max_content_width" id="detection_container">
+    <div class="design-block1">
+        <div class="box-3 color-4"></div>
+        <div style="height: 1rem;margin-top: 0.5rem">
+            <div class="box-1 color-1"></div>
+        </div>
+        <div class="line-2">
+            <div class="box-3 color-3" style="position: absolute; bottom: 0;"></div>
         </div>
     </div>
-
-
 {% endblock %}

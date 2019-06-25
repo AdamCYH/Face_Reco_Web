@@ -20,6 +20,7 @@ $ pip install django
 $ pip install redis
 $ pip install mysqlclient # use 1.3.14 if python version is 3.4 or below
 $ pip install uwsgi
+$ pip install djangorestframework
 ```
 
 ## Set up DB ##

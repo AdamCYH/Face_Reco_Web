@@ -7,14 +7,16 @@ function loadImg(input) {
                 .attr('src', e.target.result);
             $("#snap_image").val(e.target.result);
             $("#img_name").val(fileName.split(".")[0]);
+            $("#default-overlay").remove();
         };
 
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-function submitform() {
+function doMatch() {
     if (validate()) {
+        $(".scan-overlay").css("display", "block");
         $.ajax({
             url: "recognition",
             dataType: "json",
@@ -27,6 +29,7 @@ function submitform() {
             context: document.body,
             success: function (data) {
                 console.log(data);
+                $(".scan-overlay").css("display", "none");
                 display_result(data.data.match_users)
             }
         });
@@ -34,34 +37,32 @@ function submitform() {
 }
 
 function display_result(users) {
+    $(".default-match-block").remove();
     var x;
     for (x in users) {
         var curr_user = users[x];
         $("#detection_container").append(
-            "<div class='detection_box'>" +
-            "<div class='detection_img center_parent'>" +
-            "<img class='thumbnail center' src='" + curr_user.user.photo_path + "'></div>" +
-            "<div class='detection_info center_parent'>" +
-            "<div class='center'>" +
-            "<div class='center'>" + curr_user.user.fname + " " + curr_user.user.lname + "</div>" +
-            "<div class='center'>Confidence Level: " + curr_user.confidence_level + "</div>" +
-            "</div>" +
-            "</div>" +
+            "<div class='detection_box left-border center-parent'>" +
+
+            "<img class='thumbnail center' src='" + curr_user.user.photo_path + "'>" +
+            "<div class='conf-level-container'>" + curr_user.confidence_level + "%</div>" +
             "<div class='info_holder' hidden>" +
             "<span class='name_holder'>" + curr_user.user.fname + " " + curr_user.user.lname + "</span>" +
             "<span class='age_holder'>" + curr_user.user.age + "</span>" +
-            "<span class='desc_holder'>" + curr_user.user.description + "</span></div></div>");
+            "<span class='desc_holder'>" + curr_user.user.description + "</span>" +
+            "<span class='img_holder'>" + curr_user.user.photo_path + "</span></div></div>");
         console.log(users[x]);
     }
     if (users.length > 0) {
-        set_info(users[0].user.fname + " " + users[0].user.lname, users[0].user.age, users[0].user.description)
+        set_info(users[0].user.fname + " " + users[0].user.lname, users[0].user.age, users[0].user.description, users[0].user.photo_path)
     }
 }
 
-function set_info(name, age, description) {
+function set_info(name, age, description, img) {
     $("#name_col").html(name);
     $("#age_col").html(age);
     $("#description_col").html(description);
+    $("#img_col").attr('src', img);
 }
 
 
@@ -76,6 +77,7 @@ function validate() {
 
 $(document).ready(function () {
     $(document).on('click', '.detection_box', function () {
-        set_info($(this).find('.name_holder').html(), $(this).find('.age_holder').html(), $(this).find('.desc_holder').html());
+        set_info($(this).find('.name_holder').html(), $(this).find('.age_holder').html(),
+            $(this).find('.desc_holder').html(), $(this).find('.img_holder').html());
     });
 });

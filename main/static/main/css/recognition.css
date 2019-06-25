@@ -1,168 +1,182 @@
-.content {
-    border: solid 1px;
+.content-left {
+    width: 50%;
+    height: 100%;
     float: left;
-    height: 90vh;
 }
 
-.upper {
-    width: 100%;
-    height: 60vh;
-    min-height: 350px;
-}
-
-.lower {
-    width: 100%;
-    height: 285px;
-    overflow: auto;
-}
-
-.upload {
-    width: 60%;
-}
-
-.tools {
+.content-middle {
     width: 10%;
-    vertical-align: middle;
-    display: inline-flex;
+    height: 100%;
+    float: left;
+    margin: 0 1%;
 }
 
-.info {
-    width: 30%;
+.content-right {
+    width: 37%;
+    height: 100%;
+    float: left;
+    padding: 2.43rem 2% 0.25rem 0;
 }
 
-.match {
-    width: 28%;
-}
-
-.upload_tools {
-    border: none;
-    height: 60px;
+.scan-overlay {
+    background-color: rgba(38, 174, 255, 0.6);
+    -webkit-box-shadow: 0 10px 20px -5px #00ffd8, inset 0 -35px 20px -30px #00ffd8;
+    -moz-box-shadow: 0 10px 20px -5px #00ffd8, inset 0 -35px 20px -30px #00ffd8;
+    box-shadow: 0 10px 20px -5px #00ffd8, inset 0 -35px 20px -30px #00ffd8;
     width: 100%;
+    height: 10rem;
+    position: absolute;
+    z-index: 2;
+    border-bottom: solid 5px rgba(255, 255, 255, 0.9);
 }
 
-#custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    top: 11px;
-    width: 140px;
-}
-
-#upload_button_div {
-    width: 140px;
-    margin: auto;
-}
-
-.upload_image {
-    border: solid 1px;
-    border-color: rgb(255, 255, 255) transparent transparent transparent;
-    height: 50vh;
-    width: 100%;
-    display: inline-flex;
-    vertical-align: middle;
-}
-
-#snap_image {
-    max-width: 100%;
-    max-height: 50vh;
-    margin: 0 auto auto auto;
+.scan-annimation {
+    -webkit-animation-name: scan;
+    -webkit-animation-duration: 5000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: scan;
+    -moz-animation-duration: 5000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: scan;
+    -ms-animation-duration: 5000ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+    animation-name: scan;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 
 #match_button {
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
+    border: none;
+    color: #bed0ff;
+    font-size: 0.75rem;
+    font-family: Trebuchet MS;
+    padding: 0.4rem 2rem;
+    background-image: radial-gradient(#5b698c 50%, #a2b5e3 200%);
 }
 
-#info_header {
-    width: 150px;
-    margin: 20px auto;
-    font-size: 30px;
+#info-display {
+    margin: 1rem;
+    padding: 1rem;
+    border: 10px solid white;
+    border-image: url(/static/main/img/border.png) 13 stretch;
+    height: 95%;
+    text-align: center;
+    font-family: Trebuchet MS;
+    font-size: 1.25rem;
+}
+
+
+#detected_img_container {
+    width: 20rem;
+    height: 14rem;
+}
+
+#img_col {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    width: auto;
 }
 
 #info_table {
-    width: 90%;
-    margin: 20px auto;
-    font-size: 14px;
-}
-
-
-#info_table tbody * {
-    vertical-align: top;
-    text-align: left;
-}
-
-#info_table td, #info_table th {
-    padding: 8px;
+    width: 100%;
+    margin: 0.5rem 0;
 }
 
 
 #info_table td {
-    min-height: 50px;
+    text-align: left;
 }
 
-#customers th {
+#info_table td:nth-child(odd) {
     width: 30%;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    text-align: right;
 }
 
-@media (max-height: 650px) {
-    .upload_image {
-        max-height: 45vh;
-    }
-
-    #snap_image {
-        max-height: 45vh;
-    }
+#info_table * {
+    font-size: 0.85rem;
+    color: #dce0f3;
+    font-family: Trebuchet MS, sans-serif;
+    padding: 0.8rem 1rem;
 }
 
-@media (max-height: 450px) {
-    .upload_image {
-        max-height: 40vh;
-    }
-
-    #snap_image {
-        max-height: 40vh;
-    }
+#info_table pre {
+    padding: 0;
 }
 
-@media (max-height: 320px) {
-    .upload_image {
-        max-height: 35vh;
-    }
-
-    #snap_image {
-        max-height: 35vh;
-    }
-}
-
-.max_content_width {
-    width: max-content;
-}
 
 .detection_box {
-    height: 260px;
-    width: 250px;
-    margin: 20px 0 0 20px;
-    display: inline-block;
+    width: 8rem;
+    height: 100%;
+    position: relative;
     float: left;
-}
-
-.detection_img {
-    height: 60%;
-}
-
-.detection_info {
-    height: 35%;
 }
 
 .thumbnail {
     max-width: 100%;
     max-height: 100%;
+    margin: auto;
+    width: auto;
+}
+
+.conf-level-container {
+    position: absolute;
+    background-color: rgba(5, 37, 66, 0.5);
+    width: 100%;
+    font-size: 0.8rem;
+    bottom: 0;
+}
+
+@-moz-keyframes scan {
+    0% {
+        height: 0;
+    }
+    50% {
+        height: 100%;
+    }
+    100% {
+        height: 0;
+    }
+}
+
+@-webkit-keyframes scan {
+    0% {
+        height: 0;
+    }
+    50% {
+        height: 100%;
+    }
+    100% {
+        height: 0;
+    }
+}
+
+@keyframes scan {
+    0% {
+        height: 0;
+    }
+    50% {
+        height: 100%;
+    }
+    100% {
+        height: 0;
+    }
+}
+
+@media (min-width: 1600px) {
+
+    #detected_img_container {
+        width: 25rem;
+        height: 18rem;
+    }
+
+    #info_table * {
+        padding: 1.5rem;
+    }
+
 }
