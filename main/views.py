@@ -1,11 +1,9 @@
-import json
 import time
 
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from rest_framework import viewsets
-from rest_framework.renderers import JSONRenderer
 
 from main.models import FaceFeature, User, MatchJob
 from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer
@@ -66,23 +64,29 @@ class RecognitionView(View):
         # data = json.loads(str(JSONRenderer().render(serializer.data), encoding="utf8"))
         time.sleep(10)
         data = {"job_id": 23, "match_users": [{"confidence_level": "97.80",
-                                              "user": {"user_id": 1, "fname": "Adam", "lname": "Chiu", "age": 25,
-                                                       "description": "Research Assistant at CyLab",
-                                                       "photo_path": "./media/photos/enrollment/Adam_Chiu_201906211406.png",
-                                                       "enroll_time": "2019-06-18T17:41:36.664004Z"}},
-                                             {"confidence_level": "87.60",
-                                              "user": {"user_id": 2, "fname": "Bob", "lname": "Bil", "age": 25,
-                                                       "description": "test",
-                                                       "photo_path": "./media/photos/enrollment/Adam_Chiu_201906241814.png",
-                                                       "enroll_time": "2019-06-18T17:41:59.236418Z"}},
-                                             {"confidence_level": "76.90",
-                                              "user": {"user_id": 3, "fname": "user3", "lname": "adam", "age": 29,
-                                                       "description": "Hello My Name is adam\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\n",
-                                                       "photo_path": "./media/photos/enrollment/bob__201906131900.png",
-                                                       "enroll_time": "2019-06-18T18:43:56.896219Z"}}]}
+                                               "user": {"user_id": 1, "fname": "Adam", "lname": "Chiu", "age": 25,
+                                                        "description": "Research Assistant at CyLab",
+                                                        "photo_path": "./media/photos/enrollment/Adam_Chiu_201906211406.png",
+                                                        "enroll_time": "2019-06-18T17:41:36.664004Z"}},
+                                              {"confidence_level": "87.60",
+                                               "user": {"user_id": 2, "fname": "Bob", "lname": "Bil", "age": 25,
+                                                        "description": "test",
+                                                        "photo_path": "./media/photos/enrollment/Adam_Chiu_201906241814.png",
+                                                        "enroll_time": "2019-06-18T17:41:59.236418Z"}},
+                                              {"confidence_level": "76.90",
+                                               "user": {"user_id": 3, "fname": "user3", "lname": "adam", "age": 29,
+                                                        "description": "Hello My Name is adam\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\n",
+                                                        "photo_path": "./media/photos/enrollment/bob__201906131900.png",
+                                                        "enroll_time": "2019-06-18T18:43:56.896219Z"}}]}
         # data = {"job_id": 23, "match_users": []}
 
         return JsonResponse({"data": data})
+
+
+class LiveView(View):
+    # get request, return the template
+    def get(self, request):
+        return render(request, 'main/live.html')
 
 
 class FaceFeatureViewSet(viewsets.ModelViewSet):
