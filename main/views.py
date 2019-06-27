@@ -66,7 +66,7 @@ class RecognitionView(View):
         # data = json.loads(str(JSONRenderer().render(serializer.data), encoding="utf8"))
         time.sleep(10)
         data = {"job_id": 23, "match_users": [{"confidence_level": "97.80",
-                                              "user": {"user_id": 1, "fname": "Adam", "lname": "Chu", "age": 25,
+                                              "user": {"user_id": 1, "fname": "Adam", "lname": "Chiu", "age": 25,
                                                        "description": "Research Assistant at CyLab",
                                                        "photo_path": "./media/photos/enrollment/Adam_Chiu_201906211406.png",
                                                        "enroll_time": "2019-06-18T17:41:36.664004Z"}},

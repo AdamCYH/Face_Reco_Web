@@ -229,6 +229,15 @@ html * {
     overflow: scroll;
 }
 
+#detection_end_block {
+    float: right;
+    position: absolute;
+    top: 15%;
+    right: 0;
+    padding: 0.4rem 0;
+    background-color: black;
+}
+
 .spin-right {
     -webkit-animation-name: spin-right;
     -webkit-animation-duration: 4000ms;
