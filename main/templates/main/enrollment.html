@@ -12,31 +12,7 @@
         <div class="upper">
             <div class="line-1"></div>
             <div class="content-left">
-                <div id="upload-container">
-                    <div class="box-2 inline-block">
-                        <div class="box-2 color-2" style="height: 13%"></div>
-                        <div class="box-2 color-3" style="height: 87%"></div>
-                    </div>
-                    <div class="inline-block" id="upload-tool">
-                        <div>
-                            <div class="font-2">IMAGE UPLOAD</div>
-                            <div class="font-3">Upload a image with one face.</div>
-                        </div>
-                        <div id="upload-button-div">
-                            <label for="file-upload" id="custom-file-upload" style="color: black">
-                                Upload
-                            </label>
-                        </div>
-                        <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
-                    </div>
-                </div>
-                <div class="upload-img-container border-1">
-                    <div class="center-parent" id="snap_image-container">
-                        <img class="center" id="snap_image" src="{% static "main/img/default_img.gif" %}">
-                        <div id="default-overlay"></div>
-                    </div>
-
-                </div>
+                {% include 'main/modules/upload_module.html' %}
             </div>
             <div class="content-right">
                 <div class="border-1" id="info-container">
@@ -115,20 +91,7 @@
         </div>
         <div class="bottom" style="display: block;">
             <div class="bottom-left">
-                <div class="line-3"></div>
-                <div class="detection-block">
-                    <div style="width: max-content; height: 100%;">
-                        <div class="position-block1">
-                            <img src="{% static "main/img/design_box1.png" %}">
-                        </div>
-                        <div class="position-block1 left-border default-match-block"></div>
-                        <div class="position-block1 left-border default-match-block"></div>
-                        <div class="position-block1 left-border default-match-block"></div>
-                        <div class="position-block1 left-border default-match-block"></div>
-                        <div class="position-block1 left-border default-match-block"></div>
-                    </div>
-                    <div id="detection_end_block"><img src="{% static "main/img/design_box2.png" %}"></div>
-                </div>
+                {% include "main/modules/detection_module.html" %}
             </div>
             <div class="bottom-right">
                 <div class="design-block2">

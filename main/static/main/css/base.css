@@ -303,7 +303,7 @@ html * {
 
 #footer-left {
     width: 37.7rem;
-    height: 100%;
+    height: max-content;
     float: left;
     padding: 0.1rem 0.625rem;
 }
