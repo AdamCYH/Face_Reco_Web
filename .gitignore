@@ -4,3 +4,5 @@ build/
 __pycache__/
 *.sqlite*
 .idea
+media/photos/enrollment/*
+media/photos/recognition/*

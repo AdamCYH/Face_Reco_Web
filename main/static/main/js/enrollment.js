@@ -6,6 +6,7 @@ function loadImg(input) {
             $('#snap_image')
                 .attr('src', e.target.result);
             $("[name=img_holder]").val(e.target.result);
+            $("#default-overlay").remove();
         };
 
         reader.readAsDataURL(input.files[0]);

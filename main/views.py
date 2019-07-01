@@ -1,34 +1,180 @@
+import time
+
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.views import View
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 
-from main.utilities import utilities
-
-
-def recognition(request):
-    if request.method == "POST":
-        image_name = request.POST.get("img_name")
-        image_data = request.POST.get("img_data")
-
-        photo_path = utilities.save_image(image_data, "recognition", image_name)
-
-        # redis.push_to_redis(photo_path)
-
-        return JsonResponse({})
-    elif request.method == "GET":
-        return render(request, 'main/recognition.html')
+from main.models import FaceFeature, User, MatchJob, MatchUser
+from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, MatchUserSerializer
+from main.utilities import utilities, redis, sql
 
 
-def enrollment(request):
-    if request.method == "POST":
+# View for enrollment
+class EnrollmentView(View):
+    # get request, return the template
+    def get(self, request):
+        return render(request, 'main/enrollment.html')
+
+    # post request, save post data into db as new user
+    def post(self, request):
         fname = request.POST.get("fname")
         lname = request.POST.get("lname")
         age = request.POST.get("age")
+        description = request.POST.get("description")
         image_data = request.POST.get("img_holder")
 
         photo_path = utilities.save_image(image_data, "enrollment", fname=fname, lname=lname)
 
-        # redis.push_to_redis(photo_path)
+        user = sql.insert_visitor(fname, lname, age, description, photo_path)
+        redis.enroll_to_redis(user)
 
         return render(request, 'main/successful.html')
-    elif request.method == "GET":
-        return render(request, 'main/enrollment.html')
+
+
+# view for recognition
+class RecognitionView(View):
+    # get request, return the template
+    def get(self, request):
+        return render(request, 'main/recognition.html')
+
+    # process recognition pipeline
+    def post(self, request):
+        # image_name = request.POST.get("img_name")
+        # image_data = request.POST.get("img_data")
+        #
+        # # save uploaded image
+        # photo_path = utilities.save_image(image_data, "recognition", image_name)
+        #
+        # # create a new recognition job
+        # match_job = sql.create_job()
+        #
+        # # send new recognition job id and photo path to redis for SDK recognition
+        # redis.recognition_redis(photo_path, match_job.job_id)
+        #
+        # # try to get recognition result, if not continue trying
+        # match_result = ""
+        # while match_result == "":
+        #     match_result = redis.result_from_redis(match_job.job_id)
+        #
+        # # insert recognition result to database
+        # match_job = sql.insert_match_result(match_result)
+        #
+        # serializer = MatchJobSerializer(match_job)
+        # data = json.loads(str(JSONRenderer().render(serializer.data), encoding="utf8"))
+        time.sleep(10)
+        data = {"job_id": 23, "match_users": [{"confidence_level": "97.80",
+                                               "user": {"user_id": 1, "fname": "Adam", "lname": "Chiu", "age": 25,
+                                                        "description": "Research Assistant at CyLab",
+                                                        "photo_path": "./media/photos/enrollment/Adam_Chiu_201906211406.png",
+                                                        "enroll_time": "2019-06-18T17:41:36.664004Z"}},
+                                              {"confidence_level": "87.60",
+                                               "user": {"user_id": 2, "fname": "Bob", "lname": "Bil", "age": 25,
+                                                        "description": "test",
+                                                        "photo_path": "./media/photos/enrollment/Adam_Chiu_201906241814.png",
+                                                        "enroll_time": "2019-06-18T17:41:59.236418Z"}},
+                                              {"confidence_level": "76.90",
+                                               "user": {"user_id": 3, "fname": "user3", "lname": "adam", "age": 29,
+                                                        "description": "Hello My Name is adam\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\n",
+                                                        "photo_path": "./media/photos/enrollment/bob__201906131900.png",
+                                                        "enroll_time": "2019-06-18T18:43:56.896219Z"}}]}
+        # data = {"job_id": 23, "match_users": []}
+
+        return JsonResponse({"data": data})
+
+
+class LiveView(View):
+    # get request, return the template
+    def get(self, request):
+        return render(request, 'main/live.html')
+
+
+class FaceFeatureViewSet(viewsets.ViewSet):
+    queryset = FaceFeature.objects.all()
+    serializer_class = FaceFeatureSerializer
+
+    def list(self, request):
+        queryset = FaceFeature.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+    def retrieve(self, request, pk=None):
+        queryset = FaceFeature.objects.all()
+        feature = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(feature)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        queryset = FaceFeature.objects.get(user_id=pk)
+        serializer = self.serializer_class(queryset, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        else:
+            print(serializer.errors)
+
+        return Response(serializer.data)
+
+
+class UserViewSet(viewsets.ViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        else:
+            print(serializer.errors)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class MatchJobViewSet(viewsets.ViewSet):
+    queryset = MatchJob.objects.all()
+    serializer_class = MatchJobSerializer
+
+    def list(self, request):
+        queryset = MatchJob.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = MatchJob.objects.all()
+        feature = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(feature)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        match_users = request.data['match_users']
+        job_id = request.data['job_id']
+        exist_jobs = MatchUser.objects.filter(job_id=job_id)
+        exist_jobs.delete()
+
+        for match_user in match_users:
+            match_user_serializer = MatchUserSerializer(data=match_user, context={'job_id': job_id})
+            if match_user_serializer.is_valid(raise_exception=True):
+                match_user_serializer.save()
+
+        queryset = MatchJob.objects.get(job_id=pk)
+        serializer = self.serializer_class(queryset)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

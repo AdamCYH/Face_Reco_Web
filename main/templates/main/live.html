@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'main/css/live.css' %}">
+    <script src="{% static 'main/js/live.js' %}"></script>
+    <script src="{% static 'main/js/live_client.js' %}"></script>
+    <script src="{% static 'websocket/webrtc-adapter/release/adapter.js' %}"></script>
+    <script src="{% static 'websocket/kurento-utils/js/kurento-utils.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="live_container" id="live_container">
+        <div class="video_header">
+            <div class="video_status_bar font-3">Status: <span id="video_status_message">Stopped</span></div>
+            <div class="video_control_button">
+                <a href="javascript: max_min_screen()" id="btn-full-scrn">
+                    <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>
+                <a id="stop" class="button btn-stop">Stop</a>
+                <a id="start" class="button btn-start">Start</a>
+            </div>
+        </div>
+        <div class="video_content" id="video_content">
+            <div class='overlay' id='overlay'>
+            </div>
+            <video class="videoOutput" id="videoOutput" autoplay></video>
+        </div>
+        <div class="video_bottom font-3">
+            <span id="address">Click bounding box to see detection information.</span>
+        </div>
+
+    </div>
+{% endblock %}

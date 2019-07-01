@@ -10,29 +10,46 @@ TASK_NULL = 0
 TASK_CREATE_USER = 1
 TASK_DELETE_USER = 2
 TASK_LOAD_USERS = 3
-TASK_FACE_REGISTRATION = 101
+
+# For face recognition project
+TASK_FACE_ENROLLMENT = 101
+TASK_FACE_RECOGNITION = 102
 
 
-def push_to_redis(u_id, fname, lname, photo_path):
+def enroll_to_redis(user):
     # Create user and save it into redis db
     user_info = {
-        'id': int(u_id),
-        'name': '%s %s' % (fname, lname),
-        'photo_path': os.path.abspath(photo_path)
+        'id': user.user_id,
+        'name': '%s %s' % (user.fname, user.lname),
+        'photo_path': os.path.abspath(user.photo_path)
     }
-    my_server.set('FR_user:_%d' % u_id, json.dumps(user_info))
+    my_server.set('FR:%d' % user.user_id, json.dumps(user_info))
 
     task_info = {
-        'task_id': TASK_FACE_REGISTRATION,
-        'user_id': int(u_id)
+        'task_id': TASK_FACE_ENROLLMENT,
+        'user_id': user.user_id,
     }
-    my_server.publish('test-channel', json.dumps(task_info))
+    my_server.publish('enroll-channel', json.dumps(task_info))
 
-    # new thread to get feature from sdk and insert to SQL
-    # download_thread = Thread(target=get_face_feature, args=(u_id,))
-    # download_thread.setDaemon(True)
-    # download_thread.start()
     return 1
+
+
+def recognition_redis(photo_path, job_id):
+    task_info = {
+        'task_id': TASK_FACE_RECOGNITION,
+        'photo_path': photo_path,
+        'job_id': job_id
+    }
+    my_server.publish('recognition-channel', json.dumps(task_info))
+    return 1
+
+
+def result_from_redis(job_id):
+    result_string = my_server.get("FR_result:%d" % job_id)
+    if result_string is None:
+        return ""
+    result = json.loads(str(result_string, encoding='utf8'))
+    return result
 
 
 # load feature from SQL database to redis, so SDK can extract face feature again.

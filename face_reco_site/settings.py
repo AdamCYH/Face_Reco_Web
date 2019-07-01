@@ -17,11 +17,13 @@ import os
 ############## Directory Config ################
 ################################################
 ################################################
-RECOGNITION_IMG_UPLOAD = "./photos/recognition"
-ENROLLMENT_IMG_UPLOAD = "./photos/enrollment"
+RECOGNITION_IMG_UPLOAD = "./media/photos/recognition"
+ENROLLMENT_IMG_UPLOAD = "./media/photos/enrollment"
 
 MEDIA_ROOT = "./media"
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = None
 
@@ -37,7 +39,7 @@ SECRET_KEY = '$qfqkk0*_ojle6)u+wj2(ve33zj@^_x+0^3y$*-67ry2o*m5d+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '128.237.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
