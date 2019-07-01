@@ -1,12 +1,14 @@
 import time
 
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.views import View
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 
-from main.models import FaceFeature, User, MatchJob
-from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer
+from main.models import FaceFeature, User, MatchJob, MatchUser
+from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, MatchUserSerializer
 from main.utilities import utilities, redis, sql
 
 
@@ -89,16 +91,90 @@ class LiveView(View):
         return render(request, 'main/live.html')
 
 
-class FaceFeatureViewSet(viewsets.ModelViewSet):
+class FaceFeatureViewSet(viewsets.ViewSet):
     queryset = FaceFeature.objects.all()
     serializer_class = FaceFeatureSerializer
 
+    def list(self, request):
+        queryset = FaceFeature.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
-class UserViewSet(viewsets.ModelViewSet):
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+    def retrieve(self, request, pk=None):
+        queryset = FaceFeature.objects.all()
+        feature = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(feature)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        queryset = FaceFeature.objects.get(user_id=pk)
+        serializer = self.serializer_class(queryset, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        else:
+            print(serializer.errors)
+
+        return Response(serializer.data)
+
+
+class UserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
-class MatchJobViewSet(viewsets.ReadOnlyModelViewSet):
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        else:
+            print(serializer.errors)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class MatchJobViewSet(viewsets.ViewSet):
     queryset = MatchJob.objects.all()
     serializer_class = MatchJobSerializer
+
+    def list(self, request):
+        queryset = MatchJob.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = MatchJob.objects.all()
+        feature = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(feature)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        match_users = request.data['match_users']
+        job_id = request.data['job_id']
+        exist_jobs = MatchUser.objects.filter(job_id=job_id)
+        exist_jobs.delete()
+
+        for match_user in match_users:
+            match_user_serializer = MatchUserSerializer(data=match_user, context={'job_id': job_id})
+            if match_user_serializer.is_valid(raise_exception=True):
+                match_user_serializer.save()
+
+        queryset = MatchJob.objects.get(job_id=pk)
+        serializer = self.serializer_class(queryset)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

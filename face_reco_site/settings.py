@@ -22,6 +22,8 @@ ENROLLMENT_IMG_UPLOAD = "./media/photos/enrollment"
 
 MEDIA_ROOT = "./media"
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = None
 
@@ -85,14 +87,14 @@ WSGI_APPLICATION = 'face_reco_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'face_recognition',
-#         'USER': 'admin',
-#         'PASSWORD': 'spiderman',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'face_recognition',
+        'USER': 'admin',
+        'PASSWORD': 'spiderman',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

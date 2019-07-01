@@ -23,7 +23,6 @@ html * {
 
 .container {
     max-width: none;
-    min-height: 40rem;
     padding: 0;
     margin: 1.25rem 0 0.75rem 0;
     position: relative;

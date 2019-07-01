@@ -1,0 +1,129 @@
+.container {
+    position: unset;
+}
+
+.live_container {
+    width: 70rem;
+    height: 41rem;
+    margin: 1rem;
+    position: relative;
+    padding: 0 8.5%;
+
+}
+
+.video_header {
+    padding: 0.8rem;
+    width: 78.2%;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.video_header * {
+    background-color: transparent;
+}
+
+.video_status_bar {
+    float: left;
+}
+
+.video_control_button {
+    float: right;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 3px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 3px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.btn-start {
+    background-color: forestgreen;
+    float: right;
+}
+
+.btn-stop {
+    background-color: indianred;
+    float: right;
+}
+
+
+#btn-full-scrn {
+    height: 23px;
+    margin: 0 0 0 5px;
+    float: right;
+    padding: 0;
+    position: relative;
+    top: -2px;
+}
+
+.max_min_icon {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+.video_content {
+    height: 100%;
+}
+
+.videoOutput {
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.overlay {
+    position: relative;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
+
+.detect_box {
+    border: solid limegreen 2px;
+    position: absolute;
+    z-index: 2;
+}
+
+.full_screen {
+    float: none;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.video_bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.video_bottom * {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#address {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    overflow: auto;
+}

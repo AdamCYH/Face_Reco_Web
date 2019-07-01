@@ -22,9 +22,9 @@ from django.conf import settings
 from main.views import EnrollmentView, RecognitionView, LiveView, FaceFeatureViewSet, UserViewSet, MatchJobViewSet
 
 router = DefaultRouter()
-router.register(r'face_feature', FaceFeatureViewSet)
-router.register(r'user', UserViewSet)
-router.register(r'match_job', MatchJobViewSet)
+router.register(r'face_feature', FaceFeatureViewSet, base_name='face_feature')
+router.register(r'user', UserViewSet, base_name='user')
+router.register(r'match_job', MatchJobViewSet, base_name='match_job')
 
 urlpatterns = [
     path('', EnrollmentView.as_view()),
