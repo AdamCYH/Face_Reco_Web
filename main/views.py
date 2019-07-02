@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.views import View
 from rest_framework import viewsets, status
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from main.models import FaceFeature, User, MatchJob, MatchUser
@@ -29,7 +30,13 @@ class EnrollmentView(View):
 
         photo_path = utilities.save_image(image_data, "enrollment", fname=fname, lname=lname)
 
-        user = sql.insert_visitor(fname, lname, age, description, photo_path)
+        # user = sql.insert_visitor(fname, lname, age, description, photo_path)
+        user = UserSerializer(data=request.data)
+        if user.is_valid(raise_exception=True):
+            user.save()
+        else:
+            print(user.errors)
+
         redis.enroll_to_redis(user)
 
         return render(request, 'main/successful.html')
@@ -165,17 +172,25 @@ class MatchJobViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(feature)
         return Response(serializer.data)
 
+    # def update(self, request, pk=None):
+    #     #     job_id = pk
+    #     #     exist_jobs = MatchUser.objects.filter(job_id=job_id)
+    #     #     exist_jobs.delete()
+    #     #
+    #     #     serializer = self.serializer_class(data=request.data, context={'job_id': job_id})
+    #     #     if serializer.is_valid(raise_exception=True):
+    #     #         serializer.save()
+    #     #     else:
+    #     #         print(serializer.errors)
+    #     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     def update(self, request, pk=None):
-        match_users = request.data['match_users']
-        job_id = pk
-        exist_jobs = MatchUser.objects.filter(job_id=job_id)
+        exist_jobs = MatchUser.objects.filter(job_id=pk)
         exist_jobs.delete()
 
-        # for match_user in match_users:
-        #     match_user_serializer = MatchUserSerializer(data=match_user, context={'job_id': job_id})
-        #     if match_user_serializer.is_valid(raise_exception=True):
-        #         match_user_serializer.save()
-        serializer = self.serializer_class(data=request.data, context={'job_id': job_id})
+        queryset = MatchJob.objects.get(job_id=pk)
+        serializer = self.serializer_class(queryset, data=request.data)
+
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         else:

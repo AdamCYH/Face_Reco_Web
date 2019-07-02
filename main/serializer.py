@@ -56,18 +56,25 @@ class MatchUserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('user', 'confidence_level')
 
 
-
 class MatchJobSerializer(serializers.HyperlinkedModelSerializer):
     match_users = MatchUserSerializer(many=True)
 
-    def create(self, validated_data):
+    # def create(self, validated_data):
+    #     match_users = validated_data.pop("match_users")
+    #     match_job = MatchJob.objects.get(job_id=self.context.get("job_id"))
+    #     for match_user in match_users:
+    #         MatchUser.objects.create(job=match_job,
+    #                                  user_id=match_user['user']['user_id'],
+    #                                  confidence_level=match_user['confidence_level'])
+    #     return match_job
+
+    def update(self, instance, validated_data):
         match_users = validated_data.pop("match_users")
-        match_job = MatchJob.objects.get(job_id=self.context.get("job_id"))
         for match_user in match_users:
-            MatchUser.objects.create(job=match_job,
+            MatchUser.objects.create(job=instance,
                                      user_id=match_user['user']['user_id'],
                                      confidence_level=match_user['confidence_level'])
-        return match_job
+        return instance
 
     class Meta:
         model = MatchJob

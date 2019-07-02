@@ -37,4 +37,4 @@ class MatchUser(models.Model):
 
     class Meta:
         db_table = 'match_users'
-        ordering = ['confidence_level']
+        ordering = ['job', '-confidence_level']
