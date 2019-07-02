@@ -22,7 +22,6 @@ function resetVideoSize() {
     var video = $('#videoOutput');
     video_width = video.width();
     video_height = video.height();
-    console.log("new" + video_width + ":" + video_height)
 }
 
 String.prototype.format = String.prototype.f = function () {
