@@ -4,6 +4,7 @@ import time
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.utils import timezone
 from django.views import View
 from rest_framework import viewsets, status
 from rest_framework.renderers import JSONRenderer
@@ -27,19 +28,33 @@ class EnrollmentView(View):
         age = request.POST.get("age")
         description = request.POST.get("description")
         image_data = request.POST.get("img_holder")
-
         photo_path = utilities.save_image(image_data, "enrollment", fname=fname, lname=lname)
 
         # user = sql.insert_visitor(fname, lname, age, description, photo_path)
-        user = UserSerializer(data=request.data)
-        if user.is_valid(raise_exception=True):
-            user.save()
+        if age == "":
+            age = None
+        if description == "":
+            description = None
+        data = {
+            'fname': fname,
+            'lname': lname,
+            'age': age,
+            'description': description,
+            'photo_path': photo_path,
+            'enroll_time': timezone.now()
+        }
+
+        user_serializer = UserSerializer(data=data)
+        if user_serializer.is_valid(raise_exception=True):
+            user = user_serializer.save()
         else:
-            print(user.errors)
+            print(user_serializer.errors)
 
-        redis.enroll_to_redis(user)
-
-        return render(request, 'main/successful.html')
+        if user is not None:
+            redis.enroll_to_redis(user)
+            return render(request, 'main/successful.html')
+        else:
+            return
 
 
 # view for recognition
