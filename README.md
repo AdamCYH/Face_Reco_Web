@@ -1,5 +1,7 @@
-This is a face matcher website.
-It does not include enrollment.
+This service includes three modules
+Single image upload,
+Single image recognition,
+Live video recognition
 
 
 ## Install dependency ##
@@ -25,13 +27,13 @@ $ pip install djangorestframework
 
 ## Set up DB ##
 
-1.Create db `registry`
+1.Create db `face_recognition`
 
 ```
 $ mysql -u root -p
 
-mysql> DROP DATABASE if exists registry;
-mysql> CREATE DATABASE registry;
+mysql> DROP DATABASE if exists face_recognition;
+mysql> CREATE DATABASE face_recognition;
 ```
 
 2.Create user `airport`
@@ -39,31 +41,21 @@ mysql> CREATE DATABASE registry;
 ```
 $ mysql -u root -p
 
-mysql> CREATE USER 'airport'@'localhost' IDENTIFIED BY '#{THE_PASSWORD_FOR_AIPORT_ACCOUNT}';
+mysql> CREATE USER 'admin'@'localhost' IDENTIFIED BY '#{THE_PASSWORD_FOR_AIPORT_ACCOUNT}';
 ```
 
-3.Grant permission with `registry` database
+3.Grant permission with `face_recognition` database
 
 ```
 $ mysql -u root -p
 
-mysql> GRANT ALL PRIVILEGES ON registry.* TO 'airport'@'localhost';
+mysql> GRANT ALL PRIVILEGES ON face_recognition.* TO 'airport'@'localhost';
 ```
 
-4.Update `my.cnf` file
+4.Update MYSQL setting
 
-```
-$ sudo vim /etc/mysql/my.cnf
-
-[client]
-database = registry
-user = airport
-password = #{THE_PASSWORD_FOR_AIPORT_ACCOUNT}
-default-character-set = utf8mb4
-
-$ sudo /etc/init.d/mysql stop
-$ sudo /etc/init.d/mysql start
-```
+Modify django face_reco_site/settings.py
+Change DATABASES setting
 
 5.Migrate the db schema
 
@@ -73,19 +65,18 @@ $ python manage.py makemigrations
 $ python manage.py migrate
 ```
 
-6.Create the `admin` account for dashboard
 
-```
-USE registry;
-INSERT INTO admin (name, role, user_name, password, email, phone) VALUES ("admin", "admin", "admin", "#{THE_PASSWORD_FOR_ADMIN_ACCOUNT}", "admin@admin.com", 0800);
-```
-
-
-## Start web server ##
+## Start web server [Development]##
 
 ```
 $ cd webapp/
 $ python manage.py runserver 8080
+```
+## Start web server [Production]##
+
+```
+$ cd webapp/
+$ uwsgi --ini uwsgi.ini
 ```
 
 ## List routes ##
@@ -94,33 +85,28 @@ $ python manage.py runserver 8080
 $ cd webapp/
 $ python manage.py show_urls
 
-/       						registry.views.home     				registry-home
-/dashboard/     				dashboard.views.dashboard_site  		dashboard
-/dashboard/admin        		dashboard.views.manage_admin    		dashboard-admin
-/dashboard/admin_management     dashboard.views.admin_management_site   dashboard-admin_management
-/dashboard/check_feature_status dashboard.views.feature_status  		dashboard-check_feature_status
-/dashboard/dashboard_summary    dashboard.views.dashboard_summary       dashboard-dashboard_summary
-/dashboard/detection    		dashboard.views.detection       		dashboard-detection
-/dashboard/live 				dashboard.views.live_site       		dashboard-live
-/dashboard/load_features        dashboard.views.load_face_feature       dashboard-load_features
-/dashboard/load_test_data       dashboard.views.load_test_data  		dashboard-load_test_data
-/dashboard/login        		dashboard.views.login   				dashboard-login
-/dashboard/logout       		dashboard.views.logout  				dashboard-logout
-/dashboard/member_management    dashboard.views.member_management_site  dashboard-member_management
-/dashboard/registration_check   dashboard.views.registration_check      dashboard-registration_check
-/dashboard/security_check       dashboard.views.security_check_site     dashboard-security-check
-/dashboard/update_face_feature  dashboard.views.update_feature  		dashboard-update_feature
-/dashboard/update_leave_time    dashboard.views.update_leave_time       dashboard-update_leave_time
-/dashboard/validate_username    dashboard.views.validate_username       dashboard-validate_username
-/dashboard/visitor_api  		dashboard.views.visitor_api     		dashboard-visitor_api
-/home_upload    				registry.views.home_upload      		registry-home_upload
-/media\/<path>  				django.views.static.serve
-/registration   				registry.views.registration     		registry-registration
-/rtsp   						registry.views.home_rtsp        		registry-rtsp
+/									main.views.EnrollmentView	
+/api/								rest_framework.routers.APIRootView		api-root
+/api/\.<format>/					rest_framework.routers.APIRootView		api-root
+/api/face_feature/					main.views.FaceFeatureViewSet			face_feature-list
+/api/face_feature/<pk>/				main.views.FaceFeatureViewSet			face_feature-detail
+/api/face_feature/<pk>\.<format>/	main.views.FaceFeatureViewSet			face_feature-detail
+/api/face_feature\.<format>/		main.views.FaceFeatureViewSet			face_feature-list
+/api/match_job/						main.views.MatchJobViewSet				match_job-list
+/api/match_job/<pk>/				main.views.MatchJobViewSet				match_job-detail
+/api/match_job/<pk>\.<format>/		main.views.MatchJobViewSet				match_job-detail
+/api/match_job\.<format>/			main.views.MatchJobViewSet				match_job-list
+/api/user/							main.views.UserViewSet					user-list
+/api/user/<pk>/						main.views.UserViewSet					user-detail
+/api/user/<pk>\.<format>/			main.views.UserViewSet					user-detail
+/api/user\.<format>/				main.views.UserViewSet					user-list
+/enrollment							main.views.EnrollmentView				main-enrollment_site
+/live								main.views.LiveView						main-live_site
+/recognition						main.views.RecognitionView				main-recognition_site
+/media\/<path>						django.views.static.serve	
 ```
 
 ## Production Deployment ##
-1. copy airport.conf to nginx configuration
+1. copy face_reco_nginx.conf to nginx configuration
 2. sudo nginx -s reload
-3. use start_service.sh to start service
-
+3. use uwsgi --ini uwsgi.ini
