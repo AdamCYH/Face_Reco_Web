@@ -56,9 +56,10 @@ ws.onmessage = function (message) {
             webRtcPeer.addIceCandidate(parsedMessage.candidate);
             break;
         case 'faceFound':
-            var faces = JSON.parse(parsedMessage.faces.value).face;
+            var facesList = JSON.parse(parsedMessage.faces.value);
             // console.log(faces);
-            if (faces !== undefined && faces != null) {
+            if (facesList !== undefined && facesList != null) {
+                faces = facesList.face;
                 var x;
                 for (x in faces) {
                     var bbox = faces[x].bbox;
