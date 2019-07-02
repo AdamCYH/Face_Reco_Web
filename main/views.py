@@ -54,7 +54,7 @@ class EnrollmentView(View):
             redis.enroll_to_redis(user)
             return render(request, 'main/successful.html')
         else:
-            return
+            return render(request, 'main/enrollment.html')
 
 
 # view for recognition
