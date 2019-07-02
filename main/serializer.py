@@ -6,7 +6,7 @@ from rest_framework import serializers
 from main.models import FaceFeature, User, MatchJob, MatchUser
 
 
-class FaceFeatureSerializer(serializers.HyperlinkedModelSerializer):
+class FaceFeatureSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.user_id')
 
     def create(self, validated_data):
@@ -36,11 +36,14 @@ class FaceFeatureSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('user', 'features')
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-        user = User(**validated_data)
-        user.enroll_time = timezone.now()
-        return user
+        # print(validated_data)
+        # user = User(**validated_data)
+        # print(user)
+        # user.enroll_time = timezone.now()
+        # return user
+        return User.objects.create(**validated_data, enroll_time=timezone.now())
 
     class Meta:
         model = User
@@ -48,7 +51,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ('user_id', 'enroll_time')
 
 
-class MatchUserSerializer(serializers.HyperlinkedModelSerializer):
+class MatchUserSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.user_id')
 
     class Meta:
@@ -56,7 +59,7 @@ class MatchUserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('user', 'confidence_level')
 
 
-class MatchJobSerializer(serializers.HyperlinkedModelSerializer):
+class MatchJobSerializer(serializers.ModelSerializer):
     match_users = MatchUserSerializer(many=True)
 
     # def create(self, validated_data):

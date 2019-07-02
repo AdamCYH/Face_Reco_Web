@@ -27,6 +27,9 @@ function validate() {
     } else if ($("[name=fname]").val().trim().length == 0) {
         $("#message").html("Please enter your first name.");
         return false;
+    } else if ($("[name=lname]").val().trim().length == 0) {
+        $("#message").html("Please enter your last name.");
+        return false;
     } else {
         return true;
     }
