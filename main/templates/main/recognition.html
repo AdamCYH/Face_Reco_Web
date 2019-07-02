@@ -12,7 +12,8 @@
         <div class="upper">
             <div class="line-1"></div>
             <div class="content-left">
-                {% include "main/modules/upload_module.html" %}
+                {% include "main/modules/control_module.html" %}
+                {% include "main/modules/preview_module.html" %}
             </div>
             <div class="content-middle center-parent">
                 <div class="center">
@@ -23,7 +24,7 @@
             </div>
             <div class="content-right">
                 <div class="border-1" id="info-container">
-                    <div id="info-display">
+                    <div class="border-special" id="info-display">
                         <div id="detected_img_container" class="center-parent border-2"></div>
                         <table style="display: table" id="info_table">
                             <tr>

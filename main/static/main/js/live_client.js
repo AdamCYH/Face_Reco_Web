@@ -28,7 +28,6 @@ const I_AM_STARTING = 2;
 
 window.onload = function () {
     videoOutput = document.getElementById('videoOutput');
-    setState(I_CAN_START);
 };
 
 window.onbeforeunload = function () {
@@ -42,17 +41,17 @@ ws.onmessage = function (message) {
     switch (parsedMessage.id) {
         case 'startResponse':
             startResponse(parsedMessage);
-            $("#video_status_message").html("Building connections");
+            $("#control-subtitle").html("Building connections");
             break;
         case 'error':
             if (state == I_AM_STARTING) {
                 setState(I_CAN_START);
             }
             onError('Error message from server: ' + parsedMessage.message);
-            $("#video_status_message").html('Error: ' + parsedMessage.message);
+            $("#control-subtitle").html('Error: ' + parsedMessage.message);
             break;
         case 'iceCandidate':
-            $("#video_status_message").html("Running");
+            $("#control-subtitle").html("Running");
             webRtcPeer.addIceCandidate(parsedMessage.candidate);
             break;
         case 'faceFound':
@@ -81,7 +80,7 @@ ws.onmessage = function (message) {
 };
 
 function start() {
-    $("#video_status_message").html("Initiating");
+    $("#control-subtitle").html("Initiating");
     console.log('Starting video call ...')
 
     // Disable start button
@@ -135,7 +134,7 @@ function startResponse(message) {
 
 function stop() {
     console.log('Stopping video call ...');
-    $("#video_status_message").html("Stopping");
+    $("#control-subtitle").html("Stopping");
     setState(I_CAN_START);
     if (webRtcPeer) {
         webRtcPeer.dispose();
@@ -147,7 +146,7 @@ function stop() {
         sendMessage(message);
     }
     $(".detect_box").remove();
-    $("#video_status_message").html("Stopped");
+    $("#control-subtitle").html("Stopped");
     hideSpinner(videoOutput);
 }
 

@@ -115,7 +115,7 @@ html * {
 }
 
 
-#upload-container {
+#control-container {
     height: 4.25rem;
     background-color: #222222;
     position: relative;
@@ -131,7 +131,7 @@ html * {
     background-color: transparent;
 }
 
-#upload-button-div {
+#control-button-div {
     position: absolute;
     width: max-content;
     right: 0;
@@ -139,7 +139,7 @@ html * {
     z-index: 2;
 }
 
-#custom-file-upload {
+#button-label {
     background-color: #ffc003;
     color: black;
     padding: 0.2rem 1rem;
@@ -237,51 +237,6 @@ html * {
     background-color: black;
 }
 
-.spin-right {
-    -webkit-animation-name: spin-right;
-    -webkit-animation-duration: 4000ms;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: spin-right;
-    -moz-animation-duration: 4000ms;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: linear;
-    animation-name: spin-right;
-    animation-duration: 4000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-
-.spin-left {
-    -webkit-animation-name: spin-left;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: spin-left;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: linear;
-    animation-name: spin-left;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-
-.speed-slow {
-    -webkit-animation-duration: 9000ms;
-    -moz-animation-duration: 9000ms;
-    animation-duration: 9000ms;
-}
-
-.speed-median {
-    -webkit-animation-duration: 5000ms;
-    -moz-animation-duration: 5000ms;
-    animation-duration: 5000ms;
-}
-
-.speed-fast {
-    -webkit-animation-duration: 3000ms;
-    -moz-animation-duration: 3000ms;
-    animation-duration: 3000ms;
-}
-
 
 /*
 ########################
@@ -336,199 +291,6 @@ html * {
     margin: 1rem 1rem 0.5rem 1rem;
 }
 
-/*
-########################
-###### components ######
-########################
-*/
-.cursor {
-    font-size: 1rem;
-    color: #2E3D48;
-    -webkit-animation: 1s blink step-end infinite;
-    -moz-animation: 1s blink step-end infinite;
-    -o-animation: 1s blink step-end infinite;
-    animation: 1s blink step-end infinite;
-}
-
-.line-1 {
-    border: solid 5px;
-    border-color: rgb(58, 58, 58) rgb(58, 58, 58) transparent transparent;
-    position: absolute;
-    right: 0;
-    background-color: transparent;
-    z-index: 1;
-    width: 90%;
-    height: 5.375rem;
-    min-width: 700px;
-    border-block-end-style: none;
-}
-
-.line-2 {
-    border: solid 1px;
-    border-color: transparent transparent transparent rgb(64, 76, 85);
-    height: 30rem;
-    position: relative;
-}
-
-.line-3 {
-    border: solid 3px;
-    border-color: transparent rgb(58, 58, 58) rgb(58, 58, 58) transparent;
-    position: relative;
-    left: 0;
-    background-color: transparent;
-    width: 100%;
-    height: 15%;
-    border-block-start-style: none;
-}
-
-.box-1 {
-    width: 5px;
-    height: 100%;
-}
-
-.box-2 {
-    width: 10px;
-    height: 100%;
-}
-
-.box-3 {
-    width: 1.5rem;
-    height: 5.375rem;
-    margin-left: 30%;
-}
-
-.box-4 {
-    width: 0.5rem;
-    height: 0.5rem;
-    display: inline-block;
-    top: 0;
-    position: absolute;
-}
-
-.box-5 {
-    width: 2rem;
-    height: 0.5rem;
-    display: inline-block;
-    top: 0;
-    left: 1rem;
-    position: absolute;
-}
-
-
-.design-block1 {
-    width: 2%;
-    height: 37rem;
-    position: absolute;
-    right: 0.3%;
-    top: 0;
-}
-
-
-.design-block2 {
-    height: 5rem;
-    position: relative;
-    margin: 1rem 0;
-}
-
-
-.design-block4 {
-    width: 100%;
-    height: 5rem;
-    position: absolute;
-    bottom: 0;
-    background-color: transparent;
-}
-
-.position-block1 {
-    display: inline-block;
-    width: 8rem;
-    height: 100%;
-    position: relative;
-    padding: 0.5rem 0;
-    overflow: hidden;
-    float: left;
-}
-
-.position-block1 img {
-    position: absolute;
-}
-
-.position-block2 {
-    display: inline-block;
-    width: 27%;
-    height: 100%;
-    position: relative;
-    margin: 0 0 0 3%;
-}
-
-.color-1 {
-    background-color: #839dc0;
-}
-
-.color-2 {
-    background-color: #ffbb02;
-}
-
-.color-3 {
-    background-color: #445066;
-}
-
-.color-4 {
-    background-color: #222222;
-}
-
-.color-5 {
-    background-color: #414142;
-}
-
-.color-6 {
-    background-color: #c1cad3;
-}
-
-.color-gradient1 {
-    background: linear-gradient(#5a5a5a, #000000);
-}
-
-.color-gradient2 {
-    background: linear-gradient(#818d9f, #37426a);
-}
-
-.color-gradient3 {
-    background: linear-gradient(#78838f, #262e42);
-}
-
-.font-1 {
-    font-size: 2.5rem;
-    font-family: Trebuchet MS, sans-serif;
-}
-
-.font-2 {
-    font-size: 1.625rem;
-    font-family: Trebuchet MS, sans-serif;
-    color: white;
-}
-
-.font-3 {
-    font-size: 0.875rem;
-    font-family: Trebuchet MS, sans-serif;
-    color: #a5bdda;
-}
-
-.font-4 {
-    font-size: 0.7rem;
-    font-family: Trebuchet MS, sans-serif;
-    colr: white;
-}
-
-.border-1 {
-    border: solid 2px #6c819e;
-    box-sizing: content-box;
-}
-
-.border-2 {
-    border: solid 1px #5a5a5a;
-    box-sizing: content-box;
-}
 
 .inline-block {
     display: inline-block;
@@ -563,6 +325,15 @@ html * {
     border-block-end-style: none;
 }
 
+.cursor {
+    font-size: 1rem;
+    color: #2E3D48;
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+}
+
 a:hover, .button {
     text-decoration: none;
     color: white;
@@ -592,55 +363,57 @@ a:hover, .button {
     }
 }
 
-
-/*@media (max-width: 1200px) {*/
-/*.line-1 {*/
-/*width: 87%;*/
-/*}*/
-
-/*.content-left {*/
-/*width: 45%;*/
-/*}*/
-
-/*.content-right {*/
-/*width: 55%;*/
-/*}*/
-
-
-/*.bottom-left {*/
-/*width: 50%;*/
-/*}*/
-
-/*.bottom-right {*/
-/*width: 50%;*/
-/*}*/
-
-/*#upload-button-div {*/
-/*right: 1rem;*/
-/*}*/
-
-/*}*/
-
-/*@media (max-width: 992px) {*/
-/*.line-1 {*/
-/*width: 85%;*/
-/*}*/
-
-/*#upload-tool {*/
-/*margin-left: 0.5rem;*/
-/*}*/
-
-/*#info_table {*/
-/*width: 100%;*/
-/*}*/
-/*}*/
-
-
 /*
 ########################
 ####### Animation ######
 ########################
 */
+
+.spin-right {
+    -webkit-animation-name: spin-right;
+    -webkit-animation-duration: 4000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin-right;
+    -moz-animation-duration: 4000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: spin-right;
+    animation-duration: 4000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.spin-left {
+    -webkit-animation-name: spin-left;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin-left;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: spin-left;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.speed-slow {
+    -webkit-animation-duration: 9000ms;
+    -moz-animation-duration: 9000ms;
+    animation-duration: 9000ms;
+}
+
+.speed-median {
+    -webkit-animation-duration: 5000ms;
+    -moz-animation-duration: 5000ms;
+    animation-duration: 5000ms;
+}
+
+.speed-fast {
+    -webkit-animation-duration: 3000ms;
+    -moz-animation-duration: 3000ms;
+    animation-duration: 3000ms;
+}
+
 @-moz-keyframes spin-right {
     from {
         -moz-transform: scaleY(2);

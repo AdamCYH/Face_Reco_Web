@@ -12,11 +12,12 @@
         <div class="upper">
             <div class="line-1"></div>
             <div class="content-left">
-                {% include 'main/modules/upload_module.html' %}
+                {% include 'main/modules/control_module.html' %}
+                {% include "main/modules/preview_module.html" %}
             </div>
             <div class="content-right">
                 <div class="border-1" id="info-container">
-                    <div id="input-container">
+                    <div class="border-special" id="input-container">
                         <form class="center" name="info_form" id="info_form"
                               action={% url 'main-enrollment_site' %} method="POST" style="width: 100%">
                             <table id="info_table">

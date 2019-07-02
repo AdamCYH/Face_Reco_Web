@@ -11,24 +11,56 @@
 {% endblock %}
 
 {% block content %}
-    <div class="live_container" id="live_container">
-        <div class="video_header">
-            <div class="video_status_bar font-3">Status: <span id="video_status_message">Stopped</span></div>
-            <div class="video_control_button">
-                <a href="javascript: max_min_screen()" id="btn-full-scrn">
-                    <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>
-                <a id="stop" class="button btn-stop">Stop</a>
-                <a id="start" class="button btn-start">Start</a>
+    <div class="content">
+        <div class="content-left">
+            <div class="design-block-vertical-1">
             </div>
-        </div>
-        <div class="video_content" id="video_content">
-            <div class='overlay' id='overlay'>
+            <div class="content-live">
+
+                {% include 'main/modules/control_module.html' %}
+                {#                    <div class="video_header">#}
+                {#                        <div class="video_status_bar font-3">Status: <span#}
+                {#                                id="video_status_message">Stopped</span></div>#}
+                {#                        <div class="video_control_button">#}
+                {#                            <a href="javascript: max_min_screen()" id="btn-full-scrn">#}
+                {#                                <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>#}
+                {#                            <a id="stop" class="button btn-stop">Stop</a>#}
+                {#                            <a id="start" class="button btn-start">Start</a>#}
+                {#                        </div>#}
+                {#                    </div>#}
+
+                <div class="live-wrapper border-1">
+                    <div class="border-special" id="live-border-special">
+
+                        <div class="live_container" id="live_container">
+
+                            <div class="video_content" id="video_content">
+                                <div class='overlay' id='overlay'>
+                                </div>
+                                <video class="videoOutput" id="videoOutput" autoplay></video>
+
+                                <div class="video_bottom font-3">
+                                    <span id="address">Click bounding box to see detection information.</span>
+                                    <a href="javascript: max_min_screen()" id="btn-full-scrn">
+                                        <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <video class="videoOutput" id="videoOutput" autoplay></video>
-        </div>
-        <div class="video_bottom font-3">
-            <span id="address">Click bounding box to see detection information.</span>
         </div>
 
+        <div class="content-right"></div>
+    </div>
+    <div class="design-block1">
+        <div class="box-3 color-4"></div>
+        <div style="height: 1rem;margin-top: 0.5rem">
+            <div class="box-1 color-1"></div>
+        </div>
+        <div class="line-2">
+            <div class="box-3 color-3" style="position: absolute; bottom: 0;"></div>
+        </div>
     </div>
 {% endblock %}

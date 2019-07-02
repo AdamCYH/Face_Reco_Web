@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<div id="control-container">
+    <div class="box-2 inline-block">
+        <div class="box-2 color-2" style="height: 13%"></div>
+        <div class="box-2 color-3" style="height: 87%"></div>
+    </div>
+    <div class="inline-block" id="upload-tool">
+        <div>
+            <div class="font-2" id="control-title">IMAGE UPLOAD</div>
+            <div class="font-3" id="control-subtitle">Upload a image with one face.</div>
+        </div>
+        <div id="control-button-div">
+            <label for="file-upload" id="button-label" style="color: black">
+                Upload
+            </label>
+        </div>
+        <input id="file-upload" type="file" onchange="loadImg(this);" hidden/>
+    </div>
+</div>
