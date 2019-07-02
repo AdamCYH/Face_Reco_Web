@@ -6,7 +6,7 @@ from rest_framework import serializers
 from main.models import FaceFeature, User, MatchJob, MatchUser
 
 
-class FaceFeatureSerializer(serializers.ModelSerializer):
+class FaceFeatureSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.CharField(source='user.user_id')
 
     def create(self, validated_data):
@@ -36,7 +36,7 @@ class FaceFeatureSerializer(serializers.ModelSerializer):
         fields = ('user', 'features')
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
         user = User(**validated_data)
         user.enroll_time = timezone.now()
@@ -48,27 +48,33 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('user_id', 'enroll_time')
 
 
-class MatchUserSerializer(serializers.ModelSerializer):
+class MatchUserSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.CharField(source='user.user_id')
-
-    def create(self, validated_data):
-        try:
-            match_user = MatchUser.objects.create(
-                job_id=self.context.get("job_id"),
-                confidence_level=validated_data['confidence_level'],
-                user_id=validated_data['user']['user_id'])
-        except IntegrityError:
-            raise serializers.ValidationError("job or user not found")
-        return match_user
 
     class Meta:
         model = MatchUser
         fields = ('user', 'confidence_level')
-        ordering = ('confidence_level',)
 
 
-class MatchJobSerializer(serializers.ModelSerializer):
-    match_users = MatchUserSerializer(many=True, read_only=True)
+class MatchJobSerializer(serializers.HyperlinkedModelSerializer):
+    match_users = MatchUserSerializer(many=True)
+
+    # def create(self, validated_data):
+    #     match_users = validated_data.pop("match_users")
+    #     match_job = MatchJob.objects.get(job_id=self.context.get("job_id"))
+    #     for match_user in match_users:
+    #         MatchUser.objects.create(job=match_job,
+    #                                  user_id=match_user['user']['user_id'],
+    #                                  confidence_level=match_user['confidence_level'])
+    #     return match_job
+
+    def update(self, instance, validated_data):
+        match_users = validated_data.pop("match_users")
+        for match_user in match_users:
+            MatchUser.objects.create(job=instance,
+                                     user_id=match_user['user']['user_id'],
+                                     confidence_level=match_user['confidence_level'])
+        return instance
 
     class Meta:
         model = MatchJob
