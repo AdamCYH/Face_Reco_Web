@@ -1,3 +1,12 @@
+$(document).ready(setupPage);
+
+function setupPage() {
+    $("#control-title").html('IMAGE UPLOAD');
+    $("#control-subtitle").html('Upload a image with one face.');
+    $("#control-button-div").append("<input id='file-upload' type='file' onchange='loadImg(this);' hidden/>");
+    $("#button-label").html('Upload').attr('for', 'file-upload');
+}
+
 function loadImg(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
