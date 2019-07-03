@@ -189,8 +189,8 @@ function showSpinner() {
     for (var i = 0; i < arguments.length; i++) {
         // arguments[i].poster = './img/transparent-1px.png';
         // arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
-        arguments[i].style.background = "center transparent url('/static/dashboard/icon/spinner.gif') no-repeat";
-        arguments[i].style.backgroundSize = '50px';
+        arguments[i].style.background = "center transparent url('/static/main/img/loading_live.gif') no-repeat";
+        arguments[i].style.backgroundSize = '40rem';
     }
 }
 

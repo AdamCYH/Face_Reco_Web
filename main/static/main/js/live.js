@@ -1,6 +1,6 @@
 $(document).ready(function () {
     setupPage();
-    // start();
+    start();
     $("#videoOutput").resize(resetVideoSize);
     $(window).resize(resetVideoSize);
 

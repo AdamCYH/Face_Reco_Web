@@ -225,7 +225,7 @@ html * {
     height: 90%;
     position: relative;
     margin: 0 0 0.5rem 0;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 
 #detection_end_block {
@@ -340,28 +340,6 @@ a:hover, .button {
     cursor: pointer;
 }
 
-
-@media (min-width: 1600px) {
-    .upper {
-        height: 44rem;
-    }
-
-    .upload-img-container {
-        height: 38rem;
-    }
-
-    .design-block1 {
-        height: 48rem;
-    }
-
-    .line-2 {
-        height: 41rem;
-    }
-
-    .footer-bar {
-        margin: 0 2.3%;
-    }
-}
 
 /*
 ########################
@@ -520,4 +498,20 @@ a:hover, .button {
 
 ::-webkit-scrollbar-corner {
     background-color: transparent;
+}
+
+
+@media (min-width: 1600px) {
+    .upper {
+        height: 44rem;
+    }
+
+    .upload-img-container {
+        height: 38rem;
+    }
+
+
+    .footer-bar {
+        margin: 0 2.3%;
+    }
 }
