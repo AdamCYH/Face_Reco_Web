@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    videoOutput = $("#videoOutput");
     setupPage();
     start();
     $("#videoOutput").resize(resetVideoSize);

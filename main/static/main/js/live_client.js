@@ -26,9 +26,6 @@ const I_CAN_START = 0;
 const I_CAN_STOP = 1;
 const I_AM_STARTING = 2;
 
-window.onload = function () {
-    videoOutput = document.getElementById('videoOutput');
-};
 
 window.onbeforeunload = function () {
     ws.close();
@@ -85,6 +82,7 @@ function start() {
 
     // Disable start button
     setState(I_AM_STARTING);
+    console.log(videoOutput);
     showSpinner(videoOutput);
 
     console.log('Creating WebRtcPeer and generating local sdp offer ...');
@@ -187,18 +185,15 @@ function sendMessage(message) {
 
 function showSpinner() {
     for (var i = 0; i < arguments.length; i++) {
-        // arguments[i].poster = './img/transparent-1px.png';
-        // arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
-        arguments[i].style.background = "center transparent url('/static/main/img/loading_live.gif') no-repeat";
-        arguments[i].style.backgroundSize = '40rem';
+        arguments[i].css("background", "center transparent url('/static/main/img/loading_live.gif') no-repeat");
+        arguments[i].css("background-size", "40rem");
     }
 }
 
 function hideSpinner() {
     for (var i = 0; i < arguments.length; i++) {
         arguments[i].src = '';
-        // arguments[i].poster = './img/webrtc.png';
-        arguments[i].style.background = '';
+        arguments[i].css("background", "");
     }
 }
 
