@@ -1,7 +1,13 @@
+@font-face {
+    font-family: 'Trebuchet MS';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Trebuchet MS'), local('TrebuchetMS'), url('/static/main/font/Trebuchet MS.ttf');
+}
+
 
 .design-block1 {
     width: 2%;
-    height: 37rem;
     position: absolute;
     right: 0.3%;
     top: 0;
@@ -47,7 +53,7 @@
 .line-2 {
     border: solid 1px;
     border-color: transparent transparent transparent rgb(64, 76, 85);
-    height: 30rem;
+    height: 36rem;
     position: relative;
 }
 
@@ -195,10 +201,6 @@
 }
 
 @media (min-width: 1600px) {
-
-    .design-block1 {
-        height: 51rem;
-    }
 
     .line-2 {
         height: 44rem;
