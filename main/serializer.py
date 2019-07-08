@@ -80,8 +80,8 @@ class MatchJobSerializer(serializers.ModelSerializer):
         read_only_fields = ('job_id', 'match_time')
 
 
-class DetectionSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+class DetectionCreateSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.user_id')
 
     def create(self, validated_data):
         return Detection.objects.create(
@@ -98,6 +98,16 @@ class DetectionSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             raise serializers.ValidationError("user does not exist")
         return value
+
+    class Meta:
+        model = Detection
+        fields = ('detection_id', 'user', 'detect_camera', 'location', 'detected_photo_path', 'detection_time',
+                  'confidence_level')
+        read_only_fields = ('detection_id', 'detection_time')
+
+
+class DetectionReadSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
 
     class Meta:
         model = Detection

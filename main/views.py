@@ -9,11 +9,13 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status, generics
+from rest_framework.exceptions import APIException
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from main.models import FaceFeature, User, MatchJob, MatchUser, Detection
-from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionSerializer
+from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionCreateSerializer, \
+    DetectionReadSerializer
 from main.utilities import utilities, redis, sql
 
 
@@ -252,11 +254,12 @@ class DetectionViewSet(viewsets.ViewSet):
         return super(DetectionViewSet, self).dispatch(request, *args, **kwargs)
 
     queryset = Detection.objects.all()
-    serializer_class = DetectionSerializer
+    serializer_class = DetectionCreateSerializer
+    read_serializer_class = DetectionReadSerializer
 
     def list(self, request):
         queryset = Detection.objects.all()
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.read_serializer_class(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -275,14 +278,17 @@ class DetectionViewSet(viewsets.ViewSet):
 
 
 class DetectionStatus(generics.ListAPIView):
-    serializer_class = DetectionSerializer
+    serializer_class = DetectionReadSerializer
 
     def get_queryset(self):
-        initial_call = self.request.GET.get('initial_call')
-        last_entry = self.request.GET.get('last_entry')
-        num_entries = self.request.GET.get('num_entries')
+        try:
+            initial_call = self.request.GET.get('initial_call')
+            last_entry = self.request.GET.get('last_entry')
+            num_entries = self.request.GET.get('num_entries')
 
-        if initial_call.lower() == "true":
-            return Detection.objects.all().order_by('-detection_id')[:int(num_entries)]
-        else:
-            return Detection.objects.filter(detection_id__gt=int(last_entry)).order_by('-detection_id')
+            if initial_call.lower() == "true":
+                return Detection.objects.all().order_by('-detection_id')[:int(num_entries)]
+            else:
+                return Detection.objects.filter(detection_id__gt=int(last_entry)).order_by('-detection_id')
+        except AttributeError:
+            raise APIException("Invalid Parameters")
