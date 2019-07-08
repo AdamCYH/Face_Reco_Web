@@ -81,7 +81,7 @@ class MatchJobSerializer(serializers.ModelSerializer):
 
 
 class DetectionSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.user_id')
+    user = UserSerializer(many=False)
 
     def create(self, validated_data):
         return Detection.objects.create(
