@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -118,6 +118,10 @@ class LiveView(View):
 
 
 class FaceFeatureViewSet(viewsets.ViewSet):
+    """
+    This view is the REST api view for face feature creation, retrieving, updating, and listing
+    """
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(FaceFeatureViewSet, self).dispatch(request, *args, **kwargs)
@@ -156,6 +160,10 @@ class FaceFeatureViewSet(viewsets.ViewSet):
 
 
 class UserViewSet(viewsets.ViewSet):
+    """
+    This view is the REST api view for user creation, retrieving, and listing
+    """
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(UserViewSet, self).dispatch(request, *args, **kwargs)
@@ -184,6 +192,12 @@ class UserViewSet(viewsets.ViewSet):
 
 
 class MatchJobViewSet(viewsets.ViewSet):
+    """
+    This view is the REST api view for matchjob updating, retrieving, and listing
+    Since server creates the matchjob when user submit request, so the view does not provide
+    CREATE api
+    """
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(MatchJobViewSet, self).dispatch(request, *args, **kwargs)
@@ -229,6 +243,10 @@ class MatchJobViewSet(viewsets.ViewSet):
 
 
 class DetectionViewSet(viewsets.ViewSet):
+    """
+    This view is the REST api view for detection creation, retrieving, and listing
+    """
+
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super(DetectionViewSet, self).dispatch(request, *args, **kwargs)
@@ -254,3 +272,17 @@ class DetectionViewSet(viewsets.ViewSet):
         feature = get_object_or_404(queryset, pk=pk)
         serializer = self.serializer_class(feature)
         return Response(serializer.data)
+
+
+class DetectionStatus(generics.ListAPIView):
+    serializer_class = DetectionSerializer
+
+    def get_queryset(self):
+        initial_call = self.request.GET.get('initial_call')
+        last_entry = self.request.GET.get('last_entry')
+        num_entries = self.request.GET.get('num_entries')
+
+        if initial_call.lower() == "true":
+            return Detection.objects.all().order_by('-detection_id')[:int(num_entries)]
+        else:
+            return Detection.objects.filter(detection_id__gt=int(last_entry)).order_by('-detection_id')
