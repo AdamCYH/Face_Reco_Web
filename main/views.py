@@ -5,7 +5,9 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -17,6 +19,7 @@ from main.utilities import utilities, redis, sql
 
 # View for enrollment
 class EnrollmentView(View):
+
     # get request, return the template
     def get(self, request):
         return render(request, 'main/enrollment.html')
@@ -87,7 +90,7 @@ class RecognitionView(View):
 
         serializer = MatchJobSerializer(match_job)
         data = json.loads(str(JSONRenderer().render(serializer.data), encoding="utf8"))
-        time.sleep(10)
+        time.sleep(3)
         # data = {"job_id": 23, "match_users": [{"confidence_level": "97.80",
         #                                        "user": {"user_id": 1, "fname": "Adam", "lname": "Chiu", "age": 25,
         #                                                 "description": "Research Assistant at CyLab",
@@ -115,6 +118,10 @@ class LiveView(View):
 
 
 class FaceFeatureViewSet(viewsets.ViewSet):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(FaceFeatureViewSet, self).dispatch(request, *args, **kwargs)
+
     queryset = FaceFeature.objects.all()
     serializer_class = FaceFeatureSerializer
 
@@ -124,6 +131,7 @@ class FaceFeatureViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
+        print(request.data)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -149,6 +157,10 @@ class FaceFeatureViewSet(viewsets.ViewSet):
 
 
 class UserViewSet(viewsets.ViewSet):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserViewSet, self).dispatch(request, *args, **kwargs)
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -173,6 +185,10 @@ class UserViewSet(viewsets.ViewSet):
 
 
 class MatchJobViewSet(viewsets.ViewSet):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MatchJobViewSet, self).dispatch(request, *args, **kwargs)
+
     queryset = MatchJob.objects.all()
     serializer_class = MatchJobSerializer
 
