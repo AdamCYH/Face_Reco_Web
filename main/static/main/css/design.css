@@ -36,6 +36,12 @@
     background: url("/static/main/img/design_box3.png") no-repeat;
 }
 
+.design-block-vertical-2 {
+    width: 30%;
+    height: 100%;
+    float: right;
+    background: url("/static/main/img/design_box4.png") no-repeat;
+}
 
 .line-1 {
     border: solid 5px;
