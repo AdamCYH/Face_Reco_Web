@@ -37,8 +37,9 @@
 }
 
 .design-block-vertical-2 {
-    width: 30%;
+    width: 27%;
     height: 100%;
+    margin-top: 2.2rem;
     float: right;
     background: url("/static/main/img/design_box4.png") no-repeat;
 }
