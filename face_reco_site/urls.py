@@ -14,23 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from django.conf.urls.static import static
-from django.conf import settings
 
-from main.views import EnrollmentView, RecognitionView, LiveView, FaceFeatureViewSet, UserViewSet, MatchJobViewSet
+from main.views import EnrollmentView, RecognitionView, LiveView, FaceFeatureViewSet, UserViewSet, MatchJobViewSet, \
+    DetectionViewSet
 
 router = DefaultRouter()
 router.register(r'face_feature', FaceFeatureViewSet, base_name='face_feature')
 router.register(r'user', UserViewSet, base_name='user')
 router.register(r'match_job', MatchJobViewSet, base_name='match_job')
+router.register(r'detection', DetectionViewSet, base_name='detection')
 
 urlpatterns = [
-    path('', EnrollmentView.as_view()),
-    path('api/', include(router.urls)),
-    path('recognition', RecognitionView.as_view(), name='main-recognition_site'),
-    path('enrollment', EnrollmentView.as_view(), name='main-enrollment_site'),
-    path('live', LiveView.as_view(), name='main-live_site'),
+                  path('', EnrollmentView.as_view()),
+                  path('api/', include(router.urls)),
+                  path('recognition', RecognitionView.as_view(), name='main-recognition_site'),
+                  path('enrollment', EnrollmentView.as_view(), name='main-enrollment_site'),
+                  path('live', LiveView.as_view(), name='main-live_site'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,8 +12,8 @@ from rest_framework import viewsets, status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from main.models import FaceFeature, User, MatchJob, MatchUser
-from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer
+from main.models import FaceFeature, User, MatchJob, MatchUser, Detection
+from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionSerializer
 from main.utilities import utilities, redis, sql
 
 
@@ -131,7 +131,6 @@ class FaceFeatureViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        print(request.data)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -227,3 +226,31 @@ class MatchJobViewSet(viewsets.ViewSet):
         else:
             print(serializer.errors)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class DetectionViewSet(viewsets.ViewSet):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DetectionViewSet, self).dispatch(request, *args, **kwargs)
+
+    queryset = Detection.objects.all()
+    serializer_class = DetectionSerializer
+
+    def list(self, request):
+        queryset = Detection.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+    def retrieve(self, request, pk=None):
+        queryset = Detection.objects.all()
+        feature = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(feature)
+        return Response(serializer.data)

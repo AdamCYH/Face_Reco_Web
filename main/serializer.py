@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.utils import timezone
 from rest_framework import serializers
 
-from main.models import FaceFeature, User, MatchJob, MatchUser
+from main.models import FaceFeature, User, MatchJob, MatchUser, Detection
 
 
 class FaceFeatureSerializer(serializers.ModelSerializer):
@@ -38,11 +38,6 @@ class FaceFeatureSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-        # print(validated_data)
-        # user = User(**validated_data)
-        # print(user)
-        # user.enroll_time = timezone.now()
-        # return user
         return User.objects.create(**validated_data, enroll_time=timezone.now())
 
     class Meta:
@@ -83,3 +78,29 @@ class MatchJobSerializer(serializers.ModelSerializer):
         model = MatchJob
         fields = ('job_id', 'match_time', 'match_users')
         read_only_fields = ('job_id', 'match_time')
+
+
+class DetectionSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.user_id')
+
+    def create(self, validated_data):
+        return Detection.objects.create(
+            user_id=validated_data['user']['user_id'],
+            detect_camera=validated_data['detect_camera'],
+            location=validated_data['location'],
+            detected_photo_path=validated_data['detected_photo_path'],
+            detection_time=timezone.now(),
+            confidence_level=validated_data['confidence_level'])
+
+    def validate_user(self, value):
+        try:
+            User.objects.get(user_id=value)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError("user does not exist")
+        return value
+
+    class Meta:
+        model = Detection
+        fields = ('detection_id', 'user', 'detect_camera', 'location', 'detected_photo_path', 'detection_time',
+                  'confidence_level')
+        read_only_fields = ('detection_id', 'detection_time')
