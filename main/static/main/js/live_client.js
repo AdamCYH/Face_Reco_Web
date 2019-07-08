@@ -100,7 +100,7 @@ function start() {
 }
 
 function onIceCandidate(candidate) {
-    console.log('Local candidate' + JSON.stringify(candidate));
+    // console.log('Local candidate' + JSON.stringify(candidate));
 
     var message = {
         id: 'onIceCandidate',
@@ -179,7 +179,7 @@ function setState(nextState) {
 
 function sendMessage(message) {
     var jsonMessage = JSON.stringify(message);
-    console.log('Senging message: ' + jsonMessage);
+    // console.log('Senging message: ' + jsonMessage);
     ws.send(jsonMessage);
 }
 
