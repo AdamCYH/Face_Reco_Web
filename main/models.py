@@ -38,3 +38,16 @@ class MatchUser(models.Model):
     class Meta:
         db_table = 'match_users'
         ordering = ['job', '-confidence_level']
+
+
+class Detection(models.Model):
+    detection_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    detect_camera = models.CharField(max_length=200, null=True)
+    location = models.CharField(max_length=200, null=True)
+    detected_photo_path = models.CharField(max_length=500, null=True)
+    detection_time = models.DateTimeField(null=True)
+    confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+
+    class Meta:
+        db_table = 'detections'
