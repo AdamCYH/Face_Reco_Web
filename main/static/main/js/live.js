@@ -15,7 +15,7 @@ $(document).ready(function () {
     window.setInterval(get_detection_update, 10000);
 
     $(document).on('mousedown', '.detect_box', function () {
-        console.log($(this).attr('data-uid'))
+        console.log($(this).attr('data-uid'));
         show_detection_detail();
         get_user_details(2);
     });
@@ -30,8 +30,8 @@ function setupPage() {
     setState(I_CAN_START);
     $("#control-title").html('STATUS');
     $("#control-subtitle").html('Stopped');
-    $("#button-label").html('')
-    $("#control-button-div").append("<a id='control-button' hidden></a>");
+    $("#button-label").html('');
+    $("#button-label").append("<a id='control-button'></a>");
     $("#button-label").attr('for', 'control-button');
 }
 
@@ -54,8 +54,6 @@ function resetVideoSize() {
     var video = $('#videoOutput');
     video_width = video.width();
     video_height = video.height();
-    var video_content = $(".video_content");
-    video_content.height(video_content.width() / 1.3333);
 }
 
 function show_detection_detail() {

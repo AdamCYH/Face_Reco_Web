@@ -1,3 +1,7 @@
+.container {
+    width: 1440px;
+}
+
 .content {
     height: 42rem;
     min-width: 1200px;
@@ -18,7 +22,7 @@
 }
 
 .content-live {
-    width: 83%;
+    width: 85%;
     height: 100%;
     float: left;
     margin: 0 1rem;
@@ -112,7 +116,7 @@
 
 .video_bottom {
     position: absolute;
-    bottom: -2rem;
+    bottom: -1.7rem;
     width: 100%;
     height: 1.5rem;
     background: rgba(0, 0, 0, 0.5);
@@ -181,7 +185,7 @@
     display: block;
 }
 
-#detection-detail{
+#detection-detail {
     overflow: initial;
 }
 
@@ -255,5 +259,17 @@
 @media (min-width: 1600px) {
     .content {
         height: 52rem;
+    }
+
+    .container {
+        width: 1900px;
+    }
+
+    .content-left {
+        width: 62%;
+    }
+
+    .content-live {
+        width: 85%;
     }
 }

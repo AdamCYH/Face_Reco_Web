@@ -30,10 +30,12 @@
 }
 
 .design-block-vertical-1 {
-    width: 12%;
+    width: 10%;
     height: 100%;
     float: left;
     background: url("/static/main/img/design_box3.png") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
 
 .design-block-vertical-2 {

@@ -29,7 +29,7 @@ const I_AM_STARTING = 2;
 window.onload = function () {
     videoOutput = document.getElementById('videoOutput');
     setState(I_CAN_START);
-    start();
+    // start();
 };
 
 window.onbeforeunload = function () {
@@ -158,24 +158,25 @@ function setState(nextState) {
     switch (nextState) {
         case I_CAN_START:
             $('#control-button').attr('onclick', 'start()');
+            $("#control-button").html('START');
             $("#button-label").removeClass("stop-label");
             $("#button-label").addClass("start-label");
-            $("#button-label").html('START');
+
             break;
 
         case I_CAN_STOP:
             $('#control-button').attr('onclick', 'stop()');
+            $("#control-button").html('STOP');
             $("#button-label").removeClass("start-label");
             $("#button-label").removeClass("starting-label");
             $("#button-label").addClass("stop-label");
-            $("#button-label").html('STOP');
             break;
 
         case I_AM_STARTING:
             $('#control-button').attr('onclick', '');
+            $("#control-button").html('STARTING');
             $("#button-label").removeClass("start-label");
             $("#button-label").addClass("starting-label");
-            $("#button-label").html('STARTING');
             break;
 
         default:
