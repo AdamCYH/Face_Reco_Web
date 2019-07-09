@@ -34,7 +34,7 @@ def enroll_to_redis(user):
         'task_id': TASK_FACE_ENROLLMENT,
         'user_id': user.user_id,
     }
-    my_server.publish('enroll-channel', json.dumps(task_info))
+    my_server.publish('FR-channel', json.dumps(task_info))
 
     return 1
 
@@ -48,7 +48,7 @@ def recognition_redis(photo_path, job_id):
         'photo_path': os.path.abspath(photo_path),
         'job_id': job_id
     }
-    my_server.publish('recognition-channel', json.dumps(task_info))
+    my_server.publish('FR-channel', json.dumps(task_info))
     return 1
 
 
@@ -75,12 +75,10 @@ def load_feature_to_redis(users):
             'photo_path': os.path.abspath(user['user']['photo_path']),
             'feature': user['features']
         }
-        print('FR:%d' % user_id, user_info)
         my_server.set('FR:%d' % user_id, json.dumps(user_info))
 
         task_info = {
             'task_id': TASK_FACE_LOAD,
             'user_id': user_id
         }
-        print(task_info)
-        my_server.publish('load-channel', json.dumps(task_info))
+        my_server.publish('FR-channel', json.dumps(task_info))
