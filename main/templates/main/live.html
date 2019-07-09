@@ -16,19 +16,7 @@
             <div class="design-block-vertical-1">
             </div>
             <div class="content-live">
-
                 {% include 'main/modules/control_module.html' %}
-                {#                    <div class="video_header">#}
-                {#                        <div class="video_status_bar font-3">Status: <span#}
-                {#                                id="video_status_message">Stopped</span></div>#}
-                {#                        <div class="video_control_button">#}
-                {#                            <a href="javascript: max_min_screen()" id="btn-full-scrn">#}
-                {#                                <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>#}
-                {#                            <a id="stop" class="button btn-stop">Stop</a>#}
-                {#                            <a id="start" class="button btn-start">Start</a>#}
-                {#                        </div>#}
-                {#                    </div>#}
-
                 <div class="live-wrapper border-1">
                     <div class="border-special" id="live-border-special">
 
@@ -40,7 +28,7 @@
                                 <video class="videoOutput" id="videoOutput" autoplay></video>
 
                                 <div class="video_bottom font-3">
-                                    <span id="address">Click bounding box to see detection information.</span>
+                                    <span id="video-info">Click bounding box to see detection information.</span>
                                     <a href="javascript: max_min_screen()" id="btn-full-scrn">
                                         <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>
                                 </div>
@@ -66,8 +54,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="detection-content on">
-                    <table class="detection-table">
+                <div class="detection-content on" id="detection-list">
+                    <table id="detection-table">
                         <thead>
                         <tr>
                             <th>NAME</th>
@@ -76,12 +64,32 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                 </div>
-                <div class="detection-content ">
-
+                <div class="detection-content border-1" id="detection-detail">
+                    <div id="detected_img_container">
+                        <img id='img_col' src=''>
+                    </div>
+                    <div class="table-wrapper">
+                        <table style="display: table" id="info_table">
+                            <tr>
+                                <td>Name</td>
+                                <td class="detected_info" id="name_col"></td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td class="detected_info" id="age_col"></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>
+                                    <pre class="detected_info" id="description_col"></pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% include "main/modules/spin_rings.html" %}
                 </div>
             </div>
 

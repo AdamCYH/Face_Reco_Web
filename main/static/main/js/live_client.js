@@ -26,14 +26,19 @@ const I_CAN_START = 0;
 const I_CAN_STOP = 1;
 const I_AM_STARTING = 2;
 
+window.onload = function () {
+    videoOutput = document.getElementById('videoOutput');
+    setState(I_CAN_START);
+    start();
+};
 
 window.onbeforeunload = function () {
     ws.close();
 };
 
 ws.onmessage = function (message) {
-    $(".detect_box").remove();
     var parsedMessage = JSON.parse(message.data);
+    $(".detect_box").remove();
     // console.info('Received message: ' + message.data);
     switch (parsedMessage.id) {
         case 'startResponse':
@@ -59,8 +64,9 @@ ws.onmessage = function (message) {
                 var x;
                 for (x in faces) {
                     var bbox = faces[x].bbox;
-                    var detect_box_id = "detect_box_" + x;
-                    $("#overlay").append("<div class='detect_box' id=" + detect_box_id + "></div>")
+                    var detect_box_id = "boundary_" + x;
+                    var matching_user = faces[x].matching.user_id;
+                    $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + matching_user + "></div>");
                     $("#" + detect_box_id).css('width', bbox.width * video_width + "px");
                     $("#" + detect_box_id).css('height', bbox.height * video_height + "px");
                     $("#" + detect_box_id).css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
@@ -78,11 +84,11 @@ ws.onmessage = function (message) {
 
 function start() {
     $("#control-subtitle").html("Initiating");
-    console.log('Starting video call ...')
+    console.log('Starting video call ...');
 
     // Disable start button
     setState(I_AM_STARTING);
-    console.log(videoOutput);
+
     showSpinner(videoOutput);
 
     console.log('Creating WebRtcPeer and generating local sdp offer ...');
@@ -151,23 +157,25 @@ function stop() {
 function setState(nextState) {
     switch (nextState) {
         case I_CAN_START:
-            $('#start').attr('disabled', false);
-            $('#start').attr('onclick', 'start()');
-            $('#stop').attr('disabled', true);
-            $('#stop').removeAttr('onclick');
+            $('#control-button').attr('onclick', 'start()');
+            $("#button-label").removeClass("stop-label");
+            $("#button-label").addClass("start-label");
+            $("#button-label").html('START');
             break;
 
         case I_CAN_STOP:
-            $('#start').attr('disabled', true);
-            $('#stop').attr('disabled', false);
-            $('#stop').attr('onclick', 'stop()');
+            $('#control-button').attr('onclick', 'stop()');
+            $("#button-label").removeClass("start-label");
+            $("#button-label").removeClass("starting-label");
+            $("#button-label").addClass("stop-label");
+            $("#button-label").html('STOP');
             break;
 
         case I_AM_STARTING:
-            $('#start').attr('disabled', true);
-            $('#start').removeAttr('onclick');
-            $('#stop').attr('disabled', true);
-            $('#stop').removeAttr('onclick');
+            $('#control-button').attr('onclick', '');
+            $("#button-label").removeClass("start-label");
+            $("#button-label").addClass("starting-label");
+            $("#button-label").html('STARTING');
             break;
 
         default:
@@ -185,15 +193,15 @@ function sendMessage(message) {
 
 function showSpinner() {
     for (var i = 0; i < arguments.length; i++) {
-        arguments[i].css("background", "center transparent url('/static/main/img/loading_live.gif') no-repeat");
-        arguments[i].css("background-size", "40rem");
+        arguments[i].style.background = "center transparent url('/static/main/img/loading_live.gif') no-repeat";
+        arguments[i].style.backgroundSize = '40rem';
     }
 }
 
 function hideSpinner() {
     for (var i = 0; i < arguments.length; i++) {
         arguments[i].src = '';
-        arguments[i].css("background", "");
+        arguments[i].style.background = '';
     }
 }
 
