@@ -74,7 +74,7 @@ class RecognitionView(View):
         image_data = request.POST.get("img_data")
 
         # save uploaded image
-        photo_path = utilities.save_image(image_data, "recognition", image_name)
+        photo_path = utilities.save_image(image_data, "recognition", img_name=image_name)
 
         # create a new recognition job
         match_job = sql.create_job()

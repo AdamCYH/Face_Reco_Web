@@ -7,12 +7,13 @@ RECOGNITION_IMG_UPLOAD = settings.RECOGNITION_IMG_UPLOAD
 ENROLLMENT_IMG_UPLOAD = settings.ENROLLMENT_IMG_UPLOAD
 
 
-def save_image(img_data, type, fname, lname="", img_name=""):
+def save_image(img_data, request_type, fname="", lname="", img_name=""):
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M")
-    if type == "recognition":
+
+    if request_type == "recognition":
         img_storage_path = RECOGNITION_IMG_UPLOAD
         photo_path = "{}/{}_{}.png".format(img_storage_path, img_name, timestamp)
-    elif type == "enrollment":
+    elif request_type == "enrollment":
         img_storage_path = ENROLLMENT_IMG_UPLOAD
         photo_path = "{}/{}_{}_{}.png".format(img_storage_path, fname, lname, timestamp)
 
