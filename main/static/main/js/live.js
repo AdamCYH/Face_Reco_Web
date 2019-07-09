@@ -19,10 +19,10 @@ $(document).ready(function () {
         show_detection_detail();
         get_user_details(2);
     });
-    // $(document).on('mousedown', '#video-info', function () {
-    //     show_detection_detail();
-    //     get_user_details(2);
-    // });
+    $(document).on('mousedown', '#video-info', function () {
+        show_detection_detail();
+        get_user_details(2);
+    });
 });
 
 function setupPage() {

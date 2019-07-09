@@ -249,11 +249,18 @@
     font-size: 0.85rem;
     color: #dce0f3;
     font-family: Trebuchet MS, sans-serif;
-    padding: 0.8rem 1rem;
+    padding: 0.3rem 1rem;
 }
 
 #info_table pre {
     padding: 0;
+}
+
+#info_table td:nth-child(even) {
+    background-image: linear-gradient(rgba(100, 100, 100, 0.5) 1px, transparent 0),
+    linear-gradient(90deg, rgba(100, 100, 100, 0.5) 1px, transparent 0);
+    background-size: 10px 10px, 10px 10px;
+    border: 15px solid black;
 }
 
 @media (min-width: 1600px) {
