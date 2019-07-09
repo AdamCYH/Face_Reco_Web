@@ -14,9 +14,14 @@ TASK_LOAD_USERS = 3
 # For face recognition project
 TASK_FACE_ENROLLMENT = 101
 TASK_FACE_RECOGNITION = 102
+TASK_FACE_LOAD = 103
 
 
 def enroll_to_redis(user):
+    """
+    Enrollment function. it put user info into redis, and publish a task into channel for application to
+    process face feature extraction
+    """
     # Create user and save it into redis db
     user_info = {
         'id': user.user_id,
@@ -35,9 +40,12 @@ def enroll_to_redis(user):
 
 
 def recognition_redis(photo_path, job_id):
+    """
+    Recognition function. Publish recognition task to the channel for face recognition.
+    """
     task_info = {
         'task_id': TASK_FACE_RECOGNITION,
-        'photo_path': photo_path,
+        'photo_path': os.path.abspath(photo_path),
         'job_id': job_id
     }
     my_server.publish('recognition-channel', json.dumps(task_info))
@@ -54,18 +62,25 @@ def result_from_redis(job_id):
 
 # load feature from SQL database to redis, so SDK can extract face feature again.
 def load_feature_to_redis(users):
-    for v_id, user in users.items():
+    """
+    Feature loading function. extract face feature from persistent db, put into redis and publish load task to the channel
+    for application to read feature data for incoming recognition.
+    """
+    for user in users:
+        user_id = int(user['user']['user_id'])
         # Create user and save it into redis db
         user_info = {
-            'id': int(v_id),
-            'name': '%s %s' % (user.fname, user.lname),
-            'photo_path': os.path.abspath(user.photo_path),
-            'feature': user.face_feature.features
+            'id': user_id,
+            'name': '%s %s' % (user['user']['fname'], user['user']['lname']),
+            'photo_path': os.path.abspath(user['user']['photo_path']),
+            'feature': user['features']
         }
-        my_server.set('user:%d' % v_id, json.dumps(user_info))
+        print('FR:%d' % user_id, user_info)
+        my_server.set('FR:%d' % user_id, json.dumps(user_info))
 
         task_info = {
-            'task_id': TASK_LOAD_USERS,
-            'user_id': int(v_id)
+            'task_id': TASK_FACE_LOAD,
+            'user_id': user_id
         }
-        my_server.publish('test-channel', json.dumps(task_info))
+        print(task_info)
+        my_server.publish('load-channel', json.dumps(task_info))

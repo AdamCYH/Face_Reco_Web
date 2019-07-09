@@ -80,7 +80,7 @@ class MatchJobSerializer(serializers.ModelSerializer):
         read_only_fields = ('job_id', 'match_time')
 
 
-class DetectionCreateSerializer(serializers.ModelSerializer):
+class DetectionSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.user_id')
 
     def create(self, validated_data):
@@ -104,6 +104,14 @@ class DetectionCreateSerializer(serializers.ModelSerializer):
         fields = ('detection_id', 'user', 'detect_camera', 'location', 'detected_photo_path', 'detection_time',
                   'confidence_level')
         read_only_fields = ('detection_id', 'detection_time')
+
+
+class FaceFeatureReadSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = FaceFeature
+        fields = ('user', 'features')
 
 
 class DetectionReadSerializer(serializers.ModelSerializer):

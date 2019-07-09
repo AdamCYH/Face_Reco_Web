@@ -20,7 +20,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from main.views import EnrollmentView, RecognitionView, LiveView, FaceFeatureViewSet, UserViewSet, MatchJobViewSet, \
-    DetectionViewSet, DetectionStatus
+    DetectionViewSet, DetectionStatus, LoadFeatures
 
 router = DefaultRouter()
 router.register(r'face_feature', FaceFeatureViewSet, base_name='face_feature')
@@ -35,4 +35,5 @@ urlpatterns = [
                   path('enrollment', EnrollmentView.as_view(), name='main-enrollment_site'),
                   path('live', LiveView.as_view(), name='main-live_site'),
                   path('api/detection_update', DetectionStatus.as_view(), name='main-detection_update'),
+                  path('api/load_feature', LoadFeatures.as_view(), name='main-load_feature')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

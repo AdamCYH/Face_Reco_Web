@@ -12,10 +12,11 @@ from rest_framework import viewsets, status, generics
 from rest_framework.exceptions import APIException
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from main.models import FaceFeature, User, MatchJob, MatchUser, Detection
-from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionCreateSerializer, \
-    DetectionReadSerializer
+from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionSerializer, \
+    DetectionReadSerializer, FaceFeatureReadSerializer
 from main.utilities import utilities, redis, sql
 
 
@@ -35,7 +36,6 @@ class EnrollmentView(View):
         image_data = request.POST.get("img_holder")
         photo_path = utilities.save_image(image_data, "enrollment", fname=fname, lname=lname)
 
-        # user = sql.insert_visitor(fname, lname, age, description, photo_path)
         if age == "":
             age = None
         if description == "":
@@ -254,7 +254,7 @@ class DetectionViewSet(viewsets.ViewSet):
         return super(DetectionViewSet, self).dispatch(request, *args, **kwargs)
 
     queryset = Detection.objects.all()
-    serializer_class = DetectionCreateSerializer
+    serializer_class = DetectionSerializer
     read_serializer_class = DetectionReadSerializer
 
     def list(self, request):
@@ -292,3 +292,14 @@ class DetectionStatus(generics.ListAPIView):
                 return Detection.objects.filter(detection_id__gt=int(last_entry)).order_by('-detection_id')
         except AttributeError:
             raise APIException("Invalid Parameters")
+
+
+class LoadFeatures(APIView):
+    def get(self, request, format=None):
+        """
+        Load face feature to Redis, so SDK can use for recognition
+        """
+        queryset = FaceFeature.objects.all()
+        users = FaceFeatureReadSerializer(queryset, many=True)
+        redis.load_feature_to_redis(users.data)
+        return Response({"Status": "Successful"}, status=status.HTTP_200_OK)
