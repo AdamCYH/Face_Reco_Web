@@ -39,11 +39,16 @@ function doMatch() {
             context: document.body,
             success: function (data) {
                 $(".scan-overlay").css("display", "none");
-                if (data.data.match_users.length === 0) {
-                    $("#detected_img_container").append("<div class='center' id='no_match_div'>No Match Found.</div>");
+                if (data.data.match_users === undefined || data.data.match_users === null) {
+                    $("#detected_img_container").append("<div class='center' id='no_match_div'>" + data.data + "</div>");
                 } else {
-                    $("#detected_img_container").append("<img class='center' id='img_col'>");
-                    display_result(data.data.match_users)
+                    if (data.data.match_users.length === 0) {
+                        console.log("no match found");
+                        $("#detected_img_container").append("<div class='center' id='no_match_div'>No Match Found.</div>");
+                    } else {
+                        $("#detected_img_container").append("<img class='center' id='img_col'>");
+                        display_result(data.data.match_users)
+                    }
                 }
             }
         });
