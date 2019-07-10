@@ -1,12 +1,29 @@
-var initial_call = true;
-var last_entry = 0;
+let initial_call = true;
+let last_entry = 0;
 const date_format_option = {month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"};
 var videoOutput;
+let video_content;
+let detection_detail;
+let detection_list;
+let control_title;
+let control_subtitle;
+let button_label;
+let list_indicator;
+let detail_indicator;
+let detection_header_title;
 
 $(document).ready(function () {
-    setupPage();
-
+    detection_detail = $("#detection-detail");
+    detection_list = $("#detection-list");
+    control_title = $("#control-title");
+    control_subtitle = $("#control-subtitle");
+    button_label = $("#button-label");
+    list_indicator = $("#detection-list-indicator");
+    detail_indicator = $("#detection-detail-indicator");
     videoOutput = $("#videoOutput");
+    video_content = $("#video_content");
+    detection_header_title = $("#detection-header-title");
+    setupPage();
 
     videoOutput.resize(resetVideoSize);
     $(window).resize(resetVideoSize);
@@ -28,25 +45,29 @@ $(document).ready(function () {
 function setupPage() {
     $("file-upload").remove();
     setState(I_CAN_START);
-    $("#control-title").html('STATUS');
-    $("#control-subtitle").html('Stopped');
-    $("#button-label").html('');
-    $("#button-label").append("<a id='control-button'></a>");
-    $("#button-label").attr('for', 'control-button');
+    control_title.html('STATUS');
+    control_subtitle.html('Stopped');
+    button_label.html('');
+    button_label.append("<a id='control-button'></a>");
+    button_label.attr('for', 'control-button');
 }
 
 function max_min_screen() {
     var live_container = $("#live_container");
     if (live_container.hasClass("full_screen")) {
-        $("#detection-detail").removeClass('detection-content-full-screen');
+        detection_detail.removeClass('detection-content-full-screen');
         live_container.removeClass("full_screen");
         live_container.find(".max_min_icon").attr('src', '/static/main/img/maximize_s.png');
-        $("#video_content").css('width', 'unset');
+        video_content.css('width', 'unset');
+        detection_detail.removeClass('fade-in');
+        detection_detail.removeClass('fade-out');
         resetVideoSize();
     } else {
         live_container.find(".max_min_icon").attr('src', '/static/main/img/minimize_s.png');
         live_container.addClass("full_screen");
-        $("#video_content").width($("#videoOutput").width());
+        video_content.width($("#videoOutput").width());
+        detection_detail.removeClass('fade-in');
+        detection_detail.removeClass('fade-out');
         resetVideoSize();
     }
 }
@@ -58,8 +79,11 @@ function resetVideoSize() {
 }
 
 function show_detection_detail() {
+    detection_detail.removeClass('fade-in');
+    detection_detail.addClass('fade-out');
+
     if ($("#live_container").hasClass('full_screen')) {
-        $("#detection-detail").addClass('detection-content-full-screen');
+        detection_detail.addClass('detection-content-full-screen');
     }
 
     if ($("#name_col").html().length == 0) {
@@ -67,26 +91,42 @@ function show_detection_detail() {
     } else {
         $("#info_table").css('display', 'table');
     }
-    $("#detection-list").removeClass('on');
-    $("#detection-detail").addClass('on');
-    $("#detection-list-indicator").removeClass('on');
-    $("#detection-detail-indicator").addClass('on');
-    $("#detection-header-title").html('DETAILS');
-    // $("#detection-detail").animate({
-    //     opacity: 0.25,
-    //     left: "+=50",
-    //     height: "toggle"
-    // }, 5000, function () {
-    //     // Animation complete.
-    // });
+    detection_detail.addClass('on');
+    list_indicator.removeClass('on');
+    detail_indicator.addClass('on');
+    detection_header_title.html('DETAILS');
+    detection_detail.removeClass('fade-out');
+    detection_detail.addClass('fade-in');
+
 }
 
 function hide_detection_detail() {
-    $("#detection-detail").removeClass('on');
-    $("#detection-list").addClass('on');
-    $("#detection-detail-indicator").removeClass('on');
-    $("#detection-list-indicator").addClass('on');
-    $("#detection-header-title").html('DETECTIONS');
+    detection_detail.addClass('fade-out');
+    detection_detail.removeClass('fade-in');
+    detection_detail.removeClass('on');
+    detail_indicator.removeClass('on');
+    list_indicator.addClass('on');
+    detection_header_title.html('DETECTIONS');
+}
+
+function fadeout(element) {
+    element.animate({
+        opacity: 0.25,
+        left: "+=50",
+        height: "toggle"
+    }, 5000, function () {
+        // Animation complete.
+    });
+}
+
+function fadeout(element) {
+    element.animate({
+        opacity: 0.25,
+        left: "+=50",
+        height: "toggle"
+    }, 5000, function () {
+        // Animation complete.
+    });
 }
 
 function get_detection_update(num_entries) {
