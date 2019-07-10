@@ -20,8 +20,6 @@ var ws;
 var videoOutput;
 var webRtcPeer;
 var state = null;
-var video_width;
-var video_height;
 
 const I_CAN_START = 0;
 const I_CAN_STOP = 1;
@@ -40,17 +38,17 @@ window.onload = function () {
         switch (parsedMessage.id) {
             case 'startResponse':
                 startResponse(parsedMessage);
-                $("#control-subtitle").html("Building connections");
+                control_subtitle.html("Building connections");
                 break;
             case 'error':
                 if (state == I_AM_STARTING) {
                     setState(I_CAN_START);
                 }
                 onError('Error message from server: ' + parsedMessage.message);
-                $("#control-subtitle").html('Error: ' + parsedMessage.message);
+                control_subtitle.html('Error: ' + parsedMessage.message);
                 break;
             case 'iceCandidate':
-                $("#control-subtitle").html("Running");
+                control_subtitle.html("Running");
                 webRtcPeer.addIceCandidate(parsedMessage.candidate);
                 break;
             case 'faceFound':
@@ -60,6 +58,7 @@ window.onload = function () {
                     faces = facesList.face;
                     var x;
                     for (x in faces) {
+                        send_detection(faces[x].matching.user_id, faces[x].matching.score);
                         var bbox = faces[x].bbox;
                         var detect_box_id = "boundary_" + x;
                         var matching_user = faces[x].matching.user_id;
@@ -80,6 +79,7 @@ window.onload = function () {
     };
     ws.onopen = function () {
         console.log('connected');
+        control_subtitle.html("Ready");
     };
 
     ws.onclose = function (evt) {
@@ -89,7 +89,7 @@ window.onload = function () {
         } else {
             ws = null;
             console.log('ws connection error');
-            $("#control-subtitle").html("System error, please contact admin or refresh and try again");
+            control_subtitle.html("System error, please contact admin or refresh and try again");
         }
     };
 
@@ -106,7 +106,7 @@ window.onbeforeunload = function () {
 
 
 function start() {
-    $("#control-subtitle").html("Initiating");
+    control_subtitle.html("Initiating");
     console.log('Starting video call ...');
 
     // Disable start button
@@ -151,7 +151,7 @@ function onOffer(error, offerSdp) {
 
 function onError(error) {
     console.error(error);
-    $("#control-subtitle").html("System error, please contact admin or refresh and try again");
+    control_subtitle.html("System error, please contact admin or refresh and try again");
 }
 
 function startResponse(message) {
@@ -162,7 +162,7 @@ function startResponse(message) {
 
 function stop() {
     console.log('Stopping video call ...');
-    $("#control-subtitle").html("Stopping");
+    control_subtitle.html("Stopping");
     $(".detect_box").remove();
     setState(I_CAN_START);
     if (webRtcPeer) {
@@ -175,7 +175,7 @@ function stop() {
         sendMessage(message);
     }
     $(".detect_box").remove();
-    $("#control-subtitle").html("Stopped");
+    control_subtitle.html("Stopped");
     hideSpinner(videoOutput);
 }
 
@@ -218,7 +218,7 @@ function sendMessage(message) {
     try {
         ws.send(jsonMessage);
     } catch (e) {
-        $("#control-subtitle").html("System error, please contact admin or refresh and try again");
+        control_subtitle.html("System error, please contact admin or refresh and try again");
         setState(I_CAN_START);
         hideSpinner(videoOutput)
     }

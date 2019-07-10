@@ -11,6 +11,9 @@ let button_label;
 let list_indicator;
 let detail_indicator;
 let detection_header_title;
+let detection_map = {};
+let video_width;
+let video_height;
 
 $(document).ready(function () {
     detection_detail = $("#detection-detail");
@@ -172,6 +175,45 @@ function get_user_details(u_id) {
             console.log("Service error, please contact admin.")
         }
     })
+}
+
+function send_detection(u_id, conf_lvl) {
+    if (u_id === -1) {
+        return;
+    }
+    if (detection_map.has(u_id)) {
+        if (Date.now() - detection_map.get(u_id) > 60000) {
+            detection_map.delete(u_id)
+        } else {
+            return;
+        }
+    } else {
+        detection_map.set(u_id, Date.now());
+        do_send_detection(u_id, conf_lvl);
+    }
+}
+
+function do_send_detection(u_id, conf_lvl) {
+    $.ajax({
+        url: "api/detection",
+        dataType: "json",
+        type: 'POST',
+        data: {
+            'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),
+            user: u_id,
+            detect_camera: "Camera 1",
+            location: "Lab",
+            detected_photo_path: "",
+            confidence_level: conf_lvl
+        },
+        context: document.body,
+        success: function (data) {
+
+        },
+        error: function (data) {
+            console.log("Error in sending detection data.")
+        }
+    });
 }
 
 String.prototype.format = String.prototype.f = function () {

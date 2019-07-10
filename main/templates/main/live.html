@@ -47,10 +47,12 @@
                     <div class="font-3">REAL-TIME DETECTION ON LIVE VIDEO</div>
                     <div class="indicator-module">
                         <div class="indicator-border border-1">
-                            <div class="indicator on" id="detection-list-indicator" onclick="hide_detection_detail()"></div>
+                            <div class="indicator on" id="detection-list-indicator"
+                                 onclick="hide_detection_detail()"></div>
                         </div>
                         <div class="indicator-border border-1">
-                            <div class="indicator" id="detection-detail-indicator" onclick="show_detection_detail()"></div>
+                            <div class="indicator" id="detection-detail-indicator"
+                                 onclick="show_detection_detail()"></div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +95,7 @@
                     {% include "main/modules/spin_rings.html" %}
                 </div>
             </div>
-
+            {% csrf_token %}
             <div class="design-block-vertical-2"></div>
         </div>
     </div>
