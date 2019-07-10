@@ -1,7 +1,7 @@
 let initial_call = true;
 let last_entry = 0;
 const date_format_option = {month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"};
-var video_output;
+let video_output;
 let video_content;
 let detection_detail;
 let detection_list;
@@ -71,14 +71,11 @@ function max_min_screen() {
 }
 
 function resetVideoSize() {
-    var video = $('#videoOutput');
-    video_width = video.width();
-    video_height = video.height();
+    video_width = video_output.width();
+    video_height = video_output.height();
 }
 
 function show_detection_detail() {
-    // detection_detail.removeClass('fade-in');
-    // detection_detail.addClass('fade-out');
     fadeout(detection_detail);
 
     if ($("#live_container").hasClass('full_screen')) {
@@ -94,16 +91,12 @@ function show_detection_detail() {
     list_indicator.removeClass('on');
     detail_indicator.addClass('on');
     detection_header_title.html('DETAILS');
-    // detection_detail.removeClass('fade-out');
-    // detection_detail.addClass('fade-in');
     fadein(detection_detail);
 
 }
 
 function hide_detection_detail() {
     fadeout(detection_detail);
-    // detection_detail.addClass('fade-out');
-    // detection_detail.removeClass('fade-in');
     detection_detail.removeClass('on');
     detail_indicator.removeClass('on');
     list_indicator.addClass('on');
