@@ -209,6 +209,15 @@
     border-image: url(/static/main/img/border.png) 13 stretch;
 }
 
+.close-icon {
+    font-size: 2rem;
+    line-height: 2rem;
+    background-color: transparent;
+    left: 0.5rem;
+    position: relative;
+    color: #6c819e;
+}
+
 @media (min-width: 1600px) {
 
     .line-2 {

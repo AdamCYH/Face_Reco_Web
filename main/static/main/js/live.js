@@ -15,12 +15,12 @@ $(document).ready(function () {
     window.setInterval(get_detection_update, 10000);
 
     $(document).on('mousedown', '.detect_box', function () {
+
         console.log($(this).attr('data-uid'));
-        show_detection_detail();
         get_user_details(2);
+
     });
     $(document).on('mousedown', '#video-info', function () {
-        show_detection_detail();
         get_user_details(2);
     });
 });
@@ -38,6 +38,7 @@ function setupPage() {
 function max_min_screen() {
     var live_container = $("#live_container");
     if (live_container.hasClass("full_screen")) {
+        $("#detection-detail").removeClass('detection-content-full-screen');
         live_container.removeClass("full_screen");
         live_container.find(".max_min_icon").attr('src', '/static/main/img/maximize_s.png');
         $("#video_content").css('width', 'unset');
@@ -57,8 +58,20 @@ function resetVideoSize() {
 }
 
 function show_detection_detail() {
+    if ($("#live_container").hasClass('full_screen')) {
+        $("#detection-detail").addClass('detection-content-full-screen');
+    }
+
+    if ($("#name_col").html().length == 0) {
+        $("#info_table").css('display', 'none');
+    } else {
+        $("#info_table").css('display', 'table');
+    }
     $("#detection-list").removeClass('on');
     $("#detection-detail").addClass('on');
+    $("#detection-list-indicator").removeClass('on');
+    $("#detection-detail-indicator").addClass('on');
+    $("#detection-header-title").html('DETAILS');
     // $("#detection-detail").animate({
     //     opacity: 0.25,
     //     left: "+=50",
@@ -66,6 +79,14 @@ function show_detection_detail() {
     // }, 5000, function () {
     //     // Animation complete.
     // });
+}
+
+function hide_detection_detail() {
+    $("#detection-detail").removeClass('on');
+    $("#detection-list").addClass('on');
+    $("#detection-detail-indicator").removeClass('on');
+    $("#detection-list-indicator").addClass('on');
+    $("#detection-header-title").html('DETECTIONS');
 }
 
 function get_detection_update(num_entries) {
@@ -108,11 +129,11 @@ function get_user_details(u_id) {
         type: "GET",
         context: document.body,
         success: function (data) {
-            console.log(data)
             $("#name_col").html(data.fname + " " + data.lname);
             $("#age_col").html(data.age);
             $("#description_col").html(data.description);
             $("#img_col").attr('src', data.photo_path);
+            show_detection_detail();
         },
         error: function (data) {
             console.log(data);
