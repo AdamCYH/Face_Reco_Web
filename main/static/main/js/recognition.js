@@ -63,7 +63,7 @@ function display_result(users) {
         $("#detection_container").append(
             "<div class='detection_box left-border center-parent'>" +
             "<img class='thumbnail center' src='" + curr_user.user.photo_path + "'>" +
-            "<div class='conf-level-container'>" + curr_user.confidence_level + "%</div>" +
+            "<div class='conf-level-container'>" + Math.round(curr_user.confidence_level * 100) / 100 + "%</div>" +
             "<div class='info_holder' hidden>" +
             "<span class='name_holder'>" + curr_user.user.fname + " " + curr_user.user.lname + "</span>" +
             "<span class='age_holder'>" + curr_user.user.age + "</span>" +
