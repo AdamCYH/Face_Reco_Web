@@ -223,18 +223,6 @@ class MatchJobViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(feature)
         return Response(serializer.data)
 
-    # def update(self, request, pk=None):
-    #     #     job_id = pk
-    #     #     exist_jobs = MatchUser.objects.filter(job_id=job_id)
-    #     #     exist_jobs.delete()
-    #     #
-    #     #     serializer = self.serializer_class(data=request.data, context={'job_id': job_id})
-    #     #     if serializer.is_valid(raise_exception=True):
-    #     #         serializer.save()
-    #     #     else:
-    #     #         print(serializer.errors)
-    #     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-
     def update(self, request, pk=None):
         exist_jobs = MatchUser.objects.filter(job_id=pk)
         exist_jobs.delete()
