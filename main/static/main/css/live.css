@@ -197,7 +197,7 @@
     right: 0;
     top: 1% !important;
     height: 95%;
-    width: 17.3% !important;
+    width: 20% !important;
 }
 
 #detection-detail {
@@ -304,4 +304,7 @@
         padding: 2rem 1rem;
     }
 
+    .detection-content-full-screen {
+        width: 17.3% !important;
+    }
 }
