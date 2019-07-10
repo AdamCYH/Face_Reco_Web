@@ -30,9 +30,9 @@ const I_AM_STARTING = 2;
 window.onload = function () {
     ws = new WebSocket('wss://' + location.hostname + ':8443/rtsp');
     videoOutput = document.getElementById('videoOutput');
+    console.log(videoOutput);
     setState(I_CAN_START);
     // start();
-
 
     ws.onmessage = function (message) {
         var parsedMessage = JSON.parse(message.data);
@@ -227,6 +227,7 @@ function sendMessage(message) {
 
 function showSpinner() {
     for (var i = 0; i < arguments.length; i++) {
+        console.log(arguments[i]);
         arguments[i].style.background = "center transparent url('/static/main/img/loading_live.gif') no-repeat";
         arguments[i].style.backgroundSize = '40rem';
     }
