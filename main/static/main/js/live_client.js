@@ -15,7 +15,8 @@
  *
  */
 
-var ws = new WebSocket('wss://' + location.hostname + ':8443/rtsp');
+var ws;
+
 var videoOutput;
 var webRtcPeer;
 var state = null;
@@ -27,60 +28,83 @@ const I_CAN_STOP = 1;
 const I_AM_STARTING = 2;
 
 window.onload = function () {
+    ws = new WebSocket('wss://' + location.hostname + ':8443/rtsp');
     videoOutput = document.getElementById('videoOutput');
     setState(I_CAN_START);
     // start();
+
+
+    ws.onmessage = function (message) {
+        var parsedMessage = JSON.parse(message.data);
+        $(".detect_box").remove();
+        // console.info('Received message: ' + message.data);
+        switch (parsedMessage.id) {
+            case 'startResponse':
+                startResponse(parsedMessage);
+                $("#control-subtitle").html("Building connections");
+                break;
+            case 'error':
+                if (state == I_AM_STARTING) {
+                    setState(I_CAN_START);
+                }
+                onError('Error message from server: ' + parsedMessage.message);
+                $("#control-subtitle").html('Error: ' + parsedMessage.message);
+                break;
+            case 'iceCandidate':
+                $("#control-subtitle").html("Running");
+                webRtcPeer.addIceCandidate(parsedMessage.candidate);
+                break;
+            case 'faceFound':
+                var facesList = JSON.parse(parsedMessage.faces.value);
+                // console.log(faces);
+                if (facesList !== undefined && facesList != null) {
+                    faces = facesList.face;
+                    var x;
+                    for (x in faces) {
+                        var bbox = faces[x].bbox;
+                        var detect_box_id = "boundary_" + x;
+                        var matching_user = faces[x].matching.user_id;
+                        $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + matching_user + "></div>");
+                        $("#" + detect_box_id).css('width', bbox.width * video_width + "px");
+                        $("#" + detect_box_id).css('height', bbox.height * video_height + "px");
+                        $("#" + detect_box_id).css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
+                    }
+                }
+
+                break;
+            default:
+                if (state == I_AM_STARTING) {
+                    setState(I_CAN_START);
+                }
+                onError('Unrecognized message', parsedMessage);
+        }
+    };
+    ws.onopen = function () {
+        console.log('connected');
+    };
+
+    ws.onclose = function (evt) {
+        if (evt.code == 3001) {
+            console.log('ws closed');
+            ws = null;
+        } else {
+            ws = null;
+            console.log('ws connection error');
+            $("#control-subtitle").html("System error, please contact admin or refresh and try again");
+        }
+    };
+
+    ws.onerror = function (evt) {
+        if (ws.readyState == 1) {
+            console.log('ws normal error: ' + evt.type);
+        }
+    };
 };
 
 window.onbeforeunload = function () {
     ws.close();
 };
 
-ws.onmessage = function (message) {
-    var parsedMessage = JSON.parse(message.data);
-    $(".detect_box").remove();
-    // console.info('Received message: ' + message.data);
-    switch (parsedMessage.id) {
-        case 'startResponse':
-            startResponse(parsedMessage);
-            $("#control-subtitle").html("Building connections");
-            break;
-        case 'error':
-            if (state == I_AM_STARTING) {
-                setState(I_CAN_START);
-            }
-            onError('Error message from server: ' + parsedMessage.message);
-            $("#control-subtitle").html('Error: ' + parsedMessage.message);
-            break;
-        case 'iceCandidate':
-            $("#control-subtitle").html("Running");
-            webRtcPeer.addIceCandidate(parsedMessage.candidate);
-            break;
-        case 'faceFound':
-            var facesList = JSON.parse(parsedMessage.faces.value);
-            // console.log(faces);
-            if (facesList !== undefined && facesList != null) {
-                faces = facesList.face;
-                var x;
-                for (x in faces) {
-                    var bbox = faces[x].bbox;
-                    var detect_box_id = "boundary_" + x;
-                    var matching_user = faces[x].matching.user_id;
-                    $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + matching_user + "></div>");
-                    $("#" + detect_box_id).css('width', bbox.width * video_width + "px");
-                    $("#" + detect_box_id).css('height', bbox.height * video_height + "px");
-                    $("#" + detect_box_id).css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
-                }
-            }
-
-            break;
-        default:
-            if (state == I_AM_STARTING) {
-                setState(I_CAN_START);
-            }
-            onError('Unrecognized message', parsedMessage);
-    }
-};
 
 function start() {
     $("#control-subtitle").html("Initiating");
@@ -128,6 +152,7 @@ function onOffer(error, offerSdp) {
 
 function onError(error) {
     console.error(error);
+    $("#control-subtitle").html("System error, please contact admin or refresh and try again");
 }
 
 function startResponse(message) {
@@ -160,6 +185,7 @@ function setState(nextState) {
             $('#control-button').attr('onclick', 'start()');
             $("#control-button").html('START');
             $("#button-label").removeClass("stop-label");
+            $("#button-label").removeClass("starting-label");
             $("#button-label").addClass("start-label");
 
             break;
@@ -189,7 +215,14 @@ function setState(nextState) {
 function sendMessage(message) {
     var jsonMessage = JSON.stringify(message);
     // console.log('Senging message: ' + jsonMessage);
-    ws.send(jsonMessage);
+    try {
+        ws.send(jsonMessage);
+    } catch (e) {
+        $("#control-subtitle").html("System error, please contact admin or refresh and try again");
+        setState(I_CAN_START);
+        hideSpinner(videoOutput)
+    }
+
 }
 
 function showSpinner() {
