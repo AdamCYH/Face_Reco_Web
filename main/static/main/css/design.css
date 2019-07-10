@@ -194,12 +194,10 @@
 
 .border-1 {
     border: solid 2px #6c819e;
-    box-sizing: content-box;
 }
 
 .border-2 {
     border: solid 1px #5a5a5a;
-    box-sizing: content-box;
 }
 
 .border-special {

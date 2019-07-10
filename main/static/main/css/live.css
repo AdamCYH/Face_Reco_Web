@@ -67,8 +67,8 @@
 
 
 .max_min_icon {
-    height: 100%;
-    margin: 0;
+    height: 80%;
+    margin: 5px;
     padding: 0;
     float: right;
 }
@@ -141,7 +141,7 @@
 }
 
 .detection-header {
-    height: 4.5rem;
+    height: 4.25rem;
     position: relative;
 }
 
@@ -153,7 +153,7 @@
 
 .indicator-border {
     width: 2rem;
-    height: 1rem;
+    height: 1.2rem;
     margin-left: 5px;
     padding: 2px;
     float: left;
@@ -185,7 +185,7 @@
 }
 
 .detection-content {
-    height: calc(100% - 4.5rem);
+    height: calc(100% - 4.25rem);
     display: block;
     overflow: auto;
     position: relative;
@@ -197,25 +197,20 @@
     right: 0;
     top: 1% !important;
     height: 95%;
-    width: 17.3%;
+    width: 17.3% !important;
 }
 
 #detection-detail {
     overflow: initial;
     position: absolute;
-    top: 4.5rem;
+    top: 4.25rem;
     opacity: 0;
-    right: -30%;
     width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-#detection-detail.on {
-    overflow: initial;
-    position: absolute;
-    top: 4.5rem;
-    opacity: 1;
-    right: 0;
-}
 
 #detection-table {
     width: 100%;
@@ -282,110 +277,6 @@
 
 #info_table pre {
     padding: 0;
-}
-
-.fade-in {
-    -webkit-animation-name: fade-in;
-    -webkit-animation-duration: 500ms;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: fade-in;
-    -moz-animation-duration: 500ms;
-    -moz-animation-iteration-count: 1;
-    -moz-animation-timing-function: linear;
-    -ms-animation-name: fade-in;
-    -ms-animation-duration: 500ms;
-    -ms-animation-iteration-count: 1;
-    -ms-animation-timing-function: linear;
-    animation-name: fade-in;
-    animation-duration: 500ms;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-}
-
-.fade-out {
-    -webkit-animation-name: fade-out;
-    -webkit-animation-duration: 500ms;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: fade-out;
-    -moz-animation-duration: 500ms;
-    -moz-animation-iteration-count: 1;
-    -moz-animation-timing-function: linear;
-    -ms-animation-name: fade-out;
-    -ms-animation-duration: 500ms;
-    -ms-animation-iteration-count: 1;
-    -ms-animation-timing-function: linear;
-    animation-name: fade-out;
-    animation-duration: 500ms;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-}
-
-@-moz-keyframes fade-in {
-    0% {
-        opacity: 0;
-        right: -30%;
-    }
-    100% {
-        opacity: 1;
-        right: 0;
-    }
-}
-
-@-webkit-keyframes fade-in {
-    0% {
-        opacity: 0;
-        right: -30%;
-    }
-    100% {
-        opacity: 1;
-        right: 0;
-    }
-}
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-        right: -30%;
-    }
-    100% {
-        opacity: 1;
-        right: 0;
-    }
-}
-
-@-moz-keyframes fade-out {
-    0% {
-        opacity: 1;
-        right: 0;
-    }
-    100% {
-        opacity: 0;
-        right: -30%;
-    }
-}
-
-@-webkit-keyframes fade-out {
-    0% {
-        opacity: 1;
-        right: 0;
-    }
-    100% {
-        opacity: 0;
-        right: -30%;
-    }
-}
-
-@keyframes fade-out {
-    0% {
-        opacity: 1;
-        right: 0;
-    }
-    100% {
-        opacity: 0;
-        right: -30%;
-    }
 }
 
 @media (min-width: 1600px) {
