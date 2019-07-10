@@ -192,12 +192,12 @@
 }
 
 .detection-content-full-screen {
-    z-index: 5;
     position: fixed !important;
     right: 0;
     top: 1% !important;
     height: 95%;
     width: 20% !important;
+    z-index: 5 !important;
 }
 
 #detection-detail {
@@ -209,6 +209,7 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    z-index: -1;
 }
 
 
