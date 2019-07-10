@@ -28,6 +28,8 @@ $(document).ready(function () {
     detection_header_title = $("#detection-header-title");
     setupPage();
 
+    start_live_video();
+
     video_output.resize(resetVideoSize);
     $(window).resize(resetVideoSize);
 
