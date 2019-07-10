@@ -163,6 +163,7 @@ function startResponse(message) {
 function stop() {
     console.log('Stopping video call ...');
     $("#control-subtitle").html("Stopping");
+    $(".detect_box").remove();
     setState(I_CAN_START);
     if (webRtcPeer) {
         webRtcPeer.dispose();
