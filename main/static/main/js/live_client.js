@@ -25,11 +25,15 @@ const I_CAN_START = 0;
 const I_CAN_STOP = 1;
 const I_AM_STARTING = 2;
 
-window.onload = function () {
+/*
+websocket is moved to start_live_video so that the page is ready, and we can display error message.
+Instead of onload, separate function is written because onload and ready function in live.js may perform asyncly,
+ws connection may be set before the page is ready so undefined video source may happen.
+*/
+function start_live_video() {
     ws = new WebSocket('wss://' + location.hostname + ':8443/rtsp');
     videoOutput = document.getElementById('videoOutput');
     setState(I_CAN_START);
-    // start();
 
     ws.onmessage = function (message) {
         var parsedMessage = JSON.parse(message.data);
@@ -68,7 +72,6 @@ window.onload = function () {
                         $("#" + detect_box_id).css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
                     }
                 }
-
                 break;
             default:
                 if (state == I_AM_STARTING) {
@@ -80,6 +83,7 @@ window.onload = function () {
     ws.onopen = function () {
         console.log('connected');
         control_subtitle.html("Ready");
+        start();
     };
 
     ws.onclose = function (evt) {
@@ -98,7 +102,8 @@ window.onload = function () {
             console.log('ws normal error: ' + evt.type);
         }
     };
-};
+}
+
 
 window.onbeforeunload = function () {
     ws.close();
