@@ -16,7 +16,7 @@ from rest_framework.views import APIView
 
 from main.models import FaceFeature, User, MatchJob, MatchUser, Detection
 from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionSerializer, \
-    DetectionReadSerializer, FaceFeatureReadSerializer
+    DetectionReadSerializer, FaceFeatureReadSerializer, MatchJobReadSerializer
 from main.utilities import utilities, redis, sql
 
 
@@ -95,26 +95,8 @@ class RecognitionView(View):
         # insert recognition result to database
         match_job = sql.insert_match_result(match_result)
 
-        serializer = MatchJobSerializer(match_job)
+        serializer = MatchJobReadSerializer(match_job)
         data = json.loads(str(JSONRenderer().render(serializer.data), encoding="utf8"))
-        time.sleep(3)
-        # data = {"job_id": 23, "match_users": [{"confidence_level": "97.80",
-        #                                        "user": {"user_id": 1, "fname": "Adam", "lname": "Chiu", "age": 25,
-        #                                                 "description": "Research Assistant at CyLab",
-        #                                                 "photo_path": "./media/photos/enrollment/Adam_Chiu_201906211406.png",
-        #                                                 "enroll_time": "2019-06-18T17:41:36.664004Z"}},
-        #                                       {"confidence_level": "87.60",
-        #                                        "user": {"user_id": 2, "fname": "Bob", "lname": "Bil", "age": 25,
-        #                                                 "description": "test",
-        #                                                 "photo_path": "./media/photos/enrollment/Adam_Chiu_201906241814.png",
-        #                                                 "enroll_time": "2019-06-18T17:41:59.236418Z"}},
-        #                                       {"confidence_level": "76.90",
-        #                                        "user": {"user_id": 3, "fname": "user3", "lname": "adam", "age": 29,
-        #                                                 "description": "Hello My Name is adam\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\nthis is the second line\r\n",
-        #                                                 "photo_path": "./media/photos/enrollment/bob__201906131900.png",
-        #                                                 "enroll_time": "2019-06-18T18:43:56.896219Z"}}]}
-        # data = {"job_id": 23, "match_users": []}
-
         return JsonResponse({"data": data})
 
 

@@ -57,15 +57,6 @@ class MatchUserSerializer(serializers.ModelSerializer):
 class MatchJobSerializer(serializers.ModelSerializer):
     match_users = MatchUserSerializer(many=True)
 
-    # def create(self, validated_data):
-    #     match_users = validated_data.pop("match_users")
-    #     match_job = MatchJob.objects.get(job_id=self.context.get("job_id"))
-    #     for match_user in match_users:
-    #         MatchUser.objects.create(job=match_job,
-    #                                  user_id=match_user['user']['user_id'],
-    #                                  confidence_level=match_user['confidence_level'])
-    #     return match_job
-
     def update(self, instance, validated_data):
         match_users = validated_data.pop("match_users")
         for match_user in match_users:
@@ -104,6 +95,22 @@ class DetectionSerializer(serializers.ModelSerializer):
         fields = ('detection_id', 'user', 'detect_camera', 'location', 'detected_photo_path', 'detection_time',
                   'confidence_level')
         read_only_fields = ('detection_id', 'detection_time')
+
+
+class MatchUserReadSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
+    class Meta:
+        model = MatchUser
+        fields = ('user', 'confidence_level')
+
+
+class MatchJobReadSerializer(serializers.ModelSerializer):
+    match_users = MatchUserReadSerializer(many=True)
+
+    class Meta:
+        model = MatchJob
+        fields = ('job_id', 'match_time', 'match_users')
 
 
 class FaceFeatureReadSerializer(serializers.ModelSerializer):
