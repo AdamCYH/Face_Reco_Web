@@ -7,6 +7,7 @@ let detection_detail;
 let detection_list;
 let control_title;
 let control_subtitle;
+let control_button;
 let button_label;
 let list_indicator;
 let detail_indicator;
@@ -49,12 +50,12 @@ $(document).ready(function () {
 
 function setupPage() {
     $("file-upload").remove();
-    setState(I_CAN_START);
     control_title.html('STATUS');
     control_subtitle.html('Stopped');
     button_label.html('');
     button_label.append("<a id='control-button'></a>");
     button_label.attr('for', 'control-button');
+    control_button = $('#control-button');
     setState(I_CAN_START);
 }
 
@@ -87,7 +88,7 @@ function show_detection_detail() {
         detection_detail.addClass('detection-content-full-screen');
     }
 
-    if ($("#name_col").html().length == 0) {
+    if ($("#name_col").html().length === 0) {
         $("#info_table").css('display', 'none');
     } else {
         $("#info_table").css('display', 'table');

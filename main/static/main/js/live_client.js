@@ -17,7 +17,6 @@
 
 var ws;
 
-var videoOutput;
 var webRtcPeer;
 var state = null;
 
@@ -32,7 +31,6 @@ ws connection may be set before the page is ready so undefined video source may 
 */
 function start_live_video() {
     ws = new WebSocket('wss://' + location.hostname + ':8443/rtsp');
-    videoOutput = document.getElementById('videoOutput');
     setState(I_CAN_START);
 
     ws.onmessage = function (message) {
@@ -117,12 +115,12 @@ function start() {
     // Disable start button
     setState(I_AM_STARTING);
 
-    showSpinner(videoOutput);
+    showSpinner(video_output);
 
     console.log('Creating WebRtcPeer and generating local sdp offer ...');
 
     var options = {
-        remoteVideo: videoOutput,
+        remoteVideo: video_output[0],
         onicecandidate: onIceCandidate,
         dataChannels: true
     };
@@ -180,34 +178,35 @@ function stop() {
         sendMessage(message);
     }
     control_subtitle.html("Stopped");
-    hideSpinner(videoOutput);
+    hideSpinner(video_output);
     $(".detect_box").remove();
+    hide_detection_detail();
 }
 
 function setState(nextState) {
     switch (nextState) {
         case I_CAN_START:
-            $('#control-button').attr('onclick', 'start()');
-            $("#control-button").html('START');
-            $("#button-label").removeClass("stop-label");
-            $("#button-label").removeClass("starting-label");
-            $("#button-label").addClass("start-label");
+            control_button.attr('onclick', 'start()');
+            control_button.html('START');
+            button_label.removeClass("stop-label");
+            button_label.removeClass("starting-label");
+            button_label.addClass("start-label");
 
             break;
 
         case I_CAN_STOP:
-            $('#control-button').attr('onclick', 'stop()');
-            $("#control-button").html('STOP');
-            $("#button-label").removeClass("start-label");
-            $("#button-label").removeClass("starting-label");
-            $("#button-label").addClass("stop-label");
+            control_button.attr('onclick', 'stop()');
+            control_button.html('STOP');
+            button_label.removeClass("start-label");
+            button_label.removeClass("starting-label");
+            button_label.addClass("stop-label");
             break;
 
         case I_AM_STARTING:
-            $('#control-button').attr('onclick', '');
-            $("#control-button").html('STARTING');
-            $("#button-label").removeClass("start-label");
-            $("#button-label").addClass("starting-label");
+            control_button.attr('onclick', '');
+            control_button.html('STARTING');
+            button_label.removeClass("start-label");
+            button_label.addClass("starting-label");
             break;
 
         default:
@@ -225,22 +224,22 @@ function sendMessage(message) {
     } catch (e) {
         control_subtitle.html("System error, please contact admin or refresh and try again");
         setState(I_CAN_START);
-        hideSpinner(videoOutput)
+        hideSpinner(video_output)
     }
 
 }
 
 function showSpinner() {
     for (var i = 0; i < arguments.length; i++) {
-        arguments[i].style.background = "center transparent url('/static/main/img/loading_live.gif') no-repeat";
-        arguments[i].style.backgroundSize = '40rem';
+        arguments[i].css('background', "center transparent url('/static/main/img/loading_live.gif') no-repeat");
+        arguments[i].css('background-size', '40rem');
     }
 }
 
 function hideSpinner() {
     for (var i = 0; i < arguments.length; i++) {
-        arguments[i].src = '';
-        arguments[i].style.background = '';
+        arguments[i].attr('src', '');
+        arguments[i].css('background', '');
     }
 }
 
