@@ -179,9 +179,9 @@ function stop() {
         };
         sendMessage(message);
     }
-    $(".detect_box").remove();
     control_subtitle.html("Stopped");
     hideSpinner(videoOutput);
+    $(".detect_box").remove();
 }
 
 function setState(nextState) {
