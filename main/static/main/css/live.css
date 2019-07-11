@@ -191,6 +191,7 @@
     overflow: auto;
     position: relative;
 }
+
 .detection-content.on {
     z-index: 5 !important;
 }
@@ -251,7 +252,8 @@
 }
 
 #detected_img_container {
-    width: 90%;
+    width: max-content;
+    max-width: 100%;
     height: 15rem;
     display: block;
     margin: 0 auto 1.5rem auto;
