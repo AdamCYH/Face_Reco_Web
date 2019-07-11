@@ -190,6 +190,9 @@
     overflow: auto;
     position: relative;
 }
+.detection-content.on {
+    z-index: 5 !important;
+}
 
 .detection-content-full-screen {
     position: fixed !important;
@@ -197,7 +200,7 @@
     top: 1% !important;
     height: 95%;
     width: 20% !important;
-    z-index: 5 !important;
+
 }
 
 #detection-detail {
@@ -209,7 +212,6 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    z-index: -1;
 }
 
 

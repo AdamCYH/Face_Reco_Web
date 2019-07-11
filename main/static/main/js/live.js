@@ -33,7 +33,7 @@ $(document).ready(function () {
     video_output.resize(resetVideoSize);
     $(window).resize(resetVideoSize);
 
-    get_detection_update(5);
+    get_detection_update(10);
     window.setInterval(get_detection_update, 10000);
 
     $(document).on('mousedown', '.detect_box', function () {
@@ -121,6 +121,7 @@ function fadeout(element) {
     element.animate({
         opacity: 0,
         right: "-=30%",
+        zIndex: -1,
     }, 300, function () {
         // Animation complete.
     });
