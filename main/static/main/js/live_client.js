@@ -43,7 +43,7 @@ function start_live_video() {
                 control_subtitle.html("Building connections");
                 break;
             case 'error':
-                if (state == I_AM_STARTING) {
+                if (state === I_AM_STARTING) {
                     setState(I_CAN_START);
                 }
                 onError('Error message from server: ' + parsedMessage.message);
@@ -56,7 +56,7 @@ function start_live_video() {
             case 'faceFound':
                 var facesList = JSON.parse(parsedMessage.faces.value);
                 // console.log(faces);
-                if (facesList !== undefined && facesList != null) {
+                if (facesList !== undefined && facesList !== null) {
                     faces = facesList.face;
                     var x;
                     for (x in faces) {
@@ -73,7 +73,7 @@ function start_live_video() {
                 }
                 break;
             default:
-                if (state == I_AM_STARTING) {
+                if (state === I_AM_STARTING) {
                     setState(I_CAN_START);
                 }
                 onError('Unrecognized message', parsedMessage);
@@ -86,7 +86,7 @@ function start_live_video() {
     };
 
     ws.onclose = function (evt) {
-        if (evt.code == 3001) {
+        if (evt.code === 3001) {
             console.log('ws closed');
             ws = null;
         } else {
@@ -97,7 +97,7 @@ function start_live_video() {
     };
 
     ws.onerror = function (evt) {
-        if (ws.readyState == 1) {
+        if (ws.readyState === 1) {
             console.log('ws normal error: ' + evt.type);
         }
     };
