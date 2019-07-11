@@ -99,6 +99,7 @@
     border: solid limegreen 2px;
     position: absolute;
     z-index: 2;
+    cursor: pointer;
 }
 
 .full_screen {

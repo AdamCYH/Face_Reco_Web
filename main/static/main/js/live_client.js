@@ -65,9 +65,10 @@ function start_live_video() {
                         var detect_box_id = "boundary_" + x;
                         var matching_user = faces[x].matching.user_id;
                         $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + matching_user + "></div>");
-                        $("#" + detect_box_id).css('width', bbox.width * video_width + "px");
-                        $("#" + detect_box_id).css('height', bbox.height * video_height + "px");
-                        $("#" + detect_box_id).css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
+                        var detect_box = $("#" + detect_box_id);
+                        detect_box.css('width', bbox.width * video_width + "px");
+                        detect_box.css('height', bbox.height * video_height + "px");
+                        detect_box.css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
                     }
                 }
                 break;
@@ -191,7 +192,6 @@ function setState(nextState) {
             button_label.removeClass("stop-label");
             button_label.removeClass("starting-label");
             button_label.addClass("start-label");
-
             break;
 
         case I_CAN_STOP:
