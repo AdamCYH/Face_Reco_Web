@@ -1,4 +1,5 @@
 import json
+import logging
 import time
 
 from django.http import JsonResponse
@@ -18,6 +19,8 @@ from main.models import FaceFeature, User, MatchJob, MatchUser, Detection
 from main.serializer import FaceFeatureSerializer, UserSerializer, MatchJobSerializer, DetectionSerializer, \
     DetectionReadSerializer, FaceFeatureReadSerializer, MatchJobReadSerializer
 from main.utilities import utilities, redis, sql
+
+logger = logging.getLogger(__name__)
 
 
 # View for enrollment
@@ -53,7 +56,7 @@ class EnrollmentView(View):
         if user_serializer.is_valid(raise_exception=True):
             user = user_serializer.save()
         else:
-            print(user_serializer.errors)
+            logger.error(user_serializer.errors)
 
         if user is not None:
             redis.enroll_to_redis(user)
@@ -143,7 +146,7 @@ class FaceFeatureViewSet(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         else:
-            print(serializer.errors)
+            logger.error(serializer.errors)
 
         return Response(serializer.data)
 
@@ -170,7 +173,7 @@ class UserViewSet(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         else:
-            print(serializer.errors)
+            logger.error(serializer.errors)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk=None):
@@ -215,7 +218,7 @@ class MatchJobViewSet(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         else:
-            print(serializer.errors)
+            logger.error(serializer.errors)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
