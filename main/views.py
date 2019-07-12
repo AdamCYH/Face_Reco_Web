@@ -73,7 +73,7 @@ class RecognitionView(View):
 
     # process recognition pipeline
     def post(self, request):
-        image_name = request.POST.get("img_name")
+        image_name = request.POST.get("img_name").encode('utf-8').strip()
         image_data = request.POST.get("img_data")
 
         # save uploaded image
@@ -177,10 +177,14 @@ class UserViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk=None):
-        queryset = User.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
+        user = get_object_or_404(self.queryset, pk=pk)
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        user = get_object_or_404(self.queryset, pk=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class MatchJobViewSet(viewsets.ViewSet):
