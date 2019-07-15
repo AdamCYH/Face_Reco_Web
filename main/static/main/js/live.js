@@ -12,7 +12,7 @@ let button_label;
 let list_indicator;
 let detail_indicator;
 let detection_header_title;
-let detection_map = {};
+let detection_map = new Map();
 let video_width;
 let video_height;
 
@@ -162,23 +162,36 @@ function get_detection_update(num_entries) {
 }
 
 function get_user_details(u_id) {
-    $.ajax({
-        url: "/api/user/" + u_id,
-        dataType: "json",
-        type: "GET",
-        context: document.body,
-        success: function (data) {
-            $("#name_col").html(data.fname + " " + data.lname);
-            $("#age_col").html(data.age);
-            $("#description_col").html(data.description);
-            $("#img_col").attr('src', data.photo_path);
-            show_detection_detail();
-        },
-        error: function (data) {
-            console.log(data);
-            console.log("Service error, please contact admin.")
+    $("#no_match_div").remove();
+    if (u_id === -1) {
+        $("#detected_img_container").append("<div id='no_match_div'>No Match Found.</div>");
+    } else {
+        $.ajax({
+            url: "/api/user/" + u_id,
+            dataType: "json",
+            type: "GET",
+            context: document.body,
+            success: function (data) {
+                $("#name_col").html(data.fname + " " + data.lname);
+                $("#age_col").html(data.age);
+                $("#description_col").html(data.description);
+                $("#img_col").attr('src', data.photo_path);
+                show_detection_detail();
+            },
+            error: function (data) {
+                console.log(data);
+                console.log("Service error, please contact admin.")
+            }
+        })
+    }
+}
+
+function check_leaving_face(face_set) {
+    for (var id of detection_map.keys()) {
+        if (!face_set.has(id)) {
+            detection_map.delete(id);
         }
-    })
+    }
 }
 
 function send_detection(u_id, conf_lvl) {
