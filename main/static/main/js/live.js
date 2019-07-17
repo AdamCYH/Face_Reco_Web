@@ -12,7 +12,6 @@ let button_label;
 let list_indicator;
 let detail_indicator;
 let detection_header_title;
-let detection_map = new Map();
 let video_width;
 let video_height;
 
@@ -34,17 +33,12 @@ $(document).ready(function () {
     video_output.resize(resetVideoSize);
     $(window).resize(resetVideoSize);
 
-    get_detection_update(10);
+    get_detection_update(5);
     window.setInterval(get_detection_update, 10000);
 
     $(document).on('mousedown', '.detect_box', function () {
-
         console.log($(this).attr('data-uid'));
-        get_user_details(2);
-
-    });
-    $(document).on('mousedown', '#video-info', function () {
-        get_user_details(2);
+        get_user_details($(this).attr('data-uid'));
     });
 });
 
@@ -140,7 +134,6 @@ function get_detection_update(num_entries) {
         },
         context: document.body,
         success: function (data) {
-            console.log(data);
             initial_call = false;
             if (data.length > 0) {
                 last_entry = data[0].detection_id;
@@ -163,8 +156,13 @@ function get_detection_update(num_entries) {
 
 function get_user_details(u_id) {
     $("#no_match_div").remove();
-    if (u_id === -1) {
+    if (u_id === "-1") {
         $("#detected_img_container").append("<div id='no_match_div'>No Match Found.</div>");
+        $("#name_col").html("");
+        $("#age_col").html("");
+        $("#description_col").html("");
+        $("#img_col").attr('src', "");
+        show_detection_detail();
     } else {
         $.ajax({
             url: "/api/user/" + u_id,
@@ -186,52 +184,6 @@ function get_user_details(u_id) {
     }
 }
 
-function check_leaving_face(face_set) {
-    for (var id of detection_map.keys()) {
-        if (!face_set.has(id)) {
-            detection_map.delete(id);
-        }
-    }
-}
-
-function send_detection(u_id, conf_lvl) {
-    if (u_id === -1) {
-        return;
-    }
-    if (detection_map.has(u_id)) {
-        if (Date.now() - detection_map.get(u_id) > 60000) {
-            detection_map.delete(u_id)
-        } else {
-            return;
-        }
-    } else {
-        detection_map.set(u_id, Date.now());
-        do_send_detection(u_id, conf_lvl);
-    }
-}
-
-function do_send_detection(u_id, conf_lvl) {
-    $.ajax({
-        url: "api/detection",
-        dataType: "json",
-        type: 'POST',
-        data: {
-            'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),
-            user: u_id,
-            detect_camera: "Camera 1",
-            location: "Lab",
-            detected_photo_path: "",
-            confidence_level: conf_lvl
-        },
-        context: document.body,
-        success: function (data) {
-
-        },
-        error: function (data) {
-            console.log("Error in sending detection data.")
-        }
-    });
-}
 
 String.prototype.format = String.prototype.f = function () {
     var s = this,

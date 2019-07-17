@@ -19,7 +19,6 @@ var ws;
 
 var webRtcPeer;
 var state = null;
-let face_set = new Set();
 
 const I_CAN_START = 0;
 const I_CAN_STOP = 1;
@@ -59,23 +58,19 @@ function start_live_video() {
                 // console.log(faces);
                 if (facesList !== undefined && facesList !== null) {
                     faces = facesList.face;
-                    face_set.clear();
                     var x;
                     for (x in faces) {
                         let u_id = faces[x].matching.user_id;
-                        face_set.add(u_id);
-                        send_detection(u_id, faces[x].matching.score);
+                        // console.log(u_id);
                         let bbox = faces[x].bbox;
                         let detect_box_id = "boundary_" + x;
-                        let matching_user = u_id;
-                        $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + matching_user + "></div>");
+                        $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + u_id + "></div>");
                         let detect_box = $("#" + detect_box_id);
                         detect_box.css('width', bbox.width * video_width + "px");
                         detect_box.css('height', bbox.height * video_height + "px");
                         detect_box.css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
                     }
 
-                    check_leaving_face(face_set);
                 }
                 break;
             default:
@@ -173,7 +168,6 @@ function startResponse(message) {
 function stop() {
     console.log('Stopping video call ...');
     control_subtitle.html("Stopping");
-    $(".detect_box").remove();
     setState(I_CAN_START);
     if (webRtcPeer) {
         webRtcPeer.dispose();
