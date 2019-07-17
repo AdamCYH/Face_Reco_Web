@@ -87,8 +87,8 @@ class RecognitionView(View):
 
         # try to get recognition result, if not continue trying
         match_result = ""
-        # break if exceed 2 mins
-        timeout = time.time() + 30
+        # break if exceed 15 secs
+        timeout = time.time() + 15
         while match_result == "":
             if time.time() > timeout:
                 return JsonResponse({"data": "Service is busy, please try again later."})
