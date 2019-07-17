@@ -33,7 +33,7 @@ class MatchJob(models.Model):
 class MatchUser(models.Model):
     job = models.ForeignKey(MatchJob, related_name="match_users", db_index=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    confidence_level = models.DecimalField(null=True, max_digits=9, decimal_places=6)
+    confidence_level = models.DecimalField(null=True, max_digits=23, decimal_places=20)
 
     class Meta:
         db_table = 'match_users'
@@ -47,7 +47,7 @@ class Detection(models.Model):
     location = models.CharField(max_length=200, null=True)
     detected_photo_path = models.CharField(max_length=500, null=True)
     detection_time = models.DateTimeField(null=True)
-    confidence_level = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+    confidence_level = models.DecimalField(null=True, max_digits=23, decimal_places=20)
 
     class Meta:
         db_table = 'detections'
