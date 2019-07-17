@@ -40,7 +40,7 @@ function validate() {
     } else if ($("[name=lname]").val().trim().length === 0) {
         $("#message").html("Please enter your last name.");
         return false;
-    } else if ($("[name=age]").val().trim().length !== 0 && isNaN($("[name=age]"))) {
+    } else if ($("[name=age]").val().trim().length !== 0 && isNaN($("[name=age]").val().trim())) {
         $("#message").html("Age should be numbers only.");
         return false;
     } else {
