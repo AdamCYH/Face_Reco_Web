@@ -64,7 +64,11 @@ function start_live_video() {
                         // console.log(u_id);
                         let bbox = faces[x].bbox;
                         let detect_box_id = "boundary_" + x;
-                        $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + u_id + " data-cnflvl=" + faces[x].matching.score + "></div>");
+                        if (u_id === -1) {
+                            $("#overlay").append("<div class='detect_box no_match' id=" + detect_box_id + " data-uid=" + u_id + " data-cnflvl=" + faces[x].matching.score + "></div>");
+                        } else {
+                            $("#overlay").append("<div class='detect_box' id=" + detect_box_id + " data-uid=" + u_id + " data-cnflvl=" + faces[x].matching.score + "></div>");
+                        }
                         let detect_box = $("#" + detect_box_id);
                         detect_box.css('width', bbox.width * video_width + "px");
                         detect_box.css('height', bbox.height * video_height + "px");

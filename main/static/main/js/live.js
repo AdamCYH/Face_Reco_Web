@@ -41,9 +41,9 @@ $(document).ready(function () {
         get_user_details($(this).attr('data-uid'), $(this).attr('data-cnflvl'));
     });
     // Code for quick debug
-    $(document).on('mousedown', '#video-info', function () {
-        get_user_details(2, 0.097);
-    });
+    // $(document).on('mousedown', '#video-info', function () {
+    //     get_user_details(2, 0.097);
+    // });
 });
 
 function setupPage() {

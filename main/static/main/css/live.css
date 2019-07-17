@@ -102,6 +102,10 @@
     cursor: pointer;
 }
 
+.no_match {
+    border: solid yellow 2px;
+}
+
 .full_screen {
     float: none;
     width: 100vw;
