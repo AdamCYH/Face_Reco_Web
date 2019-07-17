@@ -38,7 +38,11 @@ $(document).ready(function () {
 
     $(document).on('mousedown', '.detect_box', function () {
         console.log($(this).attr('data-uid'));
-        get_user_details($(this).attr('data-uid'));
+        get_user_details($(this).attr('data-uid'), $(this).attr('data-cnflvl'));
+    });
+    // Code for quick debug
+    $(document).on('mousedown', '#video-info', function () {
+        get_user_details(2, 0.097);
     });
 });
 
@@ -76,7 +80,6 @@ function resetVideoSize() {
 }
 
 function show_detection_detail() {
-    fadeout(detection_detail);
 
     if ($("#live_container").hasClass('full_screen')) {
         detection_detail.addClass('detection-content-full-screen');
@@ -154,13 +157,15 @@ function get_detection_update(num_entries) {
     });
 }
 
-function get_user_details(u_id) {
+function get_user_details(u_id, cnflvl) {
+    fadeout(detection_detail);
     $("#no_match_div").remove();
     if (u_id === "-1") {
         $("#detected_img_container").append("<div id='no_match_div'>No Match Found.</div>");
         $("#name_col").html("");
         $("#age_col").html("");
         $("#description_col").html("");
+        $("#cnflvl_col").html("");
         $("#img_col").attr('src', "");
         show_detection_detail();
     } else {
@@ -172,6 +177,7 @@ function get_user_details(u_id) {
             success: function (data) {
                 $("#name_col").html(data.fname + " " + data.lname);
                 $("#age_col").html(data.age);
+                $("#cnflvl_col").html(Math.round(cnflvl * 10000) / 100 + "%");
                 $("#description_col").html(data.description);
                 $("#img_col").attr('src', data.photo_path);
                 show_detection_detail();
