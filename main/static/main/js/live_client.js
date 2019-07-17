@@ -83,7 +83,7 @@ function start_live_video() {
     ws.onopen = function () {
         console.log('connected');
         control_subtitle.html("Ready");
-        start();
+        // start();
     };
 
     ws.onclose = function (evt) {
