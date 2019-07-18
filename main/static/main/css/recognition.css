@@ -71,6 +71,8 @@
 #detected_img_container {
     width: 20rem;
     height: 14rem;
+    background-image: linear-gradient(rgba(100, 100, 100, 0.5) 1px, transparent 0), linear-gradient(90deg, rgba(100, 100, 100, 0.5) 1px, transparent 0);
+    background-size: 10px 10px, 10px 10px;
 }
 
 #img_col {
@@ -81,7 +83,7 @@
 }
 
 #info_table {
-    width: 100%;
+    width: 90%;
     margin: 0.5rem 0;
 }
 
@@ -99,16 +101,22 @@
     font-size: 0.85rem;
     color: #dce0f3;
     font-family: Trebuchet MS, sans-serif;
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 1rem;
+}
+
+#info_table div {
+    height: 2rem;
+    padding: 0.35rem 1rem;
 }
 
 #info_table pre {
-    padding: 0;
+    padding: 0.35rem 1rem;
     margin: 0;
     max-height: 4rem;
     overflow: auto;
+    min-height: 3rem;
+    height: auto;
 }
-
 
 .detection_box {
     width: 8rem;
@@ -176,7 +184,10 @@
     }
 
     #info_table * {
-        padding: 1.5rem;
+        padding: 1rem;
     }
 
+    #info_table pre {
+        min-height: 4rem;
+    }
 }
