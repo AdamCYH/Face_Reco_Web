@@ -1,6 +1,8 @@
+const date_format_option = {month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"};
+const DETECTION_LIST_NUM = 10;
+
 let initial_call = true;
 let last_entry = 0;
-const date_format_option = {month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"};
 let video_output;
 let video_content;
 let detection_detail;
@@ -33,7 +35,7 @@ $(document).ready(function () {
     video_output.resize(resetVideoSize);
     $(window).resize(resetVideoSize);
 
-    get_detection_update(5);
+    get_detection_update(DETECTION_LIST_NUM);
     window.setInterval(get_detection_update, 10000);
 
     $(document).on('mousedown', '.detect_box', function () {
