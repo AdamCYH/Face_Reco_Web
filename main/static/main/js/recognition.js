@@ -58,21 +58,26 @@ function doMatch() {
 
 function display_result(users) {
     $(".default-match-block").css('display', 'none');
-    var x;
-    for (x in users) {
-        var curr_user = users[x];
-        var age = curr_user.user.age;
-        var desc = curr_user.user.description;
+    for (const x in users) {
+        let curr_user = users[x];
+        let age = curr_user.user.age;
+        let desc = curr_user.user.description;
         if (age === null) {
             age = "";
         }
         if (desc === null) {
             desc = "";
         }
+        let cnf_lvl_div;
+        if (x == 0) {
+            cnf_lvl_div = "<div class='conf-level-container'><span class='conf-level-wrapper' style='color: #fec538'>" + Math.round(curr_user.confidence_level * 10000) / 100 + "%</span></div>";
+        } else {
+            cnf_lvl_div = "<div class='conf-level-container'><span class='conf-level-wrapper'>" + Math.round(curr_user.confidence_level * 10000) / 100 + "%</span></div>";
+        }
         $("#detection_container").append(
             "<div class='detection_box left-border center-parent'>" +
             "<img class='thumbnail center' src='" + curr_user.user.photo_path + "'>" +
-            "<div class='conf-level-container'>" + Math.round(curr_user.confidence_level * 10000) / 100 + "%</div>" +
+            cnf_lvl_div +
             "<div class='info_holder' hidden>" +
             "<span class='name_holder'>" + curr_user.user.fname + " " + curr_user.user.lname + "</span>" +
             "<span class='age_holder'>" + age + "</span>" +

@@ -134,11 +134,20 @@
 
 .conf-level-container {
     position: absolute;
-    background-color: rgba(5, 37, 66, 0.7);
+    background-color: rgba(100, 176, 190, 0.4);
     width: 100%;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     bottom: 0;
 }
+
+
+.conf-level-wrapper {
+    background-color: #072641;
+    display: inline-block;
+    padding: 0 0.4rem;
+    color: #9ddeed;
+}
+
 
 @-moz-keyframes scan {
     0% {
