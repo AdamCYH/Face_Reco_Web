@@ -93,6 +93,7 @@ function start_live_video() {
     ws.onclose = function (evt) {
         if (evt.code === 3001) {
             console.log('ws closed');
+            $(".detect_box").remove();
             ws = null;
         } else {
             ws = null;
