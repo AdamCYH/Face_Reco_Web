@@ -257,13 +257,13 @@ html * {
 
 #footer-left {
     width: 37.7rem;
-    height: max-content;
+    height: 100%;
     float: left;
     padding: 0.1rem 0.625rem;
 }
 
 #footer-center {
-    width: 21rem;
+    width: 20rem;
     height: 100%;
     float: left;
     padding: 0;
@@ -278,7 +278,7 @@ html * {
 }
 
 #address-footer {
-    padding: 0.3rem 2rem;
+    padding: 0.3rem 1rem 0.3rem 2rem;
     height: 100%;
 }
 
@@ -287,8 +287,8 @@ html * {
 }
 
 #logo {
-    height: 2rem;
-    margin: 1rem 1rem 0.5rem 1rem;
+    width: 15rem;
+    margin: 1rem 1rem 1rem 1rem;
 }
 
 
@@ -513,5 +513,9 @@ a:hover, .button {
 
     .footer-bar {
         margin: 0 2.3%;
+    }
+
+    #logo {
+        width: 20rem;
     }
 }
