@@ -488,7 +488,7 @@ a:hover, .button {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #353535;
 }
 
 /* Handle on hover */

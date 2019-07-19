@@ -1,5 +1,6 @@
 const date_format_option = {month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"};
 const DETECTION_LIST_NUM = 10;
+const COLOR_LETTERS = '0123456789ABCDEF';
 
 let initial_call = true;
 let last_entry = 0;
@@ -16,6 +17,7 @@ let detail_indicator;
 let detection_header_title;
 let video_width;
 let video_height;
+let color_map = new Map();
 
 $(document).ready(function () {
     detection_detail = $("#detection-detail");
@@ -36,7 +38,7 @@ $(document).ready(function () {
     $(window).resize(resetVideoSize);
 
     get_detection_update(DETECTION_LIST_NUM);
-    window.setInterval(get_detection_update, 10000);
+    window.setInterval(get_detection_update, 3000);
 
     $(document).on('mousedown', '.detect_box', function () {
         console.log($(this).attr('data-uid'));
@@ -44,7 +46,7 @@ $(document).ready(function () {
     });
     // Code for quick debug
     // $(document).on('mousedown', '#video-info', function () {
-    //     get_user_details(2, 0.097);
+    //     get_user_details(19, 0.097);
     // });
 });
 
@@ -144,11 +146,12 @@ function get_detection_update(num_entries) {
                 last_entry = data[0].detection_id;
             }
 
-            var row_content = "";
-            var date_str;
+            let row_content = "";
+            let date_str;
             $.each(data, function (k, v) {
+                let color_bar = `<div class='detection-color-box' style='background-color: ${getUserColor(v.user.user_id)}'></div>`
                 date_str = new Date(v.detection_time).toLocaleDateString("en-US", date_format_option);
-                row_content += `<tr><td>${v.user.fname} ${v.user.lname}</td><td>${date_str}</td><td><img class='live_thumbnail' src='${v.user.photo_path}'/></td></tr>`;
+                row_content += `<tr><td>${v.user.fname} ${v.user.lname}</td><td>${date_str}</td><td><div style="position: relative"><img class='live_thumbnail' src='${v.user.photo_path}'/>${color_bar}</div></td></tr>`;
             });
             $("#detection-table tbody").prepend(row_content);
         },
@@ -190,6 +193,25 @@ function get_user_details(u_id, cnflvl) {
             }
         })
     }
+}
+
+function getUserColor(user_id) {
+    if (color_map.has(user_id)) {
+        return color_map.get(user_id)
+    } else {
+        let color = generateColor();
+        color_map.set(user_id, color);
+        return color;
+    }
+}
+
+
+function generateColor() {
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += COLOR_LETTERS[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
 
 
