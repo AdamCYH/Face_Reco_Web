@@ -1,7 +1,9 @@
 const date_format_option = {month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"};
 const DETECTION_LIST_NUM = 10;
 const COLOR_LETTERS = '0123456789ABCDEF';
+const DETECTION_MAX_ROW = 50;
 
+let num_detection = 0;
 let initial_call = true;
 let last_entry = 0;
 let video_output;
@@ -130,6 +132,12 @@ function fadeout(element) {
 }
 
 function get_detection_update(num_entries) {
+    if (num_detection > DETECTION_MAX_ROW) {
+        for (let i = 0; i < num_detection - DETECTION_MAX_ROW; i++) {
+            $('#detection-table tr:last').remove();
+            num_detection--;
+        }
+    }
     $.ajax({
         url: "/api/detection_update",
         dataType: "json",
@@ -149,6 +157,7 @@ function get_detection_update(num_entries) {
             let row_content = "";
             let date_str;
             $.each(data, function (k, v) {
+                num_detection++;
                 let color_bar = `<div class='detection-color-box' style='background-color: ${getUserColor(v.user.user_id)}'></div>`
                 date_str = new Date(v.detection_time).toLocaleDateString("en-US", date_format_option);
                 row_content += `<tr><td>${v.user.fname} ${v.user.lname}</td><td>${date_str}</td><td><div style="position: relative"><img class='live_thumbnail' src='${v.user.photo_path}'/>${color_bar}</div></td></tr>`;
