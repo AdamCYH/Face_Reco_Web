@@ -130,6 +130,10 @@ class FaceFeatureViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
+            new_feature = FaceFeature.objects.filter(user_id=serializer.data['user'])
+            users = FaceFeatureReadSerializer(new_feature, many=True)
+            redis.load_feature_to_redis(users.data)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
