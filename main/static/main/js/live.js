@@ -64,19 +64,23 @@ function setupPage() {
 }
 
 function max_min_screen() {
-    var live_container = $("#live_container");
-    if (live_container.hasClass("full_screen")) {
-        detection_detail.removeClass('detection-content-full-screen');
-        live_container.removeClass("full_screen");
-        live_container.find(".max_min_icon").attr('src', '/static/main/img/maximize_s.png');
-        video_content.css('width', 'unset');
-        resetVideoSize();
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        alert("Full screen is not supported on mobile devices.");
     } else {
-        live_container.find(".max_min_icon").attr('src', '/static/main/img/minimize_s.png');
-        live_container.addClass("full_screen");
-        video_content.width($("#videoOutput").width());
-        fadeout(detection_detail);
-        resetVideoSize();
+        var live_container = $("#live_container");
+        if (live_container.hasClass("full_screen")) {
+            detection_detail.removeClass('detection-content-full-screen');
+            live_container.removeClass("full_screen");
+            live_container.find(".max_min_icon").attr('src', '/static/main/img/maximize_s.png');
+            video_content.css('width', 'unset');
+            resetVideoSize();
+        } else {
+            live_container.find(".max_min_icon").attr('src', '/static/main/img/minimize_s.png');
+            live_container.addClass("full_screen");
+            video_content.width($("#videoOutput").width());
+            fadeout(detection_detail);
+            resetVideoSize();
+        }
     }
 }
 
