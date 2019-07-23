@@ -70,7 +70,7 @@
 
 #detected_img_container {
     width: 20rem;
-    height: 11.25rem;
+    height: 14rem;
     background-image: linear-gradient(rgba(100, 100, 100, 0.5) 1px, transparent 0), linear-gradient(90deg, rgba(100, 100, 100, 0.5) 1px, transparent 0);
     background-size: 10px 10px, 10px 10px;
 }
@@ -112,10 +112,8 @@
 #info_table pre {
     padding: 0.35rem 1rem;
     margin: 0;
-    max-height: 6rem;
+    height: 3.5rem;
     overflow: auto;
-    min-height: 5rem;
-    height: auto;
 }
 
 .detection_box {
@@ -189,7 +187,7 @@
 
     #detected_img_container {
         width: 25rem;
-        height: 16rem;
+        height: 18rem;
     }
 
     #info_table * {
@@ -197,7 +195,6 @@
     }
 
     #info_table pre {
-        min-height: 6rem;
-        max-height: 8rem;
+        height: 6rem;
     }
 }

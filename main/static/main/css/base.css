@@ -131,7 +131,7 @@ html * {
     background-color: transparent;
 }
 
-#control-button-div {
+.control-button-div {
     position: absolute;
     width: max-content;
     right: 0;

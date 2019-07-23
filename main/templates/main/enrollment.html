@@ -5,6 +5,8 @@
 {% block header %}
     <link rel="stylesheet" href="{% static 'main/css/enrollment.css' %}">
     <script src="{% static 'main/js/enrollment.js' %}"></script>
+    <script src="{% static 'websocket/webrtc-adapter/release/adapter.js' %}"></script>
+    <script src="{% static 'websocket/kurento-utils/js/kurento-utils.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -22,11 +24,11 @@
                               action={% url 'main-enrollment_site' %} method="POST" style="width: 100%">
                             <table id="info_table">
                                 <tr>
-                                    <td>First Name*</td>
+                                    <td>First Name <span style="color:#ffbb02">*</span></td>
                                     <td><input type="text" name="fname"><br></td>
                                 </tr>
                                 <tr>
-                                    <td>Last Name*</td>
+                                    <td>Last Name <span style="color:#ffbb02">*</span></td>
                                     <td><input type="text" name="lname"><br></td>
                                 </tr>
                                 <tr>
