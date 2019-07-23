@@ -30,6 +30,7 @@
 #info_table td {
     padding: 0.6rem 1rem;
     color: #d1e0f2;
+    white-space: nowrap;
 }
 
 #info_table td:nth-child(odd) {
@@ -51,7 +52,7 @@ input[type=text], textarea {
 }
 
 textarea {
-    height: 100px;
+    height: 6.25rem;
     resize: none;
     border-image: url(/static/main/img/input_border2.png) 14 stretch;
 }
@@ -100,6 +101,7 @@ textarea {
 .photo-module {
     width: 100%;
     position: relative;
+    z-index: 1;
 }
 
 .photo-module #start-camera {
