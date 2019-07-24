@@ -102,6 +102,12 @@
     cursor: pointer;
 }
 
+.dot {
+    border: solid red 1px;
+    position: absolute;
+    z-index: 2;
+}
+
 .no_match {
     border: solid white 2px;
 }

@@ -8,6 +8,7 @@ let initial_call = true;
 let last_entry = 0;
 let video_output;
 let video_content;
+let video_overlay;
 let detection_detail;
 let detection_list;
 let control_title;
@@ -31,6 +32,7 @@ $(document).ready(function () {
     detail_indicator = $("#detection-detail-indicator");
     video_output = $("#videoOutput");
     video_content = $("#video_content");
+    video_overlay = $("#overlay");
     detection_header_title = $("#detection-header-title");
     setupPage();
 
