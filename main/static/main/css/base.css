@@ -244,15 +244,15 @@ html * {
 ########################
 */
 .footer-bar {
-    width: max-content;
-    height: 5rem;
+    width: 100%;
+    height: 6rem;
     position: relative;
     margin: 0 0 0 1rem;
     float: left;
 }
 
 .footer {
-    padding: 0.3rem;
+    margin-right: 1%;
 }
 
 #footer-left {
@@ -263,7 +263,7 @@ html * {
 }
 
 #footer-center {
-    width: 20rem;
+    width: 22rem;
     height: 100%;
     float: left;
     padding: 0;
@@ -271,10 +271,9 @@ html * {
 
 #footer-right {
     overflow: hidden;
-    float: left;
     height: 100%;
     float: left;
-
+    width: max-content;
 }
 
 #address-footer {
@@ -510,6 +509,9 @@ a:hover, .button {
         height: 38rem;
     }
 
+    .footer {
+        margin-right: 5%;
+    }
 
     .footer-bar {
         margin: 0 2.3%;
