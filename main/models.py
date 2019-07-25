@@ -10,7 +10,7 @@ class User(models.Model):
     photo_path = models.CharField(max_length=500)
     enroll_time = models.DateTimeField()
     vip = models.BooleanField(default=False)
-    deleted = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False, db_index=True)
 
     class Meta:
         db_table = 'users'

@@ -118,12 +118,11 @@ class FaceFeatureViewSet(viewsets.ViewSet):
     def dispatch(self, request, *args, **kwargs):
         return super(FaceFeatureViewSet, self).dispatch(request, *args, **kwargs)
 
-    queryset = FaceFeature.objects.all()
+    queryset = FaceFeature.objects.filter(user__deleted=False)
     serializer_class = FaceFeatureSerializer
 
     def list(self, request):
-        queryset = FaceFeature.objects.all()
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -164,12 +163,11 @@ class UserViewSet(viewsets.ViewSet):
     def dispatch(self, request, *args, **kwargs):
         return super(UserViewSet, self).dispatch(request, *args, **kwargs)
 
-    queryset = User.objects.all()
+    queryset = User.objects.filter(deleted=False)
     serializer_class = UserSerializer
 
     def list(self, request):
-        queryset = User.objects.all()
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -187,7 +185,8 @@ class UserViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         user = get_object_or_404(self.queryset, pk=pk)
-        user.delete()
+        user.deleted = True
+        user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -285,7 +284,7 @@ class LoadFeatures(APIView):
         """
         Load face feature to Redis, so SDK can use for recognition
         """
-        queryset = FaceFeature.objects.all()
+        queryset = FaceFeature.objects.filter(deleted=False)
         users = FaceFeatureReadSerializer(queryset, many=True)
         redis.load_feature_to_redis(users.data)
         return Response({"Status": "Successful"}, status=status.HTTP_200_OK)
