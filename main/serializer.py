@@ -42,8 +42,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('user_id', 'fname', 'lname', 'age', 'description', 'photo_path', 'enroll_time')
-        read_only_fields = ('user_id', 'enroll_time')
+        fields = ('user_id', 'fname', 'lname', 'age', 'description', 'photo_path', 'enroll_time', 'vip')
+        read_only_fields = ('user_id', 'enroll_time', 'deleted')
 
 
 class MatchUserSerializer(serializers.ModelSerializer):
