@@ -4,10 +4,10 @@ function setupPage() {
     $("#control-title").html('IMAGE UPLOAD');
     $("#control-subtitle").html('Upload a image with one face.');
     $("#control-button-div").append("<input id='file-upload' type='file' onclick='uploadMode()' onchange='loadImg(this);' hidden/>");
-    $("#button-label").html('Upload').attr('for', 'file-upload');
+    $("#button-label").html('UPLOAD').attr('for', 'file-upload');
 
     $("#upload-tool").append("<div class='control-button-div' id='control-button-div2' style='right: 7rem'>" +
-        "<label id='button-label' style='color: black' onclick='photoMode()'>Take a Photo</label></div>")
+        "<label id='photo-button' class='button-1' onclick='photoMode()'>CAMERA</label></div>")
 }
 
 function photoMode() {

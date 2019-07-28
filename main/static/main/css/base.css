@@ -140,12 +140,9 @@ html * {
 }
 
 #button-label {
-    background-color: #ffc003;
     color: black;
     padding: 0.2rem 1rem;
-    cursor: pointer;
-    text-align: center;
-
+    font-family: Trebuchet MS, serif;
 }
 
 .upload-img-container {
