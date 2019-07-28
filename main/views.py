@@ -53,6 +53,7 @@ class EnrollmentView(View):
         }
 
         user_serializer = UserSerializer(data=data)
+        user = None
         if user_serializer.is_valid(raise_exception=True):
             user = user_serializer.save()
         else:
@@ -284,7 +285,7 @@ class LoadFeatures(APIView):
         """
         Load face feature to Redis, so SDK can use for recognition
         """
-        queryset = FaceFeature.objects.filter(deleted=False)
+        queryset = FaceFeature.objects.filter(user__deleted=False)
         users = FaceFeatureReadSerializer(queryset, many=True)
         redis.load_feature_to_redis(users.data)
         return Response({"Status": "Successful"}, status=status.HTTP_200_OK)
