@@ -141,8 +141,9 @@ html * {
 
 #button-label {
     color: black;
-    padding: 0.2rem 1rem;
+    padding: 0.3rem 1rem;
     font-family: Trebuchet MS, serif;
+    font-size: 0.9rem;
 }
 
 .upload-img-container {
