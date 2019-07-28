@@ -13,8 +13,8 @@
 {% block content %}
     <div class="content">
         <div class="content-left">
-{#            <div class="design-block-vertical-1">#}
-{#            </div>#}
+            {#            <div class="design-block-vertical-1">#}
+            {#            </div>#}
             <div class="content-live">
                 {% include 'main/modules/control_module.html' %}
                 <div class="live-wrapper border-1">
@@ -79,16 +79,20 @@
                         <table style="display: table" id="info_table">
                             <tr>
                                 <td>Name</td>
-                                <td class="detected_info" id="name_col"></td>
+                                <td>
+                                    <div class="detected_info border-2" id="name_col"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Age</td>
-                                <td class="detected_info" id="age_col"></td>
+                                <td>
+                                    <div class="detected_info border-2" id="age_col"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Description</td>
                                 <td>
-                                    <pre class="detected_info" id="description_col"></pre>
+                                    <pre><div class="detected_info border-2" id="description_col"></div></pre>
                                 </td>
                             </tr>
                         </table>
@@ -97,7 +101,7 @@
                 </div>
             </div>
             {% csrf_token %}
-{#            <div class="design-block-vertical-2"></div>#}
+            {#            <div class="design-block-vertical-2"></div>#}
         </div>
     </div>
     <div class="design-block1">
