@@ -36,7 +36,7 @@ function start_live_video() {
     ws.onmessage = function (message) {
         var parsedMessage = JSON.parse(message.data);
         $(".detect_box").remove();
-        $(".dot").remove();
+        // $(".dot").remove();
         // console.info('Received message: ' + message.data);
         switch (parsedMessage.id) {
             case 'startResponse':
@@ -76,24 +76,25 @@ function start_live_video() {
                         detect_box.css('height', bbox.height * video_height + "px");
                         detect_box.css('transform', 'translate({0}px,{1}px)'.f(bbox.x * video_width, bbox.y * video_height));
 
-                        let lmk = faces[x].lmk;
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[36].x * video_width}px,${lmk[36].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[37].x * video_width}px,${lmk[37].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[38].x * video_width}px,${lmk[38].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[39].x * video_width}px,${lmk[39].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[40].x * video_width}px,${lmk[40].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[41].x * video_width}px,${lmk[41].y * video_height}px)"></div>`);
+                        // ###########Face Landmark###########
+                        // let lmk = faces[x].lmk;
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[36].x * video_width}px,${lmk[36].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[37].x * video_width}px,${lmk[37].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[38].x * video_width}px,${lmk[38].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[39].x * video_width}px,${lmk[39].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[40].x * video_width}px,${lmk[40].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[41].x * video_width}px,${lmk[41].y * video_height}px)"></div>`);
 
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[42].x * video_width}px,${lmk[42].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[43].x * video_width}px,${lmk[43].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[44].x * video_width}px,${lmk[44].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[45].x * video_width}px,${lmk[45].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[46].x * video_width}px,${lmk[46].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[47].x * video_width}px,${lmk[47].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[42].x * video_width}px,${lmk[42].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[43].x * video_width}px,${lmk[43].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[44].x * video_width}px,${lmk[44].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[45].x * video_width}px,${lmk[45].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[46].x * video_width}px,${lmk[46].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[47].x * video_width}px,${lmk[47].y * video_height}px)"></div>`);
 
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[30].x * video_width}px,${lmk[30].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[48].x * video_width}px,${lmk[48].y * video_height}px)"></div>`);
-                        video_overlay.append(`<div class='dot' style="transform: translate(${lmk[54].x * video_width}px,${lmk[54].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[30].x * video_width}px,${lmk[30].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[48].x * video_width}px,${lmk[48].y * video_height}px)"></div>`);
+                        // video_overlay.append(`<div class='dot' style="transform: translate(${lmk[54].x * video_width}px,${lmk[54].y * video_height}px)"></div>`);
                     }
 
                 }
