@@ -245,7 +245,7 @@ html * {
     width: 99%;
     height: 5rem;
     position: relative;
-    margin: 1rem 0 0 1rem;
+    margin: 0.5rem 0 0 1rem;
     float: left;
 }
 
@@ -255,7 +255,7 @@ html * {
 
 #footer-left {
     width: 37.7rem;
-    height: 100%;
+    height: max-content;
     float: left;
     padding: 0.1rem 0.625rem;
 }
@@ -281,6 +281,7 @@ html * {
 
 #address-footer p {
     color: #8696a3;
+    margin: 0;
 }
 
 #logo {

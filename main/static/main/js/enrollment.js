@@ -11,7 +11,7 @@ $(document).ready(setupPage);
 
 function setupPage() {
     $("#control-title").html('IMAGE UPLOAD');
-    $("#control-subtitle").html('Upload a image with one face.');
+    $("#control-subtitle").html('Upload a image or take one with camera.');
     $("#control-button-div").append("<input id='file-upload' type='file' onclick='uploadMode()' onchange='loadImg(this);' hidden/>");
     $("#button-label").html('UPLOAD').attr('for', 'file-upload');
 
