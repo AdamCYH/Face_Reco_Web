@@ -1,3 +1,12 @@
+// References to all the element we will need.
+let video,
+    image,
+    controls,
+    take_photo_btn,
+    delete_photo_btn,
+    snap_image,
+    error_message;
+
 $(document).ready(setupPage);
 
 function setupPage() {
@@ -7,7 +16,15 @@ function setupPage() {
     $("#button-label").html('UPLOAD').attr('for', 'file-upload');
 
     $("#upload-tool").append("<div class='control-button-div' id='control-button-div2' style='right: 7rem'>" +
-        "<label id='photo-button' class='button-1' onclick='photoMode()'>CAMERA</label></div>")
+        "<label id='photo-button' class='button-1' onclick='photoMode()'>CAMERA</label></div>");
+
+    video = document.querySelector('#camera-stream');
+    image = document.querySelector('#snap');
+    controls = document.querySelector('.controls');
+    take_photo_btn = document.querySelector('#take-photo');
+    delete_photo_btn = document.querySelector('#delete-photo');
+    snap_image = document.querySelector("#snap_image");
+    error_message = document.querySelector('#error-message');
 }
 
 function photoMode() {
@@ -21,6 +38,9 @@ function uploadMode() {
     $("[name=img_holder]").val("");
     $("#photo-module").css('display', 'none');
     $("#snap_image").css('display', 'block');
+    video.srcObject.getTracks().forEach((track) => {
+        track.stop();
+    });
 }
 
 
@@ -66,15 +86,6 @@ function validate() {
 
 function setUpPhotoStream() {
 
-    // References to all the element we will need.
-    var video = document.querySelector('#camera-stream'),
-        image = document.querySelector('#snap'),
-        controls = document.querySelector('.controls'),
-        take_photo_btn = document.querySelector('#take-photo'),
-        delete_photo_btn = document.querySelector('#delete-photo'),
-        snap_image = document.querySelector("#snap_image"),
-        error_message = document.querySelector('#error-message');
-
 
     // The getUserMedia interface is used for handling camera input.
     // Some browsers need a prefix so here we're covering all the options
@@ -99,7 +110,7 @@ function setUpPhotoStream() {
 
         e.preventDefault();
 
-        var snap = takeSnapshot();
+        let snap = takeSnapshot();
 
         // Show image.
         image.setAttribute('src', snap);
@@ -107,7 +118,7 @@ function setUpPhotoStream() {
 
         // Enable delete and save buttons
         delete_photo_btn.classList.remove("disabled");
-        // download_photo_btn.classList.remove("disabled");
+        take_photo_btn.classList.add("disabled");
 
         // Set the href attribute of the download button to the snap url.
         // download_photo_btn.href = snap;
@@ -131,6 +142,7 @@ function setUpPhotoStream() {
         $("[name=img_holder]").val("");
         // Disable delete and save buttons
         delete_photo_btn.classList.add("disabled");
+        take_photo_btn.classList.remove("disabled");
 
         // Resume playback of stream.
         video.play();
@@ -188,11 +200,9 @@ function setUpPhotoStream() {
         // Helper function for clearing the app UI.
 
         controls.classList.remove("visible");
-        start_camera.classList.remove("visible");
         video.classList.remove("visible");
         snap.classList.remove("visible");
         error_message.classList.remove("visible");
     }
-
 
 }
