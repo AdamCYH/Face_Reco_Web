@@ -120,6 +120,11 @@ function hide_detection_detail() {
 
 function fadein(element) {
     element.animate({
+        right: "-=30%",
+    }, 0, function () {
+        // Animation complete.
+    });
+    element.animate({
         opacity: 1,
         right: 0,
     }, 300, function () {
@@ -133,6 +138,11 @@ function fadeout(element) {
         right: "-=30%",
         zIndex: -1,
     }, 300, function () {
+        // Animation complete.
+    });
+    element.animate({
+        right: "+=30%",
+    }, 0, function () {
         // Animation complete.
     });
 }
