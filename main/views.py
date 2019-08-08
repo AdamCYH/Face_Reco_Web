@@ -259,7 +259,7 @@ class DetectionViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         queryset = Detection.objects.all()
         feature = get_object_or_404(queryset, pk=pk)
-        serializer = self.serializer_class(feature)
+        serializer = self.read_serializer_class(feature)
         return Response(serializer.data)
 
 

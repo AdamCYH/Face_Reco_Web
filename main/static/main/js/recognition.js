@@ -17,7 +17,7 @@ function loadImg(input) {
             $("#snap_image").val(e.target.result);
             $("#img_name").val(fileName.split(".")[0]);
             $("#default-overlay").remove();
-            $(".default-match-block").css('display', 'none');
+            // $(".default-match-block").css('display', 'none');
         };
 
         reader.readAsDataURL(input.files[0]);

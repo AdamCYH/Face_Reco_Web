@@ -166,7 +166,7 @@ function get_detection_update(num_entries) {
                 num_detection++;
                 let color_bar = `<div class='detection-color-box' style='background-color: ${getUserColor(v.user.user_id)}'></div>`
                 date_str = new Date(v.detection_time).toLocaleDateString("en-US", date_format_option);
-                row_content += `<tr><td>${v.user.fname} ${v.user.lname}</td><td>${date_str}</td><td><div style="position: relative"><img class='live_thumbnail' src='${v.user.photo_path}'/>${color_bar}</div></td></tr>`;
+                row_content += `<tr onclick="get_detection_detail(${v.detection_id}, '')"><td>${v.user.fname} ${v.user.lname}</td><td>${date_str}</td><td><div style="position: relative"><img class='live_thumbnail' src='${v.user.photo_path}'/>${color_bar}</div></td></tr>`;
             });
             $("#detection-table tbody").prepend(row_content);
         },
@@ -175,6 +175,31 @@ function get_detection_update(num_entries) {
             console.log("Service error, please contact admin.")
         }
     });
+}
+
+function get_detection_detail(d_id) {
+    fadeout(detection_detail);
+    $("#no_match_div").remove();
+
+    $.ajax({
+        url: "/api/detection/" + d_id,
+        dataType: "json",
+        type: "GET",
+        context: document.body,
+        success: function (data) {
+            $("#name_col").html(data.user.fname + " " + data.user.lname);
+            $("#age_col").html(data.user.age);
+            $("#cnflvl_col").html(Math.round(data.confidence_level * 10000) / 100 + "%");
+            $("#description_col").html(data.user.description);
+            $("#img_col").attr('src', data.user.photo_path);
+            show_detection_detail();
+        },
+        error: function (data) {
+            console.log(data);
+            console.log("Service error, please contact admin.")
+        }
+    })
+
 }
 
 function get_user_details(u_id, cnflvl) {
