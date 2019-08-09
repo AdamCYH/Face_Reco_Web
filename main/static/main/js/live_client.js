@@ -69,7 +69,8 @@ function start_live_video() {
                             video_overlay.append(`<div class='detect_box no_match' id=${detect_box_id} data-uid=${u_id} data-cnflvl=${faces[x].matching.score}></div>`);
                         } else {
                             let color = getUserColor(u_id);
-                            video_overlay.append(`<div class='detect_box' id=${detect_box_id} data-uid=${u_id} data-cnflvl=${faces[x].matching.score} style="border-color: ${color}"></div>`);
+                            let cnflvl = Math.round(faces[x].matching.score * 10000) / 100 + "%";
+                            video_overlay.append(`<div class='detect_box' id=${detect_box_id} data-uid=${u_id} data-cnflvl=${cnflvl} style="border-color: ${color}"><span class="detect_cnflvl" style="color: ${color}">${cnflvl}</span></div>`);
                         }
                         let detect_box = $("#" + detect_box_id);
                         detect_box.css('width', bbox.width * video_width + "px");

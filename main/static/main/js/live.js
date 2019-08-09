@@ -232,7 +232,7 @@ function get_user_details(u_id, cnflvl) {
             success: function (data) {
                 $("#name_col").html(data.fname + " " + data.lname);
                 $("#age_col").html(data.age);
-                $("#cnflvl_col").html(Math.round(cnflvl * 10000) / 100 + "%");
+                $("#cnflvl_col").html(cnflvl);
                 $("#description_col").html(data.description);
                 $("#img_col").attr('src', data.photo_path);
                 show_detection_detail();
