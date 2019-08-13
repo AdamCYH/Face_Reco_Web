@@ -8,6 +8,15 @@ ENROLLMENT_IMG_UPLOAD = settings.ENROLLMENT_IMG_UPLOAD
 
 
 def save_image(img_data, request_type, fname="", lname="", img_name=""):
+    """
+    This function saves image to local server.
+    :param img_data: base64 image data
+    :param request_type: could be enrollment or recognition, they will be stored in a different place
+    :param fname: fname used as part of the file name
+    :param lname: lname used as part of the file name
+    :param img_name: original image name if available
+    :return: photo path
+    """
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M")
 
     if request_type == "recognition":

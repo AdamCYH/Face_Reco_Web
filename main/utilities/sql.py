@@ -8,6 +8,15 @@ logger = logging.getLogger(__name__)
 
 
 def insert_visitor(fname, lname, age, description, photo_path):
+    """
+    Depreciated. Please use serializer to insert visitors.
+    :param fname: user first name
+    :param lname: user last name
+    :param age: user age
+    :param description: user description
+    :param photo_path: photo path
+    :return: user object
+    """
     user = User()
     user.fname = fname
     if age != "":
@@ -21,6 +30,10 @@ def insert_visitor(fname, lname, age, description, photo_path):
 
 
 def create_job():
+    """
+    It creates an empty job, which is used for SDK callback to update the match result.
+    :return: an empty match_job object
+    """
     match_job = MatchJob()
     match_job.match_time = timezone.now()
     match_job.save()
@@ -28,6 +41,11 @@ def create_job():
 
 
 def insert_match_result(match_result):
+    """
+    When SDK callback, it inserted match result to the database.
+    :param match_result: match result
+    :return: match result object
+    """
     match_job = MatchJob.objects.get(job_id=match_result["job_id"])
     for user in match_result["users"]:
         try:

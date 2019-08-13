@@ -264,6 +264,11 @@ class DetectionViewSet(viewsets.ViewSet):
 
 
 class DetectionStatus(generics.ListAPIView):
+    """
+    This view is the api view to retrieve list of detections.
+    It either retrieve by number of entries,
+    or it retrieve all detections later than the last entry cached in client side.
+    """
     serializer_class = DetectionReadSerializer
 
     def get_queryset(self):

@@ -20,7 +20,9 @@ TASK_FACE_LOAD = 103
 def enroll_to_redis(user):
     """
     Enrollment function. it put user info into redis, and publish a task into channel for application to
-    process face feature extraction
+    process face feature extraction.
+    :param user: user object for enrollment
+    :return: 1 for success
     """
     # Create user and save it into redis db
     user_info = {
@@ -42,6 +44,9 @@ def enroll_to_redis(user):
 def recognition_redis(photo_path, job_id):
     """
     Recognition function. Publish recognition task to the channel for face recognition.
+    :param photo_path: photo path for matching
+    :param job_id: empty job id for callback
+    :return: 1 for success
     """
     task_info = {
         'task_id': TASK_FACE_RECOGNITION,
@@ -53,6 +58,11 @@ def recognition_redis(photo_path, job_id):
 
 
 def result_from_redis(job_id):
+    """
+    Try to retrieve the match result from redis with the empty job id saved earlier.
+    :param job_id: job id created when recognition initiated
+    :return: result string
+    """
     result_string = my_server.get("FR_result:%d" % job_id)
     if result_string is None:
         return ""
@@ -65,6 +75,8 @@ def load_feature_to_redis(users):
     """
     Feature loading function. extract face feature from persistent db, put into redis and publish load task to the channel
     for application to read feature data for incoming recognition.
+    :param users: list of all users
+    :return:
     """
     for user in users:
         user_id = int(user['user']['user_id'])
