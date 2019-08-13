@@ -255,7 +255,7 @@ html * {
 
 #footer-left {
     width: 37.7rem;
-    height: max-content;
+    height: 100%;
     float: left;
     padding: 0.1rem 0.625rem;
 }

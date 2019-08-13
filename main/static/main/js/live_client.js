@@ -55,7 +55,7 @@ function start_live_video() {
                 webRtcPeer.addIceCandidate(parsedMessage.candidate);
                 break;
             case 'faceFound':
-                var facesList = JSON.parse(parsedMessage.faces.value);
+                var facesList = JSON.parse(parsedMessage.faces);
                 // console.log(faces);
                 if (facesList !== undefined && facesList !== null) {
                     faces = facesList.face;
@@ -70,7 +70,8 @@ function start_live_video() {
                         } else {
                             let color = getUserColor(u_id);
                             let cnflvl = Math.round(faces[x].matching.score * 10000) / 100 + "%";
-                            video_overlay.append(`<div class='detect_box' id=${detect_box_id} data-uid=${u_id} data-cnflvl=${cnflvl} style="border-color: ${color}"><span class="detect_cnflvl" style="color: ${color}">${cnflvl}</span></div>`);
+                            let info = faces[x].info;
+                            video_overlay.append(`<div class='detect_box' id=${detect_box_id} data-uid=${u_id} data-cnflvl=${cnflvl} style="border-color: ${color}"><div class="detect_cnflvl" style="color: ${color}">${cnflvl}</div><div class="detect_name" style="color: ${color}">${info.name}</div></div>`);
                         }
                         let detect_box = $("#" + detect_box_id);
                         detect_box.css('width', bbox.width * video_width + "px");

@@ -48,6 +48,22 @@ $(document).ready(function () {
         console.log($(this).attr('data-uid'));
         get_user_details($(this).attr('data-uid'), $(this).attr('data-cnflvl'));
     });
+
+    $('#conf_lvl_checkbox').change(function () {
+        if ($(this).is(':checked')) {
+            addsonSwitch(true, ".detect_cnflvl");
+        } else {
+            addsonSwitch(false, ".detect_cnflvl");
+        }
+    });
+
+    $('#name_checkbox').change(function () {
+        if ($(this).is(':checked')) {
+            addsonSwitch(true, ".detect_name");
+        } else {
+            addsonSwitch(false, ".detect_name");
+        }
+    });
     // Code for quick debug
     // $(document).on('mousedown', '#video-info', function () {
     //     get_user_details(19, 0.097);
@@ -264,6 +280,22 @@ function generateColor() {
     return color;
 }
 
+function addsonSwitch(display, className) {
+    let ss = document.styleSheets;
+    for (let i = 0; i < ss.length; i++) {
+        let rules = ss[i].cssRules || ss[i].rules;
+        for (let j = 0; j < rules.length; j++) {
+            if (rules[j].selectorText === className) {
+                if (display) {
+                    rules[j].style.display = "initial";
+                } else {
+                    rules[j].style.display = "none";
+                }
+                return;
+            }
+        }
+    }
+}
 
 String.prototype.format = String.prototype.f = function () {
     var s = this,
