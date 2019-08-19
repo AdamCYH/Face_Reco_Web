@@ -123,7 +123,7 @@ class FaceFeatureViewSet(viewsets.ViewSet):
     serializer_class = FaceFeatureSerializer
 
     def list(self, request):
-        serializer = self.serializer_class(self.queryset, many=True)
+        serializer = self.serializer_class(self.queryset.all(), many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -168,7 +168,7 @@ class UserViewSet(viewsets.ViewSet):
     serializer_class = UserSerializer
 
     def list(self, request):
-        serializer = self.serializer_class(self.queryset, many=True)
+        serializer = self.serializer_class(self.queryset.all(), many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -180,12 +180,12 @@ class UserViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk=None):
-        user = get_object_or_404(self.queryset, pk=pk)
+        user = get_object_or_404(self.queryset.all(), pk=pk)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
     def destroy(self, request, pk=None):
-        user = get_object_or_404(self.queryset, pk=pk)
+        user = get_object_or_404(self.queryset.all(), pk=pk)
         user.deleted = True
         user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -206,13 +206,11 @@ class MatchJobViewSet(viewsets.ViewSet):
     serializer_class = MatchJobSerializer
 
     def list(self, request):
-        queryset = MatchJob.objects.all()
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(self.queryset.all(), many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = MatchJob.objects.all()
-        feature = get_object_or_404(queryset, pk=pk)
+        feature = get_object_or_404(self.queryset.all(), pk=pk)
         serializer = self.serializer_class(feature)
         return Response(serializer.data)
 
@@ -244,8 +242,7 @@ class DetectionViewSet(viewsets.ViewSet):
     read_serializer_class = DetectionReadSerializer
 
     def list(self, request):
-        queryset = Detection.objects.all()
-        serializer = self.read_serializer_class(queryset, many=True)
+        serializer = self.read_serializer_class(self.queryset.all(), many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -257,8 +254,7 @@ class DetectionViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
     def retrieve(self, request, pk=None):
-        queryset = Detection.objects.all()
-        feature = get_object_or_404(queryset, pk=pk)
+        feature = get_object_or_404(self.queryset.all(), pk=pk)
         serializer = self.read_serializer_class(feature)
         return Response(serializer.data)
 
