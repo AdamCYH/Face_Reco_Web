@@ -1,0 +1,95 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'main/css/enrollment.css' %}">
+    <script src="{% static 'main/js/enrollment.js' %}"></script>
+    <script src="{% static 'websocket/webrtc-adapter/release/adapter.js' %}"></script>
+    <script src="{% static 'websocket/kurento-utils/js/kurento-utils.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="upper">
+            <div class="line-1"></div>
+            <div class="content-left">
+                {% include 'main/modules/control_module.html' %}
+                {% include "main/modules/preview_module.html" %}
+            </div>
+            <div class="content-right">
+                <div class="border-1" id="info-container">
+                    <div class="border-special" id="input-container">
+                        <form class="center" name="info_form" id="info_form"
+                              action={% url 'main-enrollment_site' %} method="POST" style="width: 100%">
+                            <table id="info_table">
+                                <tr>
+                                    <td>First Name <span style="color:#ffbb02">*</span></td>
+                                    <td><input type="text" name="fname"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name <span style="color:#ffbb02">*</span></td>
+                                    <td><input type="text" name="lname"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>Age</td>
+                                    <td><input type="text" name="age"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td><textarea name="description" form="info_form"
+                                                  placeholder="Enter description here..."></textarea>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="center-parent">
+                                        <button type="button" class="button center" id="submit_form"
+                                                onclick="submitform(this)">SUBMIT
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <span class="message" id="message"></span>
+                            <input name="img_holder" hidden>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                    {% include "main/modules/spin_rings.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="bottom" style="display: block;">
+            <div class="bottom-left">
+                {% include "main/modules/detection_module.html" %}
+            </div>
+            <div class="bottom-right">
+                <div class="design-block2">
+                    <div class="position-block2 color-gradient1">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                    <div class="position-block2 color-gradient2">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                    <div class="position-block2 color-gradient3">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="design-block1">
+        <div class="box-3 color-4"></div>
+        <div style="height: 1rem;margin-top: 0.5rem">
+            <div class="box-1 color-1"></div>
+        </div>
+        <div class="line-2">
+            <div class="box-3 color-3" style="position: absolute; bottom: 0;"></div>
+        </div>
+    </div>
+
+{% endblock %}

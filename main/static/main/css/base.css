@@ -1,0 +1,518 @@
+html {
+    min-width: 1280px;
+    background-color: black;
+}
+
+html * {
+    background-color: inherit;
+    color: white;
+    box-sizing: border-box;
+}
+
+
+/*
+########################
+########## TOP #########
+########################
+*/
+.navigation {
+    border: solid 1px;
+    border-color: transparent transparent rgb(90, 103, 122) transparent;
+    height: 7.8rem;
+}
+
+.container {
+    max-width: none;
+    padding: 0;
+    margin: 1.25rem 0 0.75rem 0;
+    position: relative;
+}
+
+.navbar {
+    padding: 0;
+    height: 1.56rem;
+}
+
+.navbar-custom * {
+    color: #989a9d !important;
+    font-family: Trebuchet MS, sans-serif !important;
+    background-color: transparent;
+    margin: 0 2rem 0 0.5rem;
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+.header {
+    margin: 0.2rem 0.5rem;
+}
+
+.header-1 {
+    background-color: #343748;
+    height: 3.5rem;
+    vertical-align: middle
+}
+
+.header-2 {
+    height: 1.1rem;
+}
+
+#title-holder {
+    position: absolute;
+    background-color: transparent;
+}
+
+.title {
+    margin-left: 0.5rem;
+}
+
+.subtitle {
+    margin-left: 0.5rem;
+    color: #8c9aa5;
+}
+
+#subtitile-holder {
+    color: #8c9aa5;
+    position: absolute;
+}
+
+
+/*
+########################
+##### Main content #####
+########################
+*/
+.content {
+    width: 96%;
+    margin: 0 0 1% 2%;
+}
+
+
+.upper {
+    height: 35rem;
+    position: relative;
+}
+
+.bottom {
+    height: 7rem;
+    position: relative;
+    background-color: transparent;
+    margin-top: 1rem;
+}
+
+
+.bottom-left {
+    width: 60%;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+
+.bottom-right {
+    width: 40%;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+
+
+#control-container {
+    height: 4.25rem;
+    background-color: #222222;
+    position: relative;
+}
+
+#upload-tool {
+    border: solid 5px;
+    border-color: rgb(58, 58, 58) transparent transparent transparent;
+    position: absolute;
+    margin-left: 3rem;
+    width: 90%;
+    min-width: 265px;
+    background-color: transparent;
+}
+
+.control-button-div {
+    position: absolute;
+    width: max-content;
+    right: 0;
+    top: 1rem;
+    z-index: 2;
+}
+
+#button-label {
+    color: black;
+    padding: 0.3rem 1rem;
+    font-family: Trebuchet MS, serif;
+    font-size: 0.9rem;
+}
+
+.upload-img-container {
+    margin: 1.375rem 0 0 0;
+    height: 29.125rem;
+}
+
+#snap_image-container {
+    height: 100%;
+    position: relative;
+}
+
+#default-overlay {
+    background-image: linear-gradient(rgba(36, 47, 59, 0.8) 1px, transparent 0),
+    linear-gradient(90deg, rgba(36, 47, 59, 0.8) 1px, transparent 0);
+    background-size: 100px 100px, 100px 100px;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#snap_image {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    width: auto;
+}
+
+
+#info-container {
+    /*margin: 2rem 9% 0 4%;*/
+    height: 100%;
+    position: relative;
+}
+
+.design-buttons {
+    position: absolute;
+    background-color: transparent;
+    bottom: 0.3rem;
+
+}
+
+#design-buttons-left {
+    width: 3rem;
+    height: 3rem;
+    right: 14rem;
+}
+
+#design-buttons-middle {
+    width: 4rem;
+    height: 4rem;
+    right: 8rem;
+}
+
+#design-buttons-right {
+    width: 5rem;
+    height: 5rem;
+    right: 1rem;
+}
+
+.design-buttons-component {
+    position: absolute;
+}
+
+.design-buttons-component * {
+    width: 100%;
+    height: 100%;
+}
+
+.default-match-block {
+    background-image: url("/static/main/img/default_detection.png");
+    background-position: center;
+}
+
+.detection-block {
+    height: 90%;
+    position: relative;
+    margin: 0 0 0.5rem 0;
+    overflow-x: scroll;
+}
+
+#detection_end_block {
+    float: right;
+    position: absolute;
+    top: 15%;
+    right: 0;
+    padding: 0.4rem 0;
+    background-color: black;
+}
+
+
+/*
+########################
+######## Footers #######
+########################
+*/
+.footer-bar {
+    width: 99%;
+    height: 5rem;
+    position: relative;
+    margin: 0.5rem 0 0 1rem;
+    float: left;
+}
+
+.footer {
+    margin-right: 1%;
+}
+
+#footer-left {
+    width: 37.7rem;
+    height: 100%;
+    float: left;
+    padding: 0.1rem 0.625rem;
+}
+
+#footer-center {
+    width: 22rem;
+    height: 100%;
+    float: left;
+    padding: 0;
+}
+
+#footer-right {
+    overflow: hidden;
+    height: 100%;
+    float: left;
+    width: max-content;
+}
+
+#address-footer {
+    padding: 0.3rem 1rem 0.3rem 2rem;
+    height: 100%;
+}
+
+#address-footer p {
+    color: #8696a3;
+    margin: 0;
+}
+
+#logo {
+    width: 15rem;
+    margin: 1rem 1rem 1rem 1rem;
+}
+
+
+.inline-block {
+    display: inline-block;
+}
+
+.vertical-center {
+    vertical-align: middle;
+    display: table;
+    width: 100%;
+}
+
+.center-parent {
+    vertical-align: middle;
+    display: inline-flex;
+    width: 100%;
+}
+
+.center {
+    margin: auto;
+    width: max-content;
+}
+
+.active {
+    font-weight: bold;
+}
+
+
+.left-border {
+    border: solid 3px;
+    border-color: transparent transparent transparent rgb(58, 58, 58);
+    border-block-start-style: none;
+    border-block-end-style: none;
+}
+
+.cursor {
+    font-size: 1rem;
+    color: #2E3D48;
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+}
+
+a:hover, .button {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+
+/*
+########################
+####### Animation ######
+########################
+*/
+
+.spin-right {
+    -webkit-animation-name: spin-right;
+    -webkit-animation-duration: 4000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin-right;
+    -moz-animation-duration: 4000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: spin-right;
+    animation-duration: 4000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.spin-left {
+    -webkit-animation-name: spin-left;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin-left;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: spin-left;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.speed-slow {
+    -webkit-animation-duration: 9000ms;
+    -moz-animation-duration: 9000ms;
+    animation-duration: 9000ms;
+}
+
+.speed-median {
+    -webkit-animation-duration: 5000ms;
+    -moz-animation-duration: 5000ms;
+    animation-duration: 5000ms;
+}
+
+.speed-fast {
+    -webkit-animation-duration: 3000ms;
+    -moz-animation-duration: 3000ms;
+    animation-duration: 3000ms;
+}
+
+@-moz-keyframes spin-right {
+    from {
+        -moz-transform: scaleY(2);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin-right {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin-right {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@-moz-keyframes spin-left {
+    from {
+        -moz-transform: rotate(360deg);
+    }
+    to {
+        -moz-transform: rotate(0deg);
+    }
+}
+
+@-webkit-keyframes spin-left {
+    from {
+        -webkit-transform: rotate(360deg);
+    }
+    to {
+        -webkit-transform: rotate(0deg);
+    }
+}
+
+@keyframes spin-left {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@-moz-keyframes blink {
+    from, to {
+        color: transparent;
+    }
+    50% {
+        color: white;
+    }
+}
+
+@-webkit-keyframes blink {
+    from, to {
+        color: transparent;
+    }
+    50% {
+        color: white;
+    }
+}
+
+@keyframes blink {
+    from, to {
+        color: transparent;
+    }
+    50% {
+        color: white;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+    /*background-color: black;*/
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #353535;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+
+@media (min-width: 1600px) {
+    .upper {
+        height: 44rem;
+    }
+
+    .upload-img-container {
+        height: 38rem;
+    }
+
+    .footer {
+        margin-right: 5%;
+    }
+
+    #logo {
+        width: 20rem;
+    }
+}

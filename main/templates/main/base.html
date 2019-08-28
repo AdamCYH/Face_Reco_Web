@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Face Recognition</title>
+    {% endif %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="{% static 'main/js/jquery-3.1.1.min.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/img/icon.png' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/design.css' %}">
+    {#    <link rel="stylesheet" type='text/css'#}
+    {#          href="https://fonts.googleapis.com/css?family=Trebuchet MS">#}
+
+    {% block header %}
+    {% endblock %}
+</head>
+<body>
+<div class="navigation">
+    <nav class="header  navbar navbar-expand navbar-custom">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="enrollment" href="{% url 'main-enrollment_site' %}">ENROLLMENT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="recognition" href="{% url 'main-recognition_site' %}">RECOGNITION</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="live" href="{% url 'main-live_site' %}">LIVE</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="header header-1">
+        <div class="box-1 color-1 inline-block"></div>
+        <div class="inline-block" id="title-holder">
+            <a class="title  font-1" href="">FACE RECOGNITION</a>
+        </div>
+    </div>
+    <div class="header header-2">
+        <div class="box-1 color-2 inline-block"></div>
+        <div class="inline-block font-3" id="subtitile-holder">
+            <span class="subtitle">CARNEGIE MELLON UNIVERSITY</span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<div class="footer-bar">
+    <div class="footer color-5" id="footer-left">
+                    <span class="font-4" style="color:#908e8c;">
+    “A world that uses facial recognition does not look like Hollywood’s Minority Report. It looks like a smarter, more pleasant experience interacting with complex computer security systems to help make a safer world for our friends, our families and our children.”
+---Marios Savvides, director of CyLab’s Biometrics Center
+</span><span class="cursor">|</span>
+    </div>
+
+    <div class="footer" id="footer-center">
+        <div class="center-parent box-2 color-3" style="width: 12px; float:left;">
+            <div class="box-1 color-2 center" style="height: 9px; width: 7px;"></div>
+        </div>
+        <div class="font-4" id="address-footer"><p>
+            CyLab Security and Privacy Institute
+            Robert Mehrabian Collaborative Innovation Center (CIC)<br>
+            4720 Forbes Avenue Pittsburgh, PA 15213<br>
+            +1 412 268 5715
+        </p>
+        </div>
+    </div>
+
+    <div class="footer center-parent" id="footer-right">
+        <img id="logo" src="{% static 'main/img/cylab-logo-horizontal.svg' %}">
+    </div>
+</div>
+<script>
+    var path = $(location).attr('href').split("/").pop();
+    console.log(path)
+    if (path == "") {
+        $('#enrollment').addClass("active");
+    } else {
+        $('#' + path).addClass("active");
+    }
+</script>
+
+</body>
+
+</html>

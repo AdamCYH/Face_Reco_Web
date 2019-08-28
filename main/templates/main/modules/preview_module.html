@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<div class="upload-img-container border-1">
+    <div class="center-parent" id="snap_image-container">
+        <div class="scan-overlay scan-annimation" style="display:none;"></div>
+
+        <div class="photo-module" id="photo-module" style="display: none">
+            <video autoplay="true" id="camera-stream" class="visible"></video>
+            <img id="snap">
+            <p id="error-message"></p>
+            <div class="controls visible">
+                <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
+                <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
+            </div>
+
+            <!-- Hidden canvas element. Used for taking snapshot of video. -->
+            <canvas></canvas>
+        </div>
+
+        <img class="center" id="snap_image" src="{% static "main/img/default_img.gif" %}">
+        <input id="img_name" hidden>
+        <div id="default-overlay"></div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'main/css/recognition.css' %}">
+    <script src="{% static 'main/js/recognition.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="upper">
+            <div class="line-1"></div>
+            <div class="content-left">
+                {% include "main/modules/control_module.html" %}
+                {% include "main/modules/preview_module.html" %}
+            </div>
+            <div class="content-middle center-parent">
+                <div class="center">
+                    <a class="button" id="match_button"
+                       onclick="doMatch(this)">Match</a>
+                </div>
+                {% csrf_token %}
+            </div>
+            <div class="content-right">
+                <div class="border-1" id="info-container">
+                    <div class="border-special" id="info-display">
+                        <div id="detected_img_container" class="center-parent border-2"></div>
+                        <table style="display: table" id="info_table">
+                            <tr>
+                                <td>Name</td>
+                                <td><div class="detected_info border-2" id="name_col"></div></td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td><div class="detected_info border-2" id="age_col"></div></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>
+                                    <pre class="detected_info border-2" id="description_col"></pre>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    {% include "main/modules/spin_rings.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="bottom" style="display: block;">
+            <div class="bottom-left">
+                {% include "main/modules/detection_module.html" %}
+            </div>
+            <div class="bottom-right">
+                <div class="design-block2">
+                    <div class="position-block2 color-gradient1">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                    <div class="position-block2 color-gradient2">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                    <div class="position-block2 color-gradient3">
+                        <div class="box-4 color-2"></div>
+                        <div class="box-5 color-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="design-block1">
+        <div class="box-3 color-4"></div>
+        <div style="height: 1rem;margin-top: 0.5rem">
+            <div class="box-1 color-1"></div>
+        </div>
+        <div class="line-2">
+            <div class="box-3 color-3" style="position: absolute; bottom: 0;"></div>
+        </div>
+    </div>
+{% endblock %}

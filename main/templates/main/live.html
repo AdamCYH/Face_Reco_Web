@@ -1,0 +1,126 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'main/css/live.css' %}">
+    <script src="{% static 'main/js/live.js' %}"></script>
+    <script src="{% static 'main/js/live_client.js' %}"></script>
+    <script src="{% static 'websocket/webrtc-adapter/release/adapter.js' %}"></script>
+    <script src="{% static 'websocket/kurento-utils/js/kurento-utils.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="content-left">
+            {#            <div class="design-block-vertical-1">#}
+            {#            </div>#}
+            <div class="content-live">
+                {% include 'main/modules/control_module.html' %}
+                <div class="live-wrapper border-1">
+                    <div class="border-special" id="live-border-special">
+
+                        <div class="live_container" id="live_container">
+
+                            <div class="video_content" id="video_content">
+                                <div class='overlay' id='overlay'>
+                                </div>
+                                <video class="videoOutput" id="videoOutput" autoplay></video>
+
+                                <div class="video_bottom font-3">
+                                    <span class="font-4" id="video-info">Click bounding box to see detection information.</span>
+                                    <a href="javascript: max_min_screen()" id="btn-full-scrn">
+                                        <img class="max_min_icon" src="{% static 'main/img/maximize_s.png' %}"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-right">
+            <div class="detection-module">
+                <div class="detection-header">
+                    <div class="font-2" id="detection-header-title">DETECTIONS</div>
+                    <div class="font-3">REAL-TIME DETECTION ON LIVE VIDEO</div>
+                    <div class="indicator-module">
+                        <div class="indicator-border border-1">
+                            <div class="indicator on" id="detection-list-indicator"
+                                 onclick="hide_detection_detail()"></div>
+                        </div>
+                        <div class="indicator-border border-1">
+                            <div class="indicator" id="detection-detail-indicator"
+                                 onclick="show_detection_detail()"></div>
+                        </div>
+                    </div>
+                    <div class="addson-module">
+                        <label class="addson-container">Show Score
+                            <input type="checkbox" checked="checked" id="conf_lvl_checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="addson-container">Show Name
+                            <input type="checkbox" checked="checked" id="name_checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="detection-content" id="detection-list">
+                    <table id="detection-table">
+                        <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TIME</th>
+                            <th>ENROLLMENT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="detection-content border-1" id="detection-detail">
+                    <span onclick="hide_detection_detail()" class="close-icon" title="Close Modal">&times;</span>
+                    <div id="detected_img_container">
+                        <img id='img_col' src=''>
+                        <div id='cnflvl_col'></div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table style="display: table" id="info_table">
+                            <tr>
+                                <td>Name</td>
+                                <td>
+                                    <div class="detected_info border-2" id="name_col"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td>
+                                    <div class="detected_info border-2" id="age_col"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>
+                                    <pre><div class="detected_info border-2" id="description_col"></div></pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% include "main/modules/spin_rings.html" %}
+                </div>
+            </div>
+            {% csrf_token %}
+            {#            <div class="design-block-vertical-2"></div>#}
+        </div>
+    </div>
+    <div class="design-block1">
+        <div class="box-3 color-4"></div>
+        <div style="height: 1rem;margin-top: 0.5rem">
+            <div class="box-1 color-1"></div>
+        </div>
+        <div class="line-2">
+            <div class="box-3 color-3" style="position: absolute; bottom: 0;"></div>
+        </div>
+    </div>
+{% endblock %}

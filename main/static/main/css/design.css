@@ -1,0 +1,241 @@
+@font-face {
+    font-family: 'Trebuchet MS';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Trebuchet MS'), local('TrebuchetMS'), url('/static/main/font/Trebuchet MS.ttf');
+}
+
+
+.design-block1 {
+    width: 2%;
+    position: absolute;
+    right: 0.3%;
+    top: 0;
+}
+
+
+.design-block2 {
+    height: 5rem;
+    position: relative;
+    margin: 1rem 0;
+}
+
+
+.design-block4 {
+    width: 100%;
+    height: 5rem;
+    position: absolute;
+    bottom: 0;
+    background-color: transparent;
+}
+
+.design-block-vertical-1 {
+    width: 10%;
+    height: 100%;
+    float: left;
+    background: url("/static/main/img/design_box3.png") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.design-block-vertical-2 {
+    width: 27%;
+    height: 100%;
+    margin-top: 2.2rem;
+    float: right;
+    background: url("/static/main/img/design_box4.png") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.line-1 {
+    border: solid 5px;
+    border-color: rgb(58, 58, 58) rgb(58, 58, 58) transparent transparent;
+    position: absolute;
+    right: 0;
+    background-color: transparent;
+    z-index: 1;
+    width: 90%;
+    height: 5.375rem;
+    min-width: 700px;
+    border-block-end-style: none;
+}
+
+.line-2 {
+    border: solid 1px;
+    border-color: transparent transparent transparent rgb(64, 76, 85);
+    height: 36rem;
+    position: relative;
+}
+
+.line-3 {
+    border: solid 3px;
+    border-color: transparent rgb(58, 58, 58) rgb(58, 58, 58) transparent;
+    position: relative;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 15%;
+    border-block-start-style: none;
+}
+
+.box-1 {
+    width: 5px;
+    height: 100%;
+}
+
+.box-2 {
+    width: 10px;
+    height: 100%;
+}
+
+.box-3 {
+    width: 1.5rem;
+    height: 5.375rem;
+    margin-left: 30%;
+}
+
+.box-4 {
+    width: 0.5rem;
+    height: 0.5rem;
+    display: inline-block;
+    top: 0;
+    position: absolute;
+}
+
+.box-5 {
+    width: 2rem;
+    height: 0.5rem;
+    display: inline-block;
+    top: 0;
+    left: 1rem;
+    position: absolute;
+}
+
+
+.position-block1 {
+    display: inline-block;
+    width: 8rem;
+    height: 100%;
+    position: relative;
+    padding: 0.5rem 0;
+    overflow: hidden;
+    float: left;
+}
+
+.position-block1 img {
+    position: absolute;
+}
+
+.position-block2 {
+    display: inline-block;
+    width: 27%;
+    height: 100%;
+    position: relative;
+    margin: 0 0 0 3%;
+}
+
+.color-1 {
+    background-color: #839dc0;
+}
+
+.color-2 {
+    background-color: #ffbb02;
+}
+
+.color-3 {
+    background-color: #445066;
+}
+
+.color-4 {
+    background-color: #222222;
+}
+
+.color-5 {
+    background-color: #414142;
+}
+
+.color-6 {
+    background-color: #c1cad3;
+}
+
+.color-gradient1 {
+    background: linear-gradient(#5a5a5a, #000000);
+}
+
+.color-gradient2 {
+    background: linear-gradient(#818d9f, #37426a);
+}
+
+.color-gradient3 {
+    background: linear-gradient(#78838f, #262e42);
+}
+
+.font-1 {
+    font-size: 2.5rem;
+    font-family: Trebuchet MS, sans-serif;
+}
+
+.font-2 {
+    font-size: 1.625rem;
+    font-family: Trebuchet MS, sans-serif;
+    color: white;
+}
+
+.font-3 {
+    font-size: 0.875rem;
+    font-family: Trebuchet MS, sans-serif;
+    color: #a5bdda;
+}
+
+.font-4 {
+    font-size: 0.7rem;
+    font-family: Trebuchet MS, sans-serif;
+    color: #908e8c;
+}
+
+.border-1 {
+    border: solid 2px #6c819e;
+}
+
+.border-2 {
+    border: solid 1px #303434;
+}
+
+.border-special {
+    margin: 1rem;
+    padding: 1rem;
+    border: 10px solid white;
+    border-image: url(/static/main/img/border.png) 13 stretch;
+}
+
+.close-icon {
+    font-size: 2rem;
+    line-height: 2rem;
+    background-color: transparent;
+    left: 0.5rem;
+    position: relative;
+    color: #6c819e;
+}
+
+.button-1 {
+    border: none;
+    box-shadow: inset 0 0 3px 1px #a3b5e1;
+    background-color: #5b698c;
+    text-align: center;
+    cursor: pointer;
+}
+.button-2 {
+    border: none;
+    box-shadow: inset 0 0 3px 1px #ffe8a3;
+    background-color: #ffc003;
+    text-align: center;
+    cursor: pointer;
+}
+@media (min-width: 1600px) {
+
+    .line-2 {
+        height: 44rem;
+    }
+
+}
