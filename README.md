@@ -1,4 +1,4 @@
-This service includes three modules
+This the front-end service only that includes three modules
 Single image upload,
 Single image recognition,
 Live video recognition
