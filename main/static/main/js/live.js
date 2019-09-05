@@ -181,6 +181,7 @@ function get_detection_update(num_entries) {
         },
         context: document.body,
         success: function (data) {
+            data = data.results;
             initial_call = false;
             if (data.length > 0) {
                 last_entry = data[0].detection_id;
